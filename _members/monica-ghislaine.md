@@ -1,5 +1,5 @@
 ---
-name: Monica Ghislaine
+name: Monica
 image: images/female.png
 description: UNIFESP
 role: pc
