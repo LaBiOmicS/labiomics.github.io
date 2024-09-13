@@ -25,7 +25,7 @@ title: Home
   type="link"
   icon=""
   text="See the Institutional Website"
-  link="https://github.com/greenelab/lab-website-template/wiki"
+  link="https://labiomics.github.io/"
   style="button"
 %}
 {:.center}
