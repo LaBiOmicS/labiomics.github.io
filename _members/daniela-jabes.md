@@ -1,5 +1,5 @@
 ---
-name: Daniela Jabes
+name: Daniela
 image: images/female.png
 description: UMC
 role: pc
