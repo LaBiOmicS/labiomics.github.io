@@ -1,7 +1,7 @@
 ---
 name: Elis Zutin
 image: images/female.png
-description: UNIFESP
+description: UMC
 role: pc
 aliases:
   - Elis Andrade de Lima Zutin
