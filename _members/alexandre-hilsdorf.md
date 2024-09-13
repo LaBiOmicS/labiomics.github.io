@@ -1,5 +1,5 @@
 ---
-name: Alexandre Hilsdorf
+name: Alexandre
 image: images/male.png
 description: UMC
 role: pc
