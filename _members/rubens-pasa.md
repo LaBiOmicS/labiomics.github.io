@@ -1,5 +1,5 @@
 ---
-name: Rubens Pasa
+name: Rubens
 image: images/male.png
 description: UFV
 role: pc
