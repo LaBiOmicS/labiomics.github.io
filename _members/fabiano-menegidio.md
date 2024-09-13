@@ -1,5 +1,5 @@
 ---
-name: Fabiano Menegidio
+name: Fabiano
 image: images/menegidio.jpg
 description: Leader Investigator
 role: pi
