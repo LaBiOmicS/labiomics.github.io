@@ -1,5 +1,5 @@
 ---
-name: Gledison Teixeira
+name: Gledison
 image: images/male.png
 description: Masters Student
 role: master
