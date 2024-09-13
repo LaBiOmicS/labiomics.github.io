@@ -1,6 +1,6 @@
 ---
 name: Luiz Nunes
-image: images/hilsdorf.jpg
+image: images/male.png
 description: UFABC
 role: pc
 aliases:
