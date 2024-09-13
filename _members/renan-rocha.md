@@ -1,5 +1,5 @@
 ---
-name: Renan Rocha
+name: Renan
 image: images/male.png
 description: PhD Student
 role: phd
