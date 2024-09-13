@@ -18,12 +18,12 @@
   tags:
     - resource
 
-- title: Cool Tutorial
+- title: IMCCalc
   group: more
-  image: images/photo.jpg
-  link: https://github.com/
-  description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-  repo: greenelab/lab-website-template
+  image: images/imc.png
+  link: https://github.com/vLaBiOmicS/imccalc
+  description: IMCCalc é uma extensão do Google Chrome para calcular o Índice de Massa Corporal (IMC). 
+  repo: vLaBiOmicS/imccalc
   tags:
     - resource
     - publication
