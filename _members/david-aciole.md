@@ -1,5 +1,5 @@
 ---
-name: David Aciole
+name: David
 image: images/male.png
 description: PhD Bioinformatician
 role: pa
