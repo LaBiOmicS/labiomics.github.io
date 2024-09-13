@@ -1,7 +1,7 @@
 ---
 name: Daniela Jabes
 image: images/female.png
-description: UFV
+description: UMC
 role: pc
 aliases:
   - Daniela Leite Jabes
@@ -9,5 +9,5 @@ aliases:
 links:
   orcid: 0000-0000-0000-0000
   email: XXXX@XXXX.br
-  twitter: karine.kavalco
+  twitter: XXXXX
 ---
