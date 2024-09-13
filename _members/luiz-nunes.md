@@ -1,5 +1,5 @@
 ---
-name: Luiz Nunes
+name: Luiz
 image: images/male.png
 description: UFABC
 role: pc
