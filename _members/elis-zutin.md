@@ -1,5 +1,5 @@
 ---
-name: Elis Zutin
+name: Elis
 image: images/female.png
 description: UMC
 role: pc
