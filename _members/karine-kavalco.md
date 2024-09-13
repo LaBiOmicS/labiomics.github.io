@@ -1,6 +1,6 @@
 ---
 name: Karine Kavalco
-image: images/karine.jpg
+image: images/female.png
 description: UFV
 role: pc
 aliases:
