@@ -1,6 +1,6 @@
 ---
 name: Rubens Pasa
-image: images/rubens.jpg
+image: images/male.png
 description: UFV
 role: pc
 aliases:
