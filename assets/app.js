@@ -37,10 +37,10 @@
         '<div class="card-top">' +
           '<span class="avatar cat-' + esc(p.category) + '" aria-hidden="true">' + esc(initials(p.name)) + "</span>" +
           "<div>" +
-            "<h3>" + esc(p.name) + "</h3>" +
-            '<p class="cat">' + esc(categories[p.category] || p.category) + "</p>" +
+            '<h3 title="' + esc(p.name) + '">' + esc(p.name).replace(/-/g, "-<wbr>") + "</h3>" +
+            '<p class="cat"><span>' + esc(categories[p.category] || p.category) + "</span>" +
+            '<span class="status">' + esc(p.status) + "</span></p>" +
           "</div>" +
-          '<span class="status">' + esc(p.status) + "</span>" +
         "</div>" +
         '<p class="summary">' + esc(p.summary) + "</p>" +
         '<p class="details">' + esc(p.details) + "</p>" +
