@@ -988,6 +988,39 @@
     });
   }
 
+  /* ---------------- Oportunidades para estudantes ---------------- */
+  (function opportunities() {
+    var sec = $("oportunidades");
+    if (!sec) return;
+    var box = sec.querySelector(".opp-box"), sw = sec.querySelector(".axis-switch"), thumb = sec.querySelector(".axis-thumb");
+    var summary = $("opp-summary"), mail = $("opp-mail");
+    var AX = { exatas: "Exatas e computação", biologicas: "Biológicas e saúde" };
+    function val(name) { var i = sec.querySelector('input[name="' + name + '"]:checked'); return i ? i.value : ""; }
+    function moveThumb() {
+      var lab = sw.querySelector("input:checked").parentNode, span = lab.querySelector("span");
+      thumb.style.width = span.offsetWidth + "px"; thumb.style.height = span.offsetHeight + "px";
+      thumb.style.transform = "translate(" + lab.offsetLeft + "px," + lab.offsetTop + "px)";
+    }
+    function update() {
+      var ax = val("opp-axis"), lvInput = sec.querySelector('input[name="opp-level"]:checked');
+      var lv = lvInput.parentNode.querySelector("b").textContent;
+      box.setAttribute("data-axis", ax);
+      sec.querySelector(".levels").setAttribute("data-axis", ax);
+      sec.querySelector(".opp-cta").setAttribute("data-axis", ax);
+      sec.querySelectorAll(".opp-panel").forEach(function (p) { p.classList.toggle("on", p.getAttribute("data-axis") === ax); });
+      summary.textContent = lv + " · " + AX[ax];
+      var subject = "[LaBiOmicS] Interesse em " + lv + " (" + AX[ax] + ")";
+      var body = "Olá, LaBiOmicS!\n\nTenho interesse em " + lv.toLowerCase() + " no eixo " + AX[ax].toLowerCase() + ".\n\n" +
+        "Nome:\nCurso e instituição:\nPeríodo ou ano de formação:\nCurrículo Lattes ou GitHub:\nTemas que me interessam:\n";
+      mail.href = "mailto:labiomics@bioinformatica.com.br?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      moveThumb();
+    }
+    sec.addEventListener("change", update);
+    window.addEventListener("resize", moveThumb);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveThumb);
+    update();
+  })();
+
   /* ---------------- Copiar e-mail ---------------- */
   (function copyMail() {
     var b = $("copy-mail");

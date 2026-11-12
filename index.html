@@ -45,6 +45,7 @@
         <a href="#projetos">Projetos</a>
         <a href="#metodologia">Metodologia</a>
         <a href="#sobre">Sobre</a>
+        <a href="#oportunidades">Oportunidades</a>
         <a href="#contato">Contato</a>
       </nav>
       <button class="theme-toggle" id="theme" type="button" aria-label="Alternar tema claro/escuro">
@@ -402,60 +403,119 @@
         <p class="bits-readout" id="bits-readout" aria-hidden="true"></p>
       </div>
     </section>
+
+    <section id="oportunidades" class="section opp">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="kicker">06 · Oportunidades</p>
+          <h2>Venha fazer ciência com a gente</h2>
+          <p class="muted">Procuramos estudantes com vontade de aprender bioinformática na prática, em projetos reais e com código aberto. Escolha o seu eixo e o seu momento.</p>
+        </div>
+
+        <div class="opp-box" data-reveal>
+          <div class="axis-switch" role="radiogroup" aria-label="Eixo de formação">
+            <label class="axis-opt" data-axis="exatas">
+              <input type="radio" name="opp-axis" value="exatas" checked>
+              <span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg>Exatas e computação</span>
+            </label>
+            <label class="axis-opt" data-axis="biologicas">
+              <input type="radio" name="opp-axis" value="biologicas">
+              <span><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 3c0 5 10 4 10 9s-10 4-10 9M17 3c0 5-10 4-10 9s10 4 10 9M8.5 6.5h7M8.5 17.5h7"/></svg>Biológicas e saúde</span>
+            </label>
+            <span class="axis-thumb" aria-hidden="true"></span>
+          </div>
+          <div class="opp-panels">
+          <div class="opp-panel" id="opp-exatas" data-axis="exatas">
+            <div class="opp-intro">
+              <p class="ax-sub">Do código à biologia</p>
+              <h3>Exatas e computação</h3>
+              <p>Para quem vem da computação, das engenharias, da estatística, da matemática ou da física e quer aplicar programação e modelagem a dados biológicos.</p>
+              <ul class="opp-courses" aria-label="Cursos de origem"><li>Ciência da Computação</li><li>Sistemas de Informação</li><li>Engenharias</li><li>Estatística</li><li>Matemática</li><li>Física</li></ul>
+            </div>
+            <div class="opp-detail">
+              <h4>O que você vai fazer</h4>
+              <ul class="opp-list"><li>Pipelines e workflows reprodutíveis (Nextflow, Snakemake, containers)</li><li>Machine learning e modelagem em dados ômicos</li><li>Ferramentas de código aberto em Python, publicadas no GitHub e no PyPI</li><li>Processamento de grandes volumes de dados em servidores e no Galaxy</li></ul>
+              <h4>Bom ter</h4>
+              <p>Python ou R, terminal Linux e Git. Não precisa saber biologia: você aprende no laboratório.</p>
+              <p class="opp-ppg"><span>Pós-graduação mais próxima</span> PPG em Engenharia Biomédica (UMC)</p>
+            </div>
+          </div>
+          <div class="opp-panel" id="opp-biologicas" data-axis="biologicas">
+            <div class="opp-intro">
+              <p class="ax-sub">Da bancada ao dado</p>
+              <h3>Biológicas e saúde</h3>
+              <p>Para quem vem das ciências biológicas e da saúde e quer analisar dados de sequenciamento, transformando perguntas biológicas em análises reprodutíveis.</p>
+              <ul class="opp-courses" aria-label="Cursos de origem"><li>Ciências Biológicas</li><li>Biomedicina</li><li>Biotecnologia</li><li>Medicina Veterinária</li><li>Farmácia</li><li>Medicina</li></ul>
+            </div>
+            <div class="opp-detail">
+              <h4>O que você vai fazer</h4>
+              <ul class="opp-list"><li>Microbioma e metagenômica (16S, shotgun, resistoma)</li><li>RNA-Seq, expressão gênica e redes de co-expressão</li><li>Genômica mitocondrial, montagem e filogenia</li><li>Interpretação biológica dos resultados e escrita científica</li></ul>
+              <h4>Bom ter</h4>
+              <p>Curiosidade e base em biologia molecular. Não precisa saber programar: o laboratório ensina Linux, R e Python.</p>
+              <p class="opp-ppg"><span>Pós-graduação mais próxima</span> PPG em Biotecnologia (UMC)</p>
+            </div>
+          </div>
+          </div>
+        </div>
+
+        <fieldset class="levels" data-reveal>
+          <legend>Em que momento você está?</legend>
+            <label class="level" data-level="ic">
+              <input type="radio" name="opp-level" value="ic" checked>
+              <span class="level-box"><small>Graduação</small><b>Iniciação científica</b><em>O primeiro projeto de pesquisa, com orientação próxima e um tema real do laboratório.</em></span>
+            </label>
+            <label class="level" data-level="estagio">
+              <input type="radio" name="opp-level" value="estagio">
+              <span class="level-box"><small>Graduação</small><b>Estágio</b><em>A rotina de um laboratório de bioinformática: análises, pipelines e ferramentas.</em></span>
+            </label>
+            <label class="level" data-level="mestrado">
+              <input type="radio" name="opp-level" value="mestrado">
+              <span class="level-box"><small>Pós-graduação</small><b>Mestrado</b><em>Dissertação nos PPGs em Biotecnologia ou em Engenharia Biomédica da UMC.</em></span>
+            </label>
+            <label class="level" data-level="doutorado">
+              <input type="radio" name="opp-level" value="doutorado">
+              <span class="level-box"><small>Pós-graduação</small><b>Doutorado</b><em>Pesquisa original, liderança de projetos, artigos e ferramentas abertas.</em></span>
+            </label>
+        </fieldset>
+
+        <div class="opp-cta" data-reveal>
+          <p><span class="muted">Sua candidatura:</span> <b id="opp-summary">Iniciação científica · Exatas e computação</b></p>
+          <a class="btn btn-primary btn-glow" id="opp-mail" href="mailto:labiomics@bioinformatica.com.br">Quero participar</a>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer id="contato" class="footer">
     <div class="wrap">
-      <div class="collab">
-        <div class="collab-head" data-reveal>
-          <p class="kicker">06 · Contato</p>
+      <div class="cta-panel" data-reveal>
+        <svg class="cta-art" viewBox="0 0 400 400" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-linecap="round">
+            <path d="M120 -20C120 80 280 70 280 170S120 270 120 370S280 470 280 520" stroke-width="10"/>
+            <path d="M280 -20C280 80 120 70 120 170S280 270 280 370S120 470 120 520" stroke-width="10" opacity=".55"/>
+            <path d="M150 40h100M140 120h120M150 220h100M140 300h120" stroke-width="6" opacity=".35"/>
+          </g>
+        </svg>
+        <div class="cta-main">
+          <p class="kicker">07 · Contato</p>
           <h2>Vamos colaborar?</h2>
-          <p class="muted">Universidades, institutos, empresas e estudantes: escolha o caminho e escreva para o laboratório.</p>
-        </div>
-        <div class="collab-grid">
-          <article class="collab-card g1" data-reveal style="--i:0">
-            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12h8M12 8v8M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0"/></svg></span>
-            <h3>Pesquisa em parceria</h3>
-            <p>Projetos conjuntos com universidades e institutos em genômica, transcriptômica, microbioma e metagenômica, do desenho experimental à análise dos dados.</p>
-            <a class="collab-link" href="mailto:labiomics@bioinformatica.com.br?subject=%5BLaBiOmicS%5D%20Parceria%20em%20pesquisa">Propor parceria<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
-          </article>
-          <article class="collab-card g2" data-reveal style="--i:1">
-            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M2 9l10-5 10 5-10 5zm4 2v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></span>
-            <h3>Pós-graduação</h3>
-            <p>Mestrado e doutorado nos Programas de Pós-Graduação em Biotecnologia e em Engenharia Biomédica da UMC, com projetos em bioinformática e ciências ômicas.</p>
-            <a class="collab-link" href="mailto:labiomics@bioinformatica.com.br?subject=%5BLaBiOmicS%5D%20Interesse%20em%20p%C3%B3s-gradua%C3%A7%C3%A3o">Falar sobre orientação<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
-          </article>
-          <article class="collab-card g3" data-reveal style="--i:2">
-            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></span>
-            <h3>Empresas e inovação</h3>
-            <p>Pipelines, ferramentas e análise de dados biológicos para projetos de P&amp;D, em diálogo com startups de base biotecnológica.</p>
-            <a class="collab-link" href="mailto:labiomics@bioinformatica.com.br?subject=%5BLaBiOmicS%5D%20Projeto%20com%20empresa">Propor um projeto<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
-          </article>
-          <article class="collab-card g4" data-reveal style="--i:3">
-            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
-            <h3>Ciência aberta</h3>
-            <p>Use, teste e melhore as ferramentas do laboratório: abra issues, sugira funcionalidades ou envie pull requests no GitHub.</p>
-            <a class="collab-link" href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">Abrir o GitHub<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
-          </article>
-        </div>
-        <div class="contact-strip" data-reveal>
-          <div class="contact-item contact-mail">
-            <span class="contact-label">E-mail</span>
-            <a href="mailto:labiomics@bioinformatica.com.br">labiomics@bioinformatica.com.br</a>
-            <button type="button" class="copy-btn" id="copy-mail" data-copy="labiomics@bioinformatica.com.br" aria-label="Copiar e-mail">
-              <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M5.5 5.5V3.2c0-.4.3-.7.7-.7h6.6c.4 0 .7.3.7.7v6.6c0 .4-.3.7-.7.7h-2.3M3.2 5.5h6.6c.4 0 .7.3.7.7v6.6c0 .4-.3.7-.7.7H3.2c-.4 0-.7-.3-.7-.7V6.2c0-.4.3-.7.7-.7z"/></svg>
+          <p>Universidades, institutos e empresas interessados em pesquisa conjunta, projetos de P&amp;D ou nas nossas ferramentas abertas: escreva para o laboratório.</p>
+          <div class="cta-actions">
+            <a class="btn cta-mail" href="mailto:labiomics@bioinformatica.com.br">
+              <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16v12H4zm0 0 8 7 8-7"/></svg>
+              labiomics@bioinformatica.com.br
+            </a>
+            <button type="button" class="btn cta-copy" id="copy-mail" data-copy="labiomics@bioinformatica.com.br" aria-label="Copiar e-mail">
+              <svg aria-hidden="true" viewBox="0 0 16 16" width="15" height="15"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M5.5 5.5V3.2c0-.4.3-.7.7-.7h6.6c.4 0 .7.3.7.7v6.6c0 .4-.3.7-.7.7h-2.3M3.2 5.5h6.6c.4 0 .7.3.7.7v6.6c0 .4-.3.7-.7.7H3.2c-.4 0-.7-.3-.7-.7V6.2c0-.4.3-.7.7-.7z"/></svg>
               <span>copiar</span>
             </button>
           </div>
-          <div class="contact-item">
-            <span class="contact-label">Endereço</span>
-            <a href="https://www.google.com/maps/search/?api=1&amp;query=Universidade%20de%20Mogi%20das%20Cruzes%2C%20Av.%20Dr.%20C%C3%A2ndido%20Xavier%20de%20Almeida%20Souza%2C%20200%2C%20Mogi%20das%20Cruzes%20-%20SP" target="_blank" rel="noopener">Universidade de Mogi das Cruzes, NIB | NPT<br>Av. Dr. Cândido Xavier de Almeida Souza, 200 · Mogi das Cruzes, SP</a>
-          </div>
-          <div class="contact-item">
-            <span class="contact-label">Institucional</span>
-            <a href="https://labiomics.bioinformatica.com.br/" target="_blank" rel="noopener">labiomics.bioinformatica.com.br</a>
-          </div>
         </div>
+        <dl class="cta-info">
+          <div><dt>Onde estamos</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Universidade%20de%20Mogi%20das%20Cruzes%2C%20Av.%20Dr.%20C%C3%A2ndido%20Xavier%20de%20Almeida%20Souza%2C%20200%2C%20Mogi%20das%20Cruzes%20-%20SP" target="_blank" rel="noopener">NIB | NPT · Universidade de Mogi das Cruzes<br>Av. Dr. Cândido Xavier de Almeida Souza, 200<br>Mogi das Cruzes, SP</a></dd></div>
+          <div><dt>Estudantes</dt><dd><a href="#oportunidades">IC, estágio, mestrado e doutorado</a></dd></div>
+          <div><dt>Código aberto</dt><dd><a href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">github.com/LaBiOmicS</a></dd></div>
+        </dl>
       </div>
       <div class="footer-inner">
         <div>
