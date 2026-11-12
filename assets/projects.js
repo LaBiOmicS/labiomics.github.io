@@ -86,7 +86,7 @@ window.PROJECTS = [
       "Estudos de caso interprofissionais (veterinária, medicina, enfermagem, farmácia, odontologia) e datasets prontos para scikit-learn. Atualizado mensalmente via GitHub Actions e validado contra o TabNet.",
     platforms: ["Site", "Jupyter"],
     tags: ["DATASUS", "Saúde Única", "epidemiologia", "machine learning"],
-    language: "Jupyter Notebook",
-    license: "Ver repositório",
+    language: "Jupyter",
+    license: "MIT",
   },
 ];
