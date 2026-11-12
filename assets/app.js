@@ -166,6 +166,105 @@
     readColors(); resize(); start();
   })();
 
+  /* ---------------- Hélice binária (2 bits por base) ---------------- */
+  (function bitsHelix() {
+    var canvas = $("bits-canvas"), out = $("bits-readout");
+    if (!canvas || !canvas.getContext) return;
+    var stage = canvas.parentNode, ctx = canvas.getContext("2d");
+    var CODE = { A: "00", C: "01", G: "10", T: "11" }, PAIR = { A: "T", T: "A", C: "G", G: "C" };
+    var W = 0, H = 0, t = 0, running = false, visible = false, raf = 0, step = 26, colors = {}, seq = [];
+    var ptr = { x: -1, tx: -1, active: false }, lastIdx = -1;
+
+    function readColors() {
+      var cs = getComputedStyle(root);
+      colors = { A: cs.getPropertyValue("--cat-ia").trim(), T: cs.getPropertyValue("--cat-bio").trim(),
+        C: cs.getPropertyValue("--cat-ensino").trim(), G: cs.getPropertyValue("--base-g").trim(),
+        text: cs.getPropertyValue("--text").trim(), muted: cs.getPropertyValue("--muted").trim() };
+    }
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = stage.clientWidth; H = stage.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      step = W < 520 ? 22 : 26;
+      var n = Math.ceil(W / step) + 2;
+      while (seq.length < n) seq.push("ACGT"[(Math.random() * 4) | 0]);
+      if (ptr.x < 0) ptr.x = ptr.tx = W / 2;
+      draw();
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var cy = (H - 44) / 2, A = Math.min(cy - 26, 80);
+      var mx = ptr.x, idx = Math.round((mx - step / 2) / step);
+      for (var i = 0; i * step < W + step; i++) {
+        var x = i * step + step / 2;
+        var ph = x * 0.022 + t, s1 = Math.sin(ph), z1 = (Math.cos(ph) + 1) / 2;
+        var dx = x - mx, near = Math.exp(-(dx * dx) / (2 * 70 * 70));
+        var y1 = cy + s1 * A, y2 = cy - s1 * A;
+        var b1 = seq[i % seq.length], b2 = PAIR[b1];
+        // degrau
+        ctx.globalAlpha = 0.08 + 0.12 * Math.min(z1, 1 - z1) + 0.3 * near;
+        ctx.strokeStyle = colors.muted; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, y1); ctx.lineTo(x, y2); ctx.stroke();
+        var nodes = z1 < 0.5 ? [[y1, z1, b1], [y2, 1 - z1, b2]] : [[y2, 1 - z1, b2], [y1, z1, b1]];
+        for (var k = 0; k < 2; k++) {
+          var y = nodes[k][0], z = nodes[k][1], b = nodes[k][2];
+          var size = 9 + 3 * z + 6 * near;
+          ctx.globalAlpha = 0.18 + 0.55 * z + 0.3 * near;
+          ctx.fillStyle = colors[b];
+          ctx.font = "600 " + size.toFixed(1) + "px 'IBM Plex Mono', monospace";
+          ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillText(CODE[b], x, y);
+          if (near > 0.45 && z > 0.4) {
+            ctx.globalAlpha = (near - 0.45) * 1.8;
+            ctx.fillStyle = colors.text;
+            ctx.font = "600 12px Inter, sans-serif";
+            ctx.fillText(b, x, y + (y < cy ? -size - 2 : size + 2));
+          }
+        }
+      }
+      ctx.globalAlpha = 1;
+      // marcador do cursor
+      if (idx >= 0) {
+        ctx.fillStyle = colors.text; ctx.globalAlpha = 0.06;
+        ctx.fillRect((idx - 1) * step, 6, step * 3, H - 56);
+        ctx.globalAlpha = 1;
+      }
+      if (idx !== lastIdx) { lastIdx = idx; readout(idx); }
+    }
+    function readout(idx) {
+      var bases = [];
+      for (var j = idx - 1; j <= idx + 1; j++) if (j >= 0) bases.push(seq[j % seq.length]);
+      if (!bases.length) return;
+      out.innerHTML = '<span class="dim">5\'-</span>' + bases.map(function (b) { return '<b class="b-' + b.toLowerCase() + '">' + b + "</b>"; }).join("") +
+        '<span class="dim">-3\' → </span>' + bases.map(function (b) { return '<span class="b-' + b.toLowerCase() + '">' + CODE[b] + "</span>"; }).join(" ");
+    }
+    function loop(now) {
+      if (!running) return;
+      t += 0.008;
+      if (!ptr.active) ptr.tx = W / 2 + Math.sin(now / 2600) * W * 0.36;   // cursor virtual
+      ptr.x += (ptr.tx - ptr.x) * 0.1;
+      draw();
+      raf = requestAnimationFrame(loop);
+    }
+    function start() { if (running || reduce || !visible || document.hidden) return; running = true; raf = requestAnimationFrame(loop); }
+    function stop() { running = false; cancelAnimationFrame(raf); }
+
+    stage.addEventListener("pointermove", function (e) {
+      var r = stage.getBoundingClientRect();
+      ptr.active = true; ptr.tx = e.clientX - r.left;
+      if (reduce) { ptr.x = ptr.tx; draw(); }
+    });
+    stage.addEventListener("pointerleave", function () { ptr.active = false; });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(stage);
+    } else { visible = true; }
+    document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+    window.addEventListener("resize", resize);
+    themeListeners.push(function () { readColors(); draw(); });
+    readColors(); resize(); start();
+  })();
+
   /* ---------------- Palavra rotativa ---------------- */
   (function rotator() {
     var el = $("rotator");
