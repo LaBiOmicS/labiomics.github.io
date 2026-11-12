@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LaBiOmicS · Projetos</title>
-  <meta name="description" content="Projetos e ferramentas abertas do Laboratório de Bioinformática e Ciências Ômicas (LaBiOmicS).">
-  <meta property="og:title" content="LaBiOmicS · Projetos">
-  <meta property="og:description" content="Ferramentas abertas de bioinformática, IA para pesquisa e ensino com dados reais.">
+  <title>LaBiOmicS · Bioinformática</title>
+  <meta name="description" content="LaBiOmicS: Laboratório de Bioinformática e Ciências Ômicas. Linhas de pesquisa, metodologia e ferramentas abertas.">
+  <meta property="og:title" content="LaBiOmicS · Bioinformática e Ciências Ômicas">
+  <meta property="og:description" content="Desvendando a complexidade biológica através da bioinformática.">
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/107589607?v=4">
   <link rel="icon" href="https://avatars.githubusercontent.com/u/107589607?s=64&v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
   <script>
     document.documentElement.classList.add("js");
@@ -31,8 +31,9 @@
         </span>
       </a>
       <nav id="nav" aria-label="Seções">
+        <a href="#pesquisa">Pesquisa</a>
         <a href="#projetos">Projetos</a>
-        <a href="#principios">Princípios</a>
+        <a href="#metodologia">Metodologia</a>
         <a href="#sobre">Sobre</a>
         <a href="#contato">Contato</a>
       </nav>
@@ -48,40 +49,115 @@
       <canvas class="helix" id="helix" aria-hidden="true"></canvas>
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <p class="eyebrow" data-reveal>Menegidio Lab · Ciência Aberta</p>
-          <h1 data-reveal><span class="prompt">$&gt;</span> LaBiOmicS<span class="caret" aria-hidden="true"></span></h1>
-          <p class="fullname" data-reveal>Laboratório de Bioinformática e Ciências Ômicas</p>
+          <p class="eyebrow" data-reveal><span class="prompt">$&gt;</span> LaBiOmicS · NIB | NPT · UMC</p>
+          <h1 data-reveal>Desvendando a complexidade biológica através da <em class="accent">bioinformática</em>.</h1>
           <p class="lead" data-reveal>
-            Ferramentas abertas para
+            O Laboratório de Bioinformática e Ciências Ômicas pesquisa genômica, transcriptômica e metagenômica,
+            combinando ciência de dados e biologia molecular para entender estrutura, função e evolução de sistemas
+            biológicos, com ferramentas abertas para
             <span class="rotator" id="rotator" aria-live="off">bioinformática</span><span class="sr-only">, avaliação científica assistida por IA e ensino com dados reais</span>.
-            Todos os projetos têm código no GitHub e página própria.
           </p>
           <div class="hero-actions" data-reveal>
-            <a class="btn btn-primary btn-glow" href="#projetos">Ver projetos <span class="arrow" aria-hidden="true">↓</span></a>
-            <a class="btn" href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">
+            <a class="btn btn-primary btn-glow" href="#pesquisa">Linhas de pesquisa <span class="arrow" aria-hidden="true">↓</span></a>
+            <a class="btn" href="#projetos">Ferramentas abertas</a>
+            <a class="btn btn-icon" href="https://github.com/LaBiOmicS" target="_blank" rel="noopener" aria-label="GitHub do LaBiOmicS">
               <svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-              GitHub
             </a>
           </div>
           <dl class="stats" id="stats" data-reveal></dl>
         </div>
 
-        <div class="term" id="term-wrap" data-reveal>
+        <div class="term lab" id="lab" data-reveal>
           <div class="term-bar">
             <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span class="term-title">labiomics — bash</span>
+            <div class="tabs" role="tablist" aria-label="Painel interativo">
+              <button type="button" role="tab" id="tab-dogma" aria-controls="pane-dogma" aria-selected="true">dogma central</button>
+              <button type="button" role="tab" id="tab-term" aria-controls="pane-term" aria-selected="false">terminal</button>
+            </div>
           </div>
-          <div class="term-body" id="term" role="log" aria-label="Terminal interativo do LaBiOmicS"></div>
+
+          <div class="pane" id="pane-dogma" role="tabpanel" aria-labelledby="tab-dogma">
+            <div class="dogma" id="dogma" aria-label="Leitura de um gene códon a códon: DNA, mRNA e proteína">
+              <div class="dogma-labels" aria-hidden="true">
+                <span>DNA</span><span>mRNA</span><span>Proteína</span>
+              </div>
+              <div class="dogma-view" id="dogma-view" tabindex="0" aria-label="Use as setas para avançar ou voltar códons">
+                <div class="dogma-head" aria-hidden="true"></div>
+                <div class="dogma-track" id="dogma-track"></div>
+              </div>
+            </div>
+            <p class="dogma-now" id="dogma-now"></p>
+            <dl class="dogma-metrics" id="dogma-metrics"></dl>
+            <form class="dogma-form" id="dogma-form" autocomplete="off">
+              <label class="sr-only" for="dogma-in">Sequência de DNA ou RNA</label>
+              <input id="dogma-in" spellcheck="false" placeholder="cole uma sequência (ATGC…)" maxlength="3000">
+              <button type="submit" class="mini">traduzir</button>
+              <button type="button" class="mini" id="dogma-rc" title="Complemento reverso">rev. comp.</button>
+              <button type="button" class="mini" id="dogma-rand" title="Gerar novo gene aleatório">↻ gene</button>
+            </form>
+          </div>
+
+          <div class="pane" id="pane-term" role="tabpanel" aria-labelledby="tab-term" hidden>
+            <div class="term-body" id="term" role="log" aria-label="Terminal interativo do LaBiOmicS"></div>
+          </div>
         </div>
       </div>
     </section>
 
     <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
 
-    <section id="projetos" class="section">
+    <section id="pesquisa" class="section">
       <div class="wrap">
         <div class="section-head" data-reveal>
-          <p class="kicker">01 · Catálogo</p>
+          <p class="kicker">01 · Pesquisa</p>
+          <h2>Linhas de pesquisa</h2>
+          <p class="muted">Áreas de concentração e expertise científica do laboratório.</p>
+        </div>
+        <div class="rlines" id="rlines">
+          <article class="rline" data-reveal style="--i:0">
+            <span class="rline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 3c0 5 10 4 10 9s-10 4-10 9M17 3c0 5-10 4-10 9s10 4 10 9M8.5 6.5h7M8.5 17.5h7"/></svg></span>
+            <h3>Genômica Estrutural e Funcional</h3>
+            <p>Investigação da arquitetura de genomas nucleares e mitocondriais (mitogenomas), com foco em anotação gênica, predição de estruturas e análise comparativa para elucidar mecanismos evolutivos.</p>
+            <ul class="rline-tags"><li>Assembly</li><li>Mitogenômica</li><li>Variação genômica</li></ul>
+          </article>
+          <article class="rline" data-reveal style="--i:1">
+            <span class="rline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 12h4l3-8 4 16 3-8h4"/></svg></span>
+            <h3>Transcriptômica e Expressão Gênica</h3>
+            <p>Análise global da expressão gênica via RNA-Seq para identificar redes de co-expressão, splicing alternativo e biomarcadores em resposta a estresses bióticos e abióticos.</p>
+            <ul class="rline-tags"><li>RNA-Seq</li><li>Redes gênicas</li><li>Transcriptoma</li></ul>
+          </article>
+          <article class="rline" data-reveal style="--i:2">
+            <span class="rline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M11 8.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM20 15a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM9 18.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM16 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/></svg></span>
+            <h3>Microbioma e Viroma</h3>
+            <p>Caracterização da diversidade microbiana e viral (bacterioma, micobioma, viroma) e de suas interações com hospedeiros, com marcadores moleculares e abordagens ecológicas.</p>
+            <ul class="rline-tags"><li>Diversidade viral</li><li>Interação hospedeiro</li><li>Ecologia microbiana</li></ul>
+          </article>
+          <article class="rline" data-reveal style="--i:0">
+            <span class="rline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 11h9M4 16h5M17 17.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2.2-.8L21 19"/></svg></span>
+            <h3>Metagenômica e Resistoma</h3>
+            <p>Exploração funcional de comunidades microbianas via shotgun, com ênfase em mineração de dados e na identificação de genes de resistência a antimicrobianos no ambiente.</p>
+            <ul class="rline-tags"><li>Shotgun</li><li>Resistência (ARG)</li><li>Gene mining</li></ul>
+          </article>
+          <article class="rline" data-reveal style="--i:1">
+            <span class="rline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M7 7h10v10H7zM10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg></span>
+            <h3>Biologia Computacional e IA</h3>
+            <p>Desenvolvimento de algoritmos e aplicação de machine learning e deep learning para reconhecimento de padrões em dados biológicos massivos e modelagem preditiva.</p>
+            <ul class="rline-tags"><li>Machine learning</li><li>Data science</li><li>Tool dev</li></ul>
+          </article>
+          <article class="rline" data-reveal style="--i:2">
+            <span class="rline-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 1 1-2.6-6.4L21 8M21 3v5h-5"/></svg></span>
+            <h3>Reprodutibilidade e Replicabilidade</h3>
+            <p>Padronização de workflows bioinformáticos, benchmarking de ferramentas e ambientes containerizados para garantir robustez e transparência científica.</p>
+            <ul class="rline-tags"><li>Benchmarking</li><li>Containers</li><li>Workflows</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="kicker">02 · Ferramentas abertas</p>
           <h2>Projetos</h2>
           <p class="muted">Selecione uma categoria ou busque por nome, tema ou plataforma.</p>
         </div>
@@ -100,47 +176,48 @@
       </div>
     </section>
 
-    <section id="principios" class="section section-alt">
+    <section id="metodologia" class="section">
       <div class="wrap">
         <div class="section-head" data-reveal>
-          <p class="kicker">02 · Como trabalhamos</p>
-          <h2>Do dado à ferramenta aberta</h2>
+          <p class="kicker">03 · Abordagem metodológica</p>
+          <h2>Do sequenciamento à ferramenta aberta</h2>
         </div>
         <ol class="flow">
           <li data-reveal style="--i:0">
             <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
-            <h3>Dados reais</h3>
-            <p>Genomas, questionários validados, bases públicas como o DATASUS: o ponto de partida é sempre um dado verificável.</p>
+            <h3>Sequenciamento e coleta</h3>
+            <p>Dados brutos de plataformas NGS e curadoria de bancos públicos (NCBI, SRA, ENA), reanalisados para testar novas hipóteses.</p>
           </li>
           <li data-reveal style="--i:1">
-            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.300-7-4.600-7-9V6z"/></svg></span>
-            <h3>Reprodutibilidade</h3>
-            <p>Etapas determinísticas e testadas antes de qualquer interpretação, para que o mesmo dado gere o mesmo resultado.</p>
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
+            <h3>Processamento in silico</h3>
+            <p>Pipelines e workflows reprodutíveis (Nextflow, Snakemake, containers Docker/Singularity e Galaxy).</p>
           </li>
           <li data-reveal style="--i:2">
-            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
-            <h3>Código aberto</h3>
-            <p>Todo projeto tem repositório público no GitHub, licença MIT e página própria com documentação.</p>
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v6M12 15v6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M3 12h6M15 12h6M5.6 18.4l4.2-4.2M14.2 9.8l4.2-4.2"/></svg></span>
+            <h3>Integração biológica</h3>
+            <p>Estatística multivariada e biologia de sistemas para interpretar os fenômenos biológicos por trás dos dados.</p>
           </li>
           <li data-reveal style="--i:3">
-            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M2 9l10-5 10 5-10 5zm4 2v5c0 1.500 2.700 3 6 3s6-1.500 6-3v-5"/></svg></span>
-            <h3>Ensino</h3>
-            <p>As ferramentas voltam para a sala de aula, com estudos de caso e materiais de formação no eLaBiOmicS.</p>
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6zm-3 9 2 2 4-4"/></svg></span>
+            <h3>Ferramenta aberta</h3>
+            <p>O método vira software livre, com código público no GitHub, licença MIT e dados F.A.I.R.</p>
           </li>
         </ol>
       </div>
     </section>
 
-    <section id="sobre" class="section">
+    <section id="sobre" class="section section-alt">
       <div class="wrap about">
         <div data-reveal>
-          <p class="kicker">03 · O laboratório</p>
+          <p class="kicker">04 · O laboratório</p>
           <h2>Sobre o laboratório</h2>
           <p>
-            O LaBiOmicS, liderado pelo Dr. Menegidio, estuda sistemas biológicos com abordagens computacionais
-            e ciências ômicas integradas. O trabalho do laboratório se volta para saúde humana e animal,
-            biotecnologia aplicada e empreendedorismo científico, com compromisso com a Ciência Aberta e a
-            reprodutibilidade dos resultados.
+            O LaBiOmicS, coordenado pelo Prof. Dr. Fabiano Bezerra Menegidio, integra o Núcleo Integrado de
+            Biotecnologia (NIB) e o Núcleo de Pesquisas Tecnológicas (NPT) da Universidade de Mogi das Cruzes (UMC).
+            O laboratório estuda sistemas biológicos com abordagens computacionais e ciências ômicas integradas,
+            voltadas para saúde humana e animal, biotecnologia aplicada e empreendedorismo científico, com compromisso
+            com a Ciência Aberta e a reprodutibilidade dos resultados.
           </p>
           <p>
             Estudantes de graduação e pós-graduação podem conhecer os materiais de formação em
@@ -149,7 +226,7 @@
           </p>
         </div>
         <div data-reveal style="--i:1">
-          <h3>Áreas de pesquisa</h3>
+          <h3>Áreas de atuação</h3>
           <ul class="areas" id="areas">
             <li>Genômica e transcriptômica</li>
             <li>Proteômica e metabolômica</li>
@@ -159,6 +236,12 @@
             <li>Biotecnologia e inovação</li>
             <li>Ecologia molecular</li>
           </ul>
+          <h3 class="infra-title">Infraestrutura</h3>
+          <dl class="infra">
+            <div><dt>Hardware local</dt><dd>2 servidores + 12 workstations</dd></div>
+            <div><dt>Plataformas externas</dt><dd>Galaxy Project (EUA, UE, AU)</dd></div>
+            <div><dt>Workflows</dt><dd>Nextflow / Snakemake</dd></div>
+          </dl>
         </div>
       </div>
     </section>
@@ -174,6 +257,7 @@
       <div class="footer-inner">
         <div>
           <strong>LaBiOmicS</strong> · Laboratório de Bioinformática e Ciências Ômicas
+          <p class="muted small">NIB | NPT · Universidade de Mogi das Cruzes, Mogi das Cruzes, SP</p>
           <p class="muted quote">“Desvendando a vida, um dado de cada vez.”</p>
         </div>
         <ul class="footer-links">

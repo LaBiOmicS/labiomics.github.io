@@ -177,11 +177,9 @@
 
   /* ---------------- Contadores ---------------- */
   function renderStats() {
-    var cats = {};
-    projects.forEach(function (p) { cats[p.category] = 1; });
     var stats = [
-      ["Projetos", projects.length, ""],
-      ["Áreas", Object.keys(cats).length, ""],
+      ["Linhas de pesquisa", document.querySelectorAll(".rline").length, ""],
+      ["Ferramentas abertas", projects.length, ""],
       ["Código aberto", 100, "%"],
     ];
     $("stats").innerHTML = stats.map(function (s) {
@@ -208,7 +206,8 @@
   (function marquee() {
     var track = $("marquee");
     if (!track) return;
-    var html = areas.concat(projects.map(function (p) { return p.name; }))
+    var kws = Array.prototype.map.call(document.querySelectorAll(".rline-tags li"), function (li) { return li.textContent; });
+    var html = kws.concat(projects.map(function (p) { return p.name; }))
       .map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("");
     track.innerHTML = html + html;
   })();
@@ -402,7 +401,150 @@
   });
   window.addEventListener("resize", movePill);
 
+  /* ---------------- Dogma central: DNA -> mRNA -> proteína ---------------- */
+  var BIO = (function () {
+    var B = "TCAG", AA = "FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG";
+    var TABLE = {};
+    for (var i = 0; i < 64; i++) TABLE[B[(i >> 4) & 3] + B[(i >> 2) & 3] + B[i & 3]] = AA[i];
+    var NAMES = {
+      A: ["Ala", "Alanina"], R: ["Arg", "Arginina"], N: ["Asn", "Asparagina"], D: ["Asp", "Aspartato"], C: ["Cys", "Cisteína"],
+      Q: ["Gln", "Glutamina"], E: ["Glu", "Glutamato"], G: ["Gly", "Glicina"], H: ["His", "Histidina"], I: ["Ile", "Isoleucina"],
+      L: ["Leu", "Leucina"], K: ["Lys", "Lisina"], M: ["Met", "Metionina"], F: ["Phe", "Fenilalanina"], P: ["Pro", "Prolina"],
+      S: ["Ser", "Serina"], T: ["Thr", "Treonina"], W: ["Trp", "Triptofano"], Y: ["Tyr", "Tirosina"], V: ["Val", "Valina"],
+      "*": ["Stop", "códon de parada"], X: ["???", "indeterminado"],
+    };
+    var CLASS = { "*": "stop", X: "x" };
+    "AVILMFWPG".split("").forEach(function (a) { CLASS[a] = "apolar"; });
+    "STCYNQ".split("").forEach(function (a) { CLASS[a] = "polar"; });
+    "KRH".split("").forEach(function (a) { CLASS[a] = "basico"; });
+    "DE".split("").forEach(function (a) { CLASS[a] = "acido"; });
+    var COMP = { A: "T", T: "A", C: "G", G: "C", N: "N" };
+    return {
+      NAMES: NAMES, CLASS: CLASS,
+      clean: function (raw) {
+        var txt = String(raw).trim();
+        // FASTA: descarta linhas de cabeçalho; num campo de uma linha, só o primeiro token após ">".
+        txt = /\n/.test(txt)
+          ? txt.split(/\r?\n/).filter(function (l) { return l.trim()[0] !== ">"; }).join("")
+          : txt.replace(/^>\S*\s*/, "");
+        return txt
+          .toUpperCase().replace(/U/g, "T").replace(/[^ACGTN]/g, "");
+      },
+      aa: function (codon) { return TABLE[codon] || "X"; },
+      translate: function (dna) {
+        var out = "";
+        for (var i = 0; i + 3 <= dna.length; i += 3) out += TABLE[dna.substr(i, 3)] || "X";
+        return out;
+      },
+      revcomp: function (dna) { return dna.split("").reverse().map(function (b) { return COMP[b] || "N"; }).join(""); },
+      gc: function (dna) {
+        var acgt = dna.replace(/N/g, "").length;
+        return acgt ? (dna.replace(/[^GC]/g, "").length / acgt) * 100 : 0;
+      },
+      randomGene: function (n) {
+        var s = "ATG", c;
+        for (var i = 0; i < n - 2; i++) {
+          do { c = B[(Math.random() * 4) | 0] + B[(Math.random() * 4) | 0] + B[(Math.random() * 4) | 0]; } while (TABLE[c] === "*");
+          s += c;
+        }
+        return s + ["TAA", "TAG", "TGA"][(Math.random() * 3) | 0];
+      },
+    };
+  })();
+
+  var dogmaCtl = (function dogma() {
+    var view = $("dogma-view"), track = $("dogma-track"), now = $("dogma-now"), metrics = $("dogma-metrics");
+    var form = $("dogma-form"), input = $("dogma-in");
+    if (!view) return null;
+    var seq = "", codons = [], idx = 0, cells = [], random = true, timer = 0, hover = false, visible = true, active = true, holdUntil = 0;
+    var CW = function () { return cells[0] ? cells[0].offsetWidth : 58; };
+
+    function load(dna, isRandom) {
+      random = !!isRandom;
+      seq = dna.slice(0, dna.length - (dna.length % 3));
+      codons = [];
+      for (var i = 0; i < seq.length; i += 3) codons.push(seq.substr(i, 3));
+      track.innerHTML = codons.map(function (c, i) {
+        var a = BIO.aa(c), n = BIO.NAMES[a];
+        var nt = function (s) { return s.split("").map(function (b) { return '<span class="b-' + b + '">' + b + "</span>"; }).join(""); };
+        return '<div class="codon" data-i="' + i + '" title="' + c + " → " + n[1] + '">' +
+          '<span class="nt">' + nt(c) + "</span>" +
+          '<span class="nt">' + nt(c.replace(/T/g, "U")) + "</span>" +
+          '<span class="aa aa-' + BIO.CLASS[a] + '">' + n[0] + "</span></div>";
+      }).join("");
+      cells = Array.prototype.slice.call(track.children);
+      var prot = BIO.translate(seq), stop = prot.indexOf("*");
+      var gc = BIO.gc(seq);
+      metrics.innerHTML =
+        "<div><dt>Comprimento</dt><dd>" + seq.length + " pb</dd></div>" +
+        "<div><dt>Conteúdo GC</dt><dd>" + gc.toFixed(1).replace(".", ",") + '%</dd><span class="gc-bar"><i></i></span></div>' +
+        "<div><dt>Códons</dt><dd>" + codons.length + "</dd></div>" +
+        "<div><dt>Proteína</dt><dd>" + (stop === -1 ? prot.length : stop) + " aa</dd></div>";
+      requestAnimationFrame(function () { var b = metrics.querySelector(".gc-bar i"); if (b) b.style.width = gc + "%"; });
+      go(0, true);
+    }
+    function go(i, instant) {
+      if (!codons.length) return;
+      idx = Math.max(0, Math.min(codons.length - 1, i));
+      cells.forEach(function (c, k) { c.classList.toggle("cur", k === idx); });
+      var x = view.clientWidth / 2 - (idx + 0.5) * CW();
+      if (instant) { track.style.transition = "none"; }
+      track.style.transform = "translateX(" + x + "px)";
+      if (instant) { void track.offsetWidth; track.style.transition = ""; }
+      var c = codons[idx], a = BIO.aa(c), n = BIO.NAMES[a];
+      now.innerHTML = "códon " + (idx + 1) + "/" + codons.length + " · <b>" + c.replace(/T/g, "U") + "</b> → <b>" + n[0] + "</b> " + n[1];
+    }
+    function tick() {
+      if (hover || !visible || !active || document.hidden || Date.now() < holdUntil) return;
+      if (idx < codons.length - 1) go(idx + 1);
+      else if (random) load(BIO.randomGene(36 + ((Math.random() * 24) | 0)), true);
+      else go(0);
+    }
+    function play() { clearInterval(timer); if (!reduce) timer = setInterval(tick, 750); }
+
+    view.addEventListener("pointerenter", function () { hover = true; });
+    view.addEventListener("pointerleave", function () { hover = false; });
+    track.addEventListener("click", function (e) {
+      var c = e.target.closest(".codon");
+      if (c) go(+c.getAttribute("data-i"));
+    });
+    view.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); go(idx + 1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); go(idx - 1); }
+      else if (e.key === "Home") { e.preventDefault(); go(0); }
+      else if (e.key === "End") { e.preventDefault(); go(codons.length - 1); }
+    });
+    view.addEventListener("focus", function () { hover = true; });
+    view.addEventListener("blur", function () { hover = false; });
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var dna = BIO.clean(input.value);
+      if (dna.length < 3) {
+        input.classList.remove("bad"); void input.offsetWidth; input.classList.add("bad");
+        now.textContent = "sequência inválida: use A, C, G, T (ou U), mínimo 3 nt";
+        holdUntil = Date.now() + 3500;
+        return;
+      }
+      input.classList.remove("bad");
+      holdUntil = 0;
+      load(dna, false); play();
+    });
+    $("dogma-rc").addEventListener("click", function () { load(BIO.revcomp(seq), false); play(); });
+    $("dogma-rand").addEventListener("click", function () { input.value = ""; load(BIO.randomGene(36 + ((Math.random() * 24) | 0)), true); play(); });
+    window.addEventListener("resize", function () { go(idx, true); });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(view);
+    }
+    load(BIO.randomGene(42), true);
+    play();
+    return {
+      setActive: function (v) { active = v; if (v) go(idx, true); },
+      show: function (dna) { load(dna, false); play(); },
+    };
+  })();
+
   /* ---------------- Terminal interativo ---------------- */
+  var termStart = function () {};
   (function terminal() {
     var body = $("term");
     if (!body) return;
@@ -430,7 +572,9 @@
           ["ver &lt;projeto&gt;", "mostra o card do projeto"],
           ["filtrar &lt;ia|bio|ensino&gt;", "filtra o catálogo"],
           ["sobre", "o laboratório"],
-          ["areas", "áreas de pesquisa"],
+          ["linhas", "linhas de pesquisa"],
+          ["areas", "áreas de atuação"],
+          ["traduzir &lt;seq&gt;", "DNA → proteína"],
           ["dna [n]", "gera uma sequência aleatória"],
           ["contato", "como falar com o laboratório"],
           ["tema", "alterna claro/escuro"],
@@ -445,6 +589,24 @@
         ];
       },
       areas: function () { return areas.map(function (a) { return '<span class="t-g">◆</span> ' + esc(a); }); },
+      linhas: function () {
+        return Array.prototype.map.call(document.querySelectorAll(".rline h3"), function (h, i) {
+          return '<span class="t-dim">' + (i + 1) + ".</span> " + esc(h.textContent);
+        });
+      },
+      traduzir: function (arg) {
+        var dna = BIO.clean(arg || "");
+        if (dna.length < 3) return ['<span class="t-err">uso:</span> traduzir ATGGCC... <span class="t-dim">(mínimo 3 nt)</span>'];
+        var prot = BIO.translate(dna);
+        var col = { apolar: "t-bio", polar: "t-ia", basico: "t-g", acido: "t-ensino", stop: "t-err", x: "t-dim" };
+        var p = prot.split("").map(function (a) { return '<span class="' + col[BIO.CLASS[a]] + '">' + a + "</span>"; }).join("");
+        if (dogmaCtl) dogmaCtl.show(dna);
+        return [
+          '<span class="t-dim">mRNA</span>     ' + esc(dna.replace(/T/g, "U").slice(0, 60)) + (dna.length > 60 ? "…" : ""),
+          '<span class="t-dim">proteína</span> ' + p,
+          '<span class="t-dim">GC ' + BIO.gc(dna).toFixed(1).replace(".", ",") + "% · " + dna.length + " pb · veja na aba dogma central</span>",
+        ];
+      },
       contato: function () {
         return ['<a class="t-link t-bio" href="mailto:labiomics@bioinformatica.com.br">labiomics@bioinformatica.com.br</a>',
                 '<a class="t-link t-ia" href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">github.com/LaBiOmicS</a>'];
@@ -564,14 +726,45 @@
         })();
       });
     }
-    if (reduce) {
-      script.forEach(function (s) { line('<span class="t-ps">$</span> ' + esc(s.cmd)); run(s.cmd); });
-      line("");
-      line('<span class="t-dim"># digite </span><span class="t-bio">ajuda</span><span class="t-dim"> para ver os comandos</span>');
-      prompt();
-    } else {
-      setTimeout(function () { play(0); }, 700);
+    var started = false;
+    termStart = function () {
+      if (started) { if (input) input.focus({ preventScroll: true }); return; }
+      started = true;
+      if (reduce) {
+        script.forEach(function (s) { line('<span class="t-ps">$</span> ' + esc(s.cmd)); run(s.cmd); });
+        line("");
+        line('<span class="t-dim"># digite </span><span class="t-bio">ajuda</span><span class="t-dim"> para ver os comandos</span>');
+        prompt();
+      } else {
+        setTimeout(function () { play(0); }, 250);
+      }
+    };
+  })();
+
+  /* ---------------- Abas do painel ---------------- */
+  (function tabs() {
+    var btns = Array.prototype.slice.call(document.querySelectorAll(".tabs [role=tab]"));
+    function select(b, focus) {
+      btns.forEach(function (x) {
+        var on = x === b;
+        x.setAttribute("aria-selected", String(on));
+        x.tabIndex = on ? 0 : -1;
+        $(x.getAttribute("aria-controls")).hidden = !on;
+      });
+      if (focus) b.focus();
+      if (dogmaCtl) dogmaCtl.setActive(b.id === "tab-dogma");
+      if (b.id === "tab-term") termStart();
     }
+    btns.forEach(function (b, i) {
+      b.tabIndex = b.getAttribute("aria-selected") === "true" ? 0 : -1;
+      b.addEventListener("click", function () { select(b); });
+      b.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+          e.preventDefault();
+          select(btns[(i + (e.key === "ArrowRight" ? 1 : btns.length - 1)) % btns.length], true);
+        }
+      });
+    });
   })();
 
   /* ---------------- Rolagem: progresso, topo, seção ativa ---------------- */
@@ -613,6 +806,17 @@
       });
     }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
     els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------- Brilho seguindo o cursor nas linhas de pesquisa ---------------- */
+  if (finePointer && !reduce) {
+    document.querySelectorAll(".rline").forEach(function (el) {
+      el.addEventListener("pointermove", function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", e.clientX - r.left + "px");
+        el.style.setProperty("--my", e.clientY - r.top + "px");
+      });
+    });
   }
 
   /* ---------------- Início ---------------- */
