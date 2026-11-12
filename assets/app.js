@@ -1016,8 +1016,11 @@
       var a = steps[0].querySelector(".step-dot").getBoundingClientRect(), c = steps[idx].querySelector(".step-dot").getBoundingClientRect();
       if (vertical) { fill.style.width = ""; fill.style.height = (c.top - a.top) + "px"; }
       else { fill.style.height = ""; fill.style.width = (c.left - a.left) + "px"; }
-      axTxt.textContent = AX[axis];
-      lvTxt.textContent = lv;
+      [[axTxt.parentNode, AX[axis], axTxt], [lvTxt, lv, lvTxt]].forEach(function (x) {
+        if (x[2].textContent === x[1]) return;
+        x[2].textContent = x[1];
+        x[0].classList.remove("pop"); void x[0].offsetWidth; x[0].classList.add("pop");
+      });
       var subject = "[LaBiOmicS] Interesse em " + lv + " (" + AX[axis] + ")";
       var body = "Olá, LaBiOmicS!\n\nSou de " + AX[axis].toLowerCase() + " e tenho interesse em " + lv.toLowerCase() + ".\n\n" +
         "Nome:\nCurso e instituição:\nPeríodo ou ano de formação:\nCurrículo Lattes ou GitHub:\nTemas que me interessam:\n";
