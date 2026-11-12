@@ -507,8 +507,6 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .infra dt { color: var(--muted); font-size: 14px; }
 .infra dd { margin: 0; font: 500 14px "IBM Plex Mono", monospace; }
 /* Áreas de atuação */
-.areas-block { margin-top: 56px; }
-.areas-block > h3 { font-size: 17px; margin-bottom: 16px; }
 .areas { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
 .area-group {
   --g: var(--accent);
