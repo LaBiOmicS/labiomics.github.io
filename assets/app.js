@@ -1021,10 +1021,8 @@
         x[2].textContent = x[1];
         x[0].classList.remove("pop"); void x[0].offsetWidth; x[0].classList.add("pop");
       });
-      var subject = "[LaBiOmicS] Interesse em " + lv + " (" + AX[axis] + ")";
-      var body = "Olá, LaBiOmicS!\n\nSou de " + AX[axis].toLowerCase() + " e tenho interesse em " + lv.toLowerCase() + ".\n\n" +
-        "Nome:\nCurso e instituição:\nPeríodo ou ano de formação:\nCurrículo Lattes ou GitHub:\nTemas que me interessam:\n";
-      mail.href = "mailto:labiomics@bioinformatica.com.br?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+      lastLv = lv;
+      compose();
     }
     paths.forEach(function (p, i) {
       p.addEventListener("click", function () { setAxis(p.getAttribute("data-axis"), true); });
@@ -1034,22 +1032,43 @@
         if (d) { e.preventDefault(); var n = paths[(i + d + paths.length) % paths.length]; setAxis(n.getAttribute("data-axis"), true); n.focus(); }
       });
     });
+    var F = { name: $("ap-name"), course: $("ap-course"), link: $("ap-link"), msg: $("ap-msg") };
+    var mpSubject = $("mp-subject"), mpBody = $("mp-body"), copyBtn = $("ap-copy"), lastLv = "";
+    function esc(t) { return t.replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+    function compose() {
+      var v = {}; Object.keys(F).forEach(function (k) { v[k] = F[k].value.trim(); });
+      var subject = "[LaBiOmicS] Interesse em " + lastLv + " (" + AX[axis] + ")";
+      // partes: [texto, tipo] → tipo "ph" = ainda não preenchido, "fill" = escolha/campo
+      var parts = [["Olá, LaBiOmicS!\n\nMeu nome é "], [v.name || "seu nome", v.name ? "fill" : "ph"], [", sou de "],
+        [v.course || "curso e instituição", v.course ? "fill" : "ph"], [" e tenho interesse em "], [lastLv.toLowerCase(), "fill"],
+        [" no eixo "], [AX[axis], "fill"], [".\n\n"]];
+      if (v.msg) parts.push(["Temas que me interessam: "], [v.msg, "fill"], [".\n\n"]);
+      if (v.link) parts.push(["Currículo: "], [v.link, "fill"], ["\n\n"]);
+      parts.push(["Fico à disposição para conversar.\n\nObrigado(a)!"]);
+      var plain = parts.map(function (p) { return p[1] === "ph" ? "[" + p[0] + "]" : p[0]; }).join("");
+      mpSubject.textContent = subject;
+      mpBody.innerHTML = parts.map(function (p) { return p[1] ? '<span class="' + p[1] + '">' + esc(p[0]) + "</span>" : esc(p[0]); }).join("");
+      mail.href = "mailto:labiomics@bioinformatica.com.br?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(plain);
+      copyBtn.setAttribute("data-copy", "Para: labiomics@bioinformatica.com.br\nAssunto: " + subject + "\n\n" + plain);
+    }
+    Object.keys(F).forEach(function (k) { F[k].addEventListener("input", compose); });
+    $("apply-form").addEventListener("submit", function (e) { e.preventDefault(); mail.click(); });
     track.addEventListener("change", update);
     window.addEventListener("resize", update);
     setAxis("exatas", false);
   })();
 
   /* ---------------- Copiar e-mail ---------------- */
-  (function copyMail() {
-    var b = $("copy-mail");
+  ["copy-mail", "ap-copy"].forEach(function copyMail(id) {
+    var b = $(id);
     if (!b) return;
-    var label = b.querySelector("span"), timer = 0;
+    var label = b.querySelector("span"), idle = label.textContent, timer = 0;
     b.addEventListener("click", function () {
       var text = b.getAttribute("data-copy");
       function ok() {
         b.classList.add("done"); label.textContent = "copiado!";
         clearTimeout(timer);
-        timer = setTimeout(function () { b.classList.remove("done"); label.textContent = "copiar"; }, 1800);
+        timer = setTimeout(function () { b.classList.remove("done"); label.textContent = idle; }, 1800);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(ok, function () { fallback(text) && ok(); });
@@ -1064,7 +1083,7 @@
       ta.remove();
       return done;
     }
-  })();
+  });
 
   /* ---------------- Início ---------------- */
   renderStats();
