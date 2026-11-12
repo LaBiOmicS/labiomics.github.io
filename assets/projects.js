@@ -84,9 +84,9 @@ window.PROJECTS = [
       "Dados reais do DATASUS para ensinar saúde, epidemiologia e ciência de dados.",
     details:
       "Estudos de caso interprofissionais (veterinária, medicina, enfermagem, farmácia, odontologia) e datasets prontos para scikit-learn. Atualizado mensalmente via GitHub Actions e validado contra o TabNet.",
-    platforms: ["Site", "Jupyter"],
+    platforms: ["Site", "Datasets para IA"],
     tags: ["DATASUS", "Saúde Única", "epidemiologia", "machine learning"],
-    language: "Jupyter",
+    language: "Python",
     license: "MIT",
   },
 ];

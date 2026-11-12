@@ -112,16 +112,20 @@
     if (el) el.textContent = versions[repo] || "—";
   }
   function loadVersions() {
-    var KEY = "labiomics-versions", TTL = 6 * 3600 * 1000;
+    var KEY = "labiomics-versions-v2", TTL = 6 * 3600 * 1000;
     try {
       var cached = JSON.parse(localStorage.getItem(KEY) || "null");
       if (cached && Date.now() - cached.t < TTL) { versions = cached.v; fillVersions(); return; }
     } catch (e) { /* armazenamento indisponível */ }
     var pending = projects.length;
     projects.forEach(function (p) {
-      fetch("https://api.github.com/repos/" + p.repo + "/releases/latest")
+      fetch("https://api.github.com/repos/" + p.repo + "/releases?per_page=10")
         .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (d) { versions[p.repo] = d && d.tag_name ? d.tag_name : "sem release"; })
+        .then(function (list) {
+          // Inclui pre-releases; ignora rascunhos. A API devolve da mais recente para a mais antiga.
+          var rel = (list || []).filter(function (r) { return !r.draft; })[0];
+          versions[p.repo] = rel ? rel.tag_name : "sem release";
+        })
         .catch(function () { versions[p.repo] = null; })
         .then(function () {
           setVersion(p.repo);
