@@ -11,60 +11,88 @@
   <link rel="icon" href="https://avatars.githubusercontent.com/u/107589607?s=64&v=4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/style.css">
+  <script>
+    document.documentElement.classList.add("js");
+    try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
+  </script>
 </head>
 <body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <a class="brand" href="#">
+      <a class="brand" href="#inicio">
         <img src="https://avatars.githubusercontent.com/u/107589607?s=80&v=4" alt="" width="32" height="32">
         <span class="brand-text">
           <span class="brand-name">LaBiOmicS</span>
           <span class="brand-sub">Bioinformática e Ciências Ômicas</span>
         </span>
       </a>
-      <nav>
+      <nav id="nav" aria-label="Seções">
         <a href="#projetos">Projetos</a>
+        <a href="#principios">Princípios</a>
         <a href="#sobre">Sobre</a>
         <a href="#contato">Contato</a>
       </nav>
+      <button class="theme-toggle" id="theme" type="button" aria-label="Alternar tema claro/escuro">
+        <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></g></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="wrap">
-        <h1><span class="prompt">$&gt;</span> LaBiOmicS</h1>
-        <p class="fullname">Laboratório de Bioinformática e Ciências Ômicas <span class="sep">·</span> <span class="lab">Menegidio Lab</span></p>
-        <p class="lead">
-          Ferramentas abertas desenvolvidas pelo LaBiOmicS para bioinformática, avaliação científica
-          assistida por IA e ensino com dados reais. Todos os projetos têm código no GitHub e página própria.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#projetos">Ver projetos</a>
-          <a class="btn" href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">
-            <svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-            GitHub
-          </a>
+    <section class="hero" id="inicio">
+      <canvas class="helix" id="helix" aria-hidden="true"></canvas>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow" data-reveal>Menegidio Lab · Ciência Aberta</p>
+          <h1 data-reveal><span class="prompt">$&gt;</span> LaBiOmicS<span class="caret" aria-hidden="true"></span></h1>
+          <p class="fullname" data-reveal>Laboratório de Bioinformática e Ciências Ômicas</p>
+          <p class="lead" data-reveal>
+            Ferramentas abertas para
+            <span class="rotator" id="rotator" aria-live="off">bioinformática</span><span class="sr-only">, avaliação científica assistida por IA e ensino com dados reais</span>.
+            Todos os projetos têm código no GitHub e página própria.
+          </p>
+          <div class="hero-actions" data-reveal>
+            <a class="btn btn-primary btn-glow" href="#projetos">Ver projetos <span class="arrow" aria-hidden="true">↓</span></a>
+            <a class="btn" href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">
+              <svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              GitHub
+            </a>
+          </div>
+          <dl class="stats" id="stats" data-reveal></dl>
         </div>
-        <dl class="stats" id="stats"></dl>
+
+        <div class="term" id="term-wrap" data-reveal>
+          <div class="term-bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="term-title">labiomics — bash</span>
+          </div>
+          <div class="term-body" id="term" role="log" aria-label="Terminal interativo do LaBiOmicS"></div>
+        </div>
       </div>
     </section>
 
+    <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
     <section id="projetos" class="section">
       <div class="wrap">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
+          <p class="kicker">01 · Catálogo</p>
           <h2>Projetos</h2>
           <p class="muted">Selecione uma categoria ou busque por nome, tema ou plataforma.</p>
         </div>
 
-        <div class="toolbar">
+        <div class="toolbar" data-reveal>
           <label class="search">
             <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm10 2-4.35-4.35"/></svg>
             <input id="q" type="search" placeholder="Buscar projetos" autocomplete="off" aria-label="Buscar projetos">
+            <kbd>/</kbd>
           </label>
-          <div class="filters" id="filters" role="tablist" aria-label="Categorias"></div>
+          <div class="filters" id="filters" role="tablist" aria-label="Categorias"><span class="pill" aria-hidden="true"></span></div>
         </div>
 
         <div class="grid" id="grid" aria-live="polite"></div>
@@ -72,9 +100,41 @@
       </div>
     </section>
 
-    <section id="sobre" class="section section-alt">
+    <section id="principios" class="section section-alt">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="kicker">02 · Como trabalhamos</p>
+          <h2>Do dado à ferramenta aberta</h2>
+        </div>
+        <ol class="flow">
+          <li data-reveal style="--i:0">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+            <h3>Dados reais</h3>
+            <p>Genomas, questionários validados, bases públicas como o DATASUS: o ponto de partida é sempre um dado verificável.</p>
+          </li>
+          <li data-reveal style="--i:1">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.300-7-4.600-7-9V6z"/></svg></span>
+            <h3>Reprodutibilidade</h3>
+            <p>Etapas determinísticas e testadas antes de qualquer interpretação, para que o mesmo dado gere o mesmo resultado.</p>
+          </li>
+          <li data-reveal style="--i:2">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
+            <h3>Código aberto</h3>
+            <p>Todo projeto tem repositório público no GitHub, licença MIT e página própria com documentação.</p>
+          </li>
+          <li data-reveal style="--i:3">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M2 9l10-5 10 5-10 5zm4 2v5c0 1.500 2.700 3 6 3s6-1.500 6-3v-5"/></svg></span>
+            <h3>Ensino</h3>
+            <p>As ferramentas voltam para a sala de aula, com estudos de caso e materiais de formação no eLaBiOmicS.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="sobre" class="section">
       <div class="wrap about">
-        <div>
+        <div data-reveal>
+          <p class="kicker">03 · O laboratório</p>
           <h2>Sobre o laboratório</h2>
           <p>
             O LaBiOmicS, liderado pelo Dr. Menegidio, estuda sistemas biológicos com abordagens computacionais
@@ -88,9 +148,9 @@
             Universidades, institutos e empresas interessados em colaborar podem entrar em contato.
           </p>
         </div>
-        <div>
+        <div data-reveal style="--i:1">
           <h3>Áreas de pesquisa</h3>
-          <ul class="areas">
+          <ul class="areas" id="areas">
             <li>Genômica e transcriptômica</li>
             <li>Proteômica e metabolômica</li>
             <li>Biologia computacional e de sistemas</li>
@@ -105,16 +165,23 @@
   </main>
 
   <footer id="contato" class="footer">
-    <div class="wrap footer-inner">
-      <div>
-        <strong>LaBiOmicS</strong> · Laboratório de Bioinformática e Ciências Ômicas
-        <p class="muted quote">“Desvendando a vida, um dado de cada vez.”</p>
+    <div class="wrap">
+      <div class="cta" data-reveal>
+        <h2>Vamos colaborar?</h2>
+        <p class="muted">Universidades, institutos e empresas: escreva para o laboratório.</p>
+        <a class="btn btn-primary btn-glow" href="mailto:labiomics@bioinformatica.com.br">labiomics@bioinformatica.com.br</a>
       </div>
-      <ul class="footer-links">
-        <li><a href="https://labiomics.bioinformatica.com.br/" target="_blank" rel="noopener">Site institucional</a></li>
-        <li><a href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="mailto:labiomics@bioinformatica.com.br">labiomics@bioinformatica.com.br</a></li>
-      </ul>
+      <div class="footer-inner">
+        <div>
+          <strong>LaBiOmicS</strong> · Laboratório de Bioinformática e Ciências Ômicas
+          <p class="muted quote">“Desvendando a vida, um dado de cada vez.”</p>
+        </div>
+        <ul class="footer-links">
+          <li><a href="https://labiomics.bioinformatica.com.br/" target="_blank" rel="noopener">Site institucional</a></li>
+          <li><a href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/eLaBiOmicS" target="_blank" rel="noopener">eLaBiOmicS</a></li>
+        </ul>
+      </div>
     </div>
   </footer>
 
