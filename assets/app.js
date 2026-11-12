@@ -988,6 +988,33 @@
     });
   }
 
+  /* ---------------- Copiar e-mail ---------------- */
+  (function copyMail() {
+    var b = $("copy-mail");
+    if (!b) return;
+    var label = b.querySelector("span"), timer = 0;
+    b.addEventListener("click", function () {
+      var text = b.getAttribute("data-copy");
+      function ok() {
+        b.classList.add("done"); label.textContent = "copiado!";
+        clearTimeout(timer);
+        timer = setTimeout(function () { b.classList.remove("done"); label.textContent = "copiar"; }, 1800);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(ok, function () { fallback(text) && ok(); });
+      } else if (fallback(text)) ok();
+    });
+    function fallback(text) {
+      var ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var done = false;
+      try { done = document.execCommand("copy"); } catch (e) {}
+      ta.remove();
+      return done;
+    }
+  })();
+
   /* ---------------- Início ---------------- */
   renderStats();
   renderFilters();

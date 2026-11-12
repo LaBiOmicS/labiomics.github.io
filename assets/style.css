@@ -601,9 +601,59 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
   content: ""; position: absolute; left: 50%; top: 0; width: 900px; height: 400px; margin-left: -450px; pointer-events: none;
   background: radial-gradient(closest-side, var(--accent-soft), transparent);
 }
-.cta { position: relative; text-align: center; margin-bottom: 64px; }
-.cta p { margin: 10px 0 24px; }
-.cta .btn { white-space: normal; overflow-wrap: anywhere; }
+.collab { position: relative; margin-bottom: 64px; }
+.collab-head { text-align: center; max-width: 640px; margin: 0 auto 36px; }
+.collab-head h2 { font-size: clamp(30px, 4.4vw, 46px); letter-spacing: -.03em; font-weight: 800; }
+.collab-head p.muted { margin: 10px 0 0; font-size: 17px; }
+.collab-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.collab-card {
+  position: relative; display: flex; flex-direction: column; padding: 24px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border); overflow: hidden; isolation: isolate;
+  transition: transform .45s var(--ease), border-color .3s, box-shadow .3s;
+}
+.collab-card::before {
+  content: ""; position: absolute; inset: auto -40% -60% -40%; height: 70%; z-index: -1; opacity: 0; transition: opacity .4s;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--g) 22%, transparent), transparent);
+}
+.collab-card:hover { transform: translateY(-5px); border-color: color-mix(in srgb, var(--g) 50%, var(--border)); box-shadow: var(--shadow-lg); }
+.collab-card:hover::before { opacity: 1; }
+.js .collab-card[data-reveal] {
+  transition: opacity .8s var(--ease), translate .8s var(--ease), transform .45s var(--ease), border-color .3s, box-shadow .3s;
+  transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s, 0s;
+}
+.collab-icon {
+  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; margin-bottom: 16px;
+  color: var(--g); background: color-mix(in srgb, var(--g) 13%, transparent); transition: transform .5s var(--ease);
+}
+.collab-card:hover .collab-icon { transform: rotate(-8deg) scale(1.08); }
+.collab-card h3 { font-size: 18px; margin-bottom: 8px; }
+.collab-card p { margin: 0 0 18px; font-size: 15px; color: var(--muted); }
+.collab-link {
+  margin-top: auto; display: inline-flex; align-items: center; gap: 6px; align-self: flex-start;
+  font-weight: 600; font-size: 15px; color: var(--g); text-decoration: none;
+}
+.collab-link svg { transition: transform .3s var(--ease); }
+.collab-link:hover svg, .collab-card:hover .collab-link svg { transform: translateX(4px); }
+.collab-link::after { content: ""; position: absolute; inset: 0; }   /* card inteiro clicável */
+
+.contact-strip {
+  margin-top: 22px; display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--border);
+}
+.contact-item { background: var(--surface); padding: 18px 22px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.contact-label { font: 600 11px "IBM Plex Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.contact-item a { color: var(--text); text-decoration: none; font-weight: 500; font-size: 15px; overflow-wrap: anywhere; }
+.contact-item a:hover { color: var(--accent); }
+.contact-mail { flex-direction: row; flex-wrap: wrap; align-items: center; column-gap: 10px; }
+.contact-mail .contact-label { flex-basis: 100%; }
+.contact-mail a { font-family: "IBM Plex Mono", monospace; font-size: 14px; }
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 5px; font: 500 12px "IBM Plex Mono", monospace; cursor: pointer;
+  padding: 4px 9px; border-radius: 7px; border: 1px solid var(--border); background: var(--surface-2); color: var(--muted);
+  transition: color .2s, border-color .2s, background-color .2s;
+}
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.copy-btn.done { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
 .footer-inner { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; padding-top: 28px; border-top: 1px solid var(--border); }
 .quote { margin: 6px 0 0; font-style: italic; }
 .footer-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }

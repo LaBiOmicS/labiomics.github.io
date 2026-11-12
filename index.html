@@ -406,10 +406,56 @@
 
   <footer id="contato" class="footer">
     <div class="wrap">
-      <div class="cta" data-reveal>
-        <h2>Vamos colaborar?</h2>
-        <p class="muted">Universidades, institutos e empresas: escreva para o laboratório.</p>
-        <a class="btn btn-primary btn-glow" href="mailto:labiomics@bioinformatica.com.br">labiomics@bioinformatica.com.br</a>
+      <div class="collab">
+        <div class="collab-head" data-reveal>
+          <p class="kicker">06 · Contato</p>
+          <h2>Vamos colaborar?</h2>
+          <p class="muted">Universidades, institutos, empresas e estudantes: escolha o caminho e escreva para o laboratório.</p>
+        </div>
+        <div class="collab-grid">
+          <article class="collab-card g1" data-reveal style="--i:0">
+            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 12h8M12 8v8M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0"/></svg></span>
+            <h3>Pesquisa em parceria</h3>
+            <p>Projetos conjuntos com universidades e institutos em genômica, transcriptômica, microbioma e metagenômica, do desenho experimental à análise dos dados.</p>
+            <a class="collab-link" href="mailto:labiomics@bioinformatica.com.br?subject=%5BLaBiOmicS%5D%20Parceria%20em%20pesquisa">Propor parceria<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
+          </article>
+          <article class="collab-card g2" data-reveal style="--i:1">
+            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M2 9l10-5 10 5-10 5zm4 2v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></span>
+            <h3>Pós-graduação</h3>
+            <p>Mestrado e doutorado nos Programas de Pós-Graduação em Biotecnologia e em Engenharia Biomédica da UMC, com projetos em bioinformática e ciências ômicas.</p>
+            <a class="collab-link" href="mailto:labiomics@bioinformatica.com.br?subject=%5BLaBiOmicS%5D%20Interesse%20em%20p%C3%B3s-gradua%C3%A7%C3%A3o">Falar sobre orientação<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
+          </article>
+          <article class="collab-card g3" data-reveal style="--i:2">
+            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></span>
+            <h3>Empresas e inovação</h3>
+            <p>Pipelines, ferramentas e análise de dados biológicos para projetos de P&amp;D, em diálogo com startups de base biotecnológica.</p>
+            <a class="collab-link" href="mailto:labiomics@bioinformatica.com.br?subject=%5BLaBiOmicS%5D%20Projeto%20com%20empresa">Propor um projeto<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
+          </article>
+          <article class="collab-card g4" data-reveal style="--i:3">
+            <span class="collab-icon"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
+            <h3>Ciência aberta</h3>
+            <p>Use, teste e melhore as ferramentas do laboratório: abra issues, sugira funcionalidades ou envie pull requests no GitHub.</p>
+            <a class="collab-link" href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">Abrir o GitHub<svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10m-4-4 4 4-4 4"/></svg></a>
+          </article>
+        </div>
+        <div class="contact-strip" data-reveal>
+          <div class="contact-item contact-mail">
+            <span class="contact-label">E-mail</span>
+            <a href="mailto:labiomics@bioinformatica.com.br">labiomics@bioinformatica.com.br</a>
+            <button type="button" class="copy-btn" id="copy-mail" data-copy="labiomics@bioinformatica.com.br" aria-label="Copiar e-mail">
+              <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M5.5 5.5V3.2c0-.4.3-.7.7-.7h6.6c.4 0 .7.3.7.7v6.6c0 .4-.3.7-.7.7h-2.3M3.2 5.5h6.6c.4 0 .7.3.7.7v6.6c0 .4-.3.7-.7.7H3.2c-.4 0-.7-.3-.7-.7V6.2c0-.4.3-.7.7-.7z"/></svg>
+              <span>copiar</span>
+            </button>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Endereço</span>
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Universidade%20de%20Mogi%20das%20Cruzes%2C%20Av.%20Dr.%20C%C3%A2ndido%20Xavier%20de%20Almeida%20Souza%2C%20200%2C%20Mogi%20das%20Cruzes%20-%20SP" target="_blank" rel="noopener">Universidade de Mogi das Cruzes, NIB | NPT<br>Av. Dr. Cândido Xavier de Almeida Souza, 200 · Mogi das Cruzes, SP</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Institucional</span>
+            <a href="https://labiomics.bioinformatica.com.br/" target="_blank" rel="noopener">labiomics.bioinformatica.com.br</a>
+          </div>
+        </div>
       </div>
       <div class="footer-inner">
         <div>
