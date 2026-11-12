@@ -303,6 +303,7 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .dogma-form input.bad { border-color: #ff8b80; animation: shake .35s; }
 @keyframes shake { 25% { translate: -4px 0; } 75% { translate: 4px 0; } }
 .mini {
+  display: inline-flex; align-items: center; gap: 5px;
   font: 500 12px "IBM Plex Mono", monospace; color: var(--t-text); background: #18211d; border: 1px solid #25302b;
   border-radius: 8px; padding: 7px 10px; cursor: pointer; white-space: nowrap; transition: border-color .2s, color .2s;
 }
@@ -334,7 +335,7 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .btn-primary:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 88%, #fff); }
 .btn-glow:hover { box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 45%, transparent); }
-.btn .arrow { display: inline-block; transition: transform .3s var(--ease); }
+.btn .arrow { display: block; flex: none; transition: transform .3s var(--ease); }
 .btn:hover .arrow { transform: translateY(3px); }
 .btn:focus-visible, button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
