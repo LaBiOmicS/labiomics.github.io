@@ -115,11 +115,11 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .topbar.scrolled { border-bottom-color: var(--border); }
 .topbar-inner { display: flex; align-items: center; height: 60px; gap: 16px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 700; margin-right: auto; }
-.logo { flex: none; display: block; filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--accent) 30%, transparent)); }
+.logo { flex: none; display: block; overflow: visible; filter: drop-shadow(0 2px 6px color-mix(in srgb, var(--accent) 30%, transparent)); }
 .logo-s1 { stop-color: var(--accent); }
 .logo-s2 { stop-color: var(--accent-2); }
-.logo-helix { transform-origin: 16px 16px; transform-box: view-box; transition: transform .7s var(--ease); }
-.brand:hover .logo-helix { transform: scaleX(-1); }
+.logo { transition: transform .5s var(--ease); }
+.brand:hover .logo { transform: rotate(-8deg) scale(1.06); }
 .brand-text { display: flex; flex-direction: column; line-height: 1.15; white-space: nowrap; }
 .brand-name { font-size: 16px; }
 .brand-sub { font-size: 12px; font-weight: 500; color: var(--muted); }
