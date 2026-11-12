@@ -992,33 +992,48 @@
   (function opportunities() {
     var sec = $("oportunidades");
     if (!sec) return;
-    var box = sec.querySelector(".opp-box"), sw = sec.querySelector(".axis-switch"), thumb = sec.querySelector(".axis-thumb");
-    var summary = $("opp-summary"), mail = $("opp-mail");
+    var paths = Array.prototype.slice.call(sec.querySelectorAll(".path"));
+    var steps = Array.prototype.slice.call(sec.querySelectorAll(".step"));
+    var fill = sec.querySelector(".journey-fill"), track = sec.querySelector(".journey-track");
+    var axTxt = $("opp-axis-txt"), lvTxt = $("opp-level-txt"), mail = $("opp-mail");
     var AX = { exatas: "Exatas e computação", biologicas: "Biológicas e saúde" };
-    function val(name) { var i = sec.querySelector('input[name="' + name + '"]:checked'); return i ? i.value : ""; }
-    function moveThumb() {
-      var lab = sw.querySelector("input:checked").parentNode, span = lab.querySelector("span");
-      thumb.style.width = span.offsetWidth + "px"; thumb.style.height = span.offsetHeight + "px";
-      thumb.style.transform = "translate(" + lab.offsetLeft + "px," + lab.offsetTop + "px)";
+    var axis = "exatas";
+
+    function setAxis(k, user) {
+      axis = k;
+      paths.forEach(function (p) { p.setAttribute("aria-checked", String(p.getAttribute("data-axis") === k)); p.tabIndex = p.getAttribute("data-axis") === k ? 0 : -1; });
+      if (user) sec.querySelector(".paths").classList.add("chosen");
+      update();
     }
     function update() {
-      var ax = val("opp-axis"), lvInput = sec.querySelector('input[name="opp-level"]:checked');
-      var lv = lvInput.parentNode.querySelector("b").textContent;
-      box.setAttribute("data-axis", ax);
-      sec.querySelector(".levels").setAttribute("data-axis", ax);
-      sec.querySelector(".opp-cta").setAttribute("data-axis", ax);
-      sec.querySelectorAll(".opp-panel").forEach(function (p) { p.classList.toggle("on", p.getAttribute("data-axis") === ax); });
-      summary.textContent = lv + " · " + AX[ax];
-      var subject = "[LaBiOmicS] Interesse em " + lv + " (" + AX[ax] + ")";
-      var body = "Olá, LaBiOmicS!\n\nTenho interesse em " + lv.toLowerCase() + " no eixo " + AX[ax].toLowerCase() + ".\n\n" +
+      var idx = 0;
+      steps.forEach(function (st, i) { if (st.querySelector("input").checked) idx = i; });
+      steps.forEach(function (st, i) { st.classList.toggle("done", i < idx); });
+      var lv = steps[idx].querySelector("b").textContent;
+      sec.setAttribute("data-axis", axis);
+      // linha da trilha preenche até a etapa escolhida
+      var vertical = window.matchMedia("(max-width: 720px)").matches;
+      var a = steps[0].querySelector(".step-dot").getBoundingClientRect(), c = steps[idx].querySelector(".step-dot").getBoundingClientRect();
+      if (vertical) { fill.style.width = ""; fill.style.height = (c.top - a.top) + "px"; }
+      else { fill.style.height = ""; fill.style.width = (c.left - a.left) + "px"; }
+      axTxt.textContent = AX[axis];
+      lvTxt.textContent = lv;
+      var subject = "[LaBiOmicS] Interesse em " + lv + " (" + AX[axis] + ")";
+      var body = "Olá, LaBiOmicS!\n\nSou de " + AX[axis].toLowerCase() + " e tenho interesse em " + lv.toLowerCase() + ".\n\n" +
         "Nome:\nCurso e instituição:\nPeríodo ou ano de formação:\nCurrículo Lattes ou GitHub:\nTemas que me interessam:\n";
       mail.href = "mailto:labiomics@bioinformatica.com.br?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
-      moveThumb();
     }
-    sec.addEventListener("change", update);
-    window.addEventListener("resize", moveThumb);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveThumb);
-    update();
+    paths.forEach(function (p, i) {
+      p.addEventListener("click", function () { setAxis(p.getAttribute("data-axis"), true); });
+      p.addEventListener("keydown", function (e) {
+        if (e.key === " " || e.key === "Enter") { e.preventDefault(); setAxis(p.getAttribute("data-axis"), true); }
+        var d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (d) { e.preventDefault(); var n = paths[(i + d + paths.length) % paths.length]; setAxis(n.getAttribute("data-axis"), true); n.focus(); }
+      });
+    });
+    track.addEventListener("change", update);
+    window.addEventListener("resize", update);
+    setAxis("exatas", false);
   })();
 
   /* ---------------- Copiar e-mail ---------------- */
