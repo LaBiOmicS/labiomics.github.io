@@ -269,24 +269,109 @@
         <div class="section-head" data-reveal>
           <p class="kicker">05 · Atuação</p>
           <h2>Áreas de atuação</h2>
-          <p class="muted">Campos em que o laboratório pesquisa, ensina e colabora.</p>
+          <p class="muted">Quatro eixos que se conectam: os dados ômicos alimentam os modelos computacionais, que respondem a perguntas de saúde e viram inovação.</p>
         </div>
-        <div class="areas" id="areas">
-          <div class="area-group g1" data-reveal style="--i:0">
-            <h4>Ciências ômicas</h4>
-            <ul><li>Genômica e transcriptômica</li><li>Proteômica e metabolômica</li><li>Microbioma e metagenômica</li></ul>
+        <div class="axes" id="areas" data-reveal>
+          <div class="ax-tabs" role="tablist" aria-label="Eixos de atuação">
+            <button type="button" role="tab" id="ax-tab-0" aria-controls="ax-0" aria-selected="true" class="g1">
+              <span class="ax-n">01</span><span class="ax-t"><b>Ciências ômicas</b><small>Do genoma à comunidade microbiana</small></span><i class="ax-bar" aria-hidden="true"></i>
+            </button>
+            <button type="button" role="tab" id="ax-tab-1" aria-controls="ax-1" aria-selected="false" class="g2">
+              <span class="ax-n">02</span><span class="ax-t"><b>Biologia computacional e evolução</b><small>Dos dados aos modelos</small></span><i class="ax-bar" aria-hidden="true"></i>
+            </button>
+            <button type="button" role="tab" id="ax-tab-2" aria-controls="ax-2" aria-selected="false" class="g3">
+              <span class="ax-n">03</span><span class="ax-t"><b>Saúde humana, animal e biomédica</b><small>Uma só saúde</small></span><i class="ax-bar" aria-hidden="true"></i>
+            </button>
+            <button type="button" role="tab" id="ax-tab-3" aria-controls="ax-3" aria-selected="false" class="g4">
+              <span class="ax-n">04</span><span class="ax-t"><b>Biotecnologia, inovação e empreendedorismo</b><small>Ciência que sai do laboratório</small></span><i class="ax-bar" aria-hidden="true"></i>
+            </button>
           </div>
-          <div class="area-group g2" data-reveal style="--i:1">
-            <h4>Sistemas e evolução</h4>
-            <ul><li>Biologia computacional e de sistemas</li><li>Evolução biológica</li><li>Ecologia molecular</li></ul>
-          </div>
-          <div class="area-group g3" data-reveal style="--i:2">
-            <h4>Saúde</h4>
-            <ul><li>Saúde humana e doenças infecciosas</li><li>Saúde animal</li><li>Engenharia biomédica</li></ul>
-          </div>
-          <div class="area-group g4" data-reveal style="--i:3">
-            <h4>Biotecnologia e inovação</h4>
-            <ul><li>Biotecnologia</li><li>Inovação e empreendedorismo</li></ul>
+          <div class="ax-panels">
+          <article class="axis g1" id="ax-0" role="tabpanel" aria-labelledby="ax-tab-0">
+            <header>
+              <span class="ax-n">01</span>
+              <div><p class="ax-sub">Do genoma à comunidade microbiana</p><h3>Ciências ômicas</h3></div>
+            </header>
+            <p class="ax-lead">Genomas, transcriptomas e comunidades microbianas analisados em larga escala. É daqui que saem os dados de todas as outras frentes do laboratório.</p>
+            <div class="ax-cols">
+              <div>
+                <h4>Áreas</h4>
+                <ul class="ax-chips"><li>Genômica</li><li>Transcriptômica</li><li>Proteômica</li><li>Metabolômica</li><li>Microbioma</li><li>Metagenômica</li></ul>
+              </div>
+              <div>
+                <h4>Na prática</h4>
+                <ul class="ax-practice">
+                  <li><span class="kind">pesquisa</span><span>Microbioma do leite bovino em diferentes populações</span></li>
+                  <li><span class="kind">pesquisa</span><span>lncRNAs no transcriptoma canino de interesse clínico-veterinário</span></li>
+                  <li><a class="kind kind-tool" href="#p-humaninfinder" data-goto="humaninfinder">ferramenta</a><span>HumaninFinder: peptídeos mitocondriais em genomas e montagens</span></li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="axis g2" id="ax-1" role="tabpanel" aria-labelledby="ax-tab-1">
+            <header>
+              <span class="ax-n">02</span>
+              <div><p class="ax-sub">Dos dados aos modelos</p><h3>Biologia computacional e evolução</h3></div>
+            </header>
+            <p class="ax-lead">Algoritmos, estatística e inteligência artificial para transformar dados em modelos: redes gênicas, filogenias, padrões ecológicos e workflows reprodutíveis.</p>
+            <div class="ax-cols">
+              <div>
+                <h4>Áreas</h4>
+                <ul class="ax-chips"><li>Biologia de sistemas</li><li>Machine learning</li><li>Evolução biológica</li><li>Filogenômica</li><li>Ecologia molecular</li></ul>
+              </div>
+              <div>
+                <h4>Na prática</h4>
+                <ul class="ax-practice">
+                  <li><span class="kind">pesquisa</span><span>Filogenômica mitocondrial de peixes neotropicais</span></li>
+                  <li><span class="kind">pesquisa</span><span>Redes de co-expressão gênica via RNA-Seq</span></li>
+                  <li><span class="kind">pesquisa</span><span>Benchmarking de ferramentas e workflows em containers</span></li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="axis g3" id="ax-2" role="tabpanel" aria-labelledby="ax-tab-2">
+            <header>
+              <span class="ax-n">03</span>
+              <div><p class="ax-sub">Uma só saúde</p><h3>Saúde humana, animal e biomédica</h3></div>
+            </header>
+            <p class="ax-lead">Na perspectiva de Saúde Única, as mesmas ferramentas analíticas servem à saúde humana, à saúde animal e à engenharia biomédica.</p>
+            <div class="ax-cols">
+              <div>
+                <h4>Áreas</h4>
+                <ul class="ax-chips"><li>Doenças infecciosas</li><li>Microbioma humano</li><li>Saúde animal</li><li>Epidemiologia</li><li>Engenharia biomédica</li></ul>
+              </div>
+              <div>
+                <h4>Na prática</h4>
+                <ul class="ax-practice">
+                  <li><span class="kind">pesquisa</span><span>Assinaturas do microbioma intestinal no Transtorno do Espectro Autista</span></li>
+                  <li><span class="kind">pesquisa</span><span>Disbiose oral associada ao tabagismo e ao vaping</span></li>
+                  <li><a class="kind kind-tool" href="#p-whoqol-toolkit" data-goto="whoqol-toolkit">ferramenta</a><span>whoqol-toolkit: qualidade de vida pelas regras da OMS</span></li>
+                  <li><a class="kind kind-tool" href="#p-epidados" data-goto="epidados">ferramenta</a><span>EpiDados: dados do DATASUS para ensino em saúde</span></li>
+                </ul>
+              </div>
+            </div>
+          </article>
+          <article class="axis g4" id="ax-3" role="tabpanel" aria-labelledby="ax-tab-3">
+            <header>
+              <span class="ax-n">04</span>
+              <div><p class="ax-sub">Ciência que sai do laboratório</p><h3>Biotecnologia, inovação e empreendedorismo</h3></div>
+            </header>
+            <p class="ax-lead">Processos biotecnológicos, software científico aberto e startups de base biotecnológica levam os resultados da pesquisa para a sociedade e o mercado.</p>
+            <div class="ax-cols">
+              <div>
+                <h4>Áreas</h4>
+                <ul class="ax-chips"><li>Biotecnologia ambiental</li><li>Bioenergia</li><li>Resistoma</li><li>Software científico</li><li>Empreendedorismo</li></ul>
+              </div>
+              <div>
+                <h4>Na prática</h4>
+                <ul class="ax-practice">
+                  <li><span class="kind">pesquisa</span><span>Dinâmica microbiana em biodigestores para otimizar a produção de biogás</span></li>
+                  <li><span class="kind">pesquisa</span><span>Genes de resistência a antimicrobianos no ambiente</span></li>
+                  <li><span class="kind">startups</span><span>EasyOmics, Brycon Soluções Biotecnológicas e Dayhoff Solutions</span></li>
+                </ul>
+              </div>
+            </div>
+          </article>
           </div>
         </div>
       </div>

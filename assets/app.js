@@ -202,7 +202,10 @@
   }
 
   /* ---------------- Faixa de áreas ---------------- */
-  var areas = Array.prototype.map.call(document.querySelectorAll("#areas li"), function (li) { return li.textContent.trim(); });
+  var areas = Array.prototype.map.call(document.querySelectorAll(".axis"), function (ax) {
+    return ax.querySelector("h3").textContent.trim() + ": " +
+      Array.prototype.map.call(ax.querySelectorAll(".ax-chips li"), function (li) { return li.textContent.trim(); }).join(", ");
+  });
   (function marquee() {
     var track = $("marquee");
     if (!track) return;
@@ -588,7 +591,12 @@
           '<span class="t-dim">Menegidio Lab · Ciência Aberta · reprodutibilidade</span>',
         ];
       },
-      areas: function () { return areas.map(function (a) { return '<span class="t-g">◆</span> ' + esc(a); }); },
+      areas: function () {
+        return areas.map(function (a, i) {
+          var k = a.indexOf(": ");
+          return '<span class="t-g">0' + (i + 1) + "</span> " + esc(a.slice(0, k)) + '\n   <span class="t-dim">' + esc(a.slice(k + 2)) + "</span>";
+        });
+      },
       linhas: function () {
         return Array.prototype.map.call(document.querySelectorAll(".rline h3"), function (h, i) {
           return '<span class="t-dim">' + (i + 1) + ".</span> " + esc(h.textContent);
@@ -807,6 +815,61 @@
     }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
     els.forEach(function (el) { io.observe(el); });
   }
+
+  /* ---------------- Eixos de atuação ---------------- */
+  (function axes() {
+    var box = $("areas");
+    if (!box) return;
+    var tabs = Array.prototype.slice.call(box.querySelectorAll(".ax-tabs [role=tab]"));
+    var panels = Array.prototype.slice.call(box.querySelectorAll(".axis"));
+    var cur = 0, timer = 0, DUR = 8000, stopped = reduce, inView = false;
+    panels.forEach(function (p) {
+      p.querySelectorAll(".ax-chips li, .ax-practice li").forEach(function (li, k) { li.style.setProperty("--k", k); });
+    });
+    function show(i, focus) {
+      cur = (i + tabs.length) % tabs.length;
+      tabs.forEach(function (t, k) {
+        var on = k === cur;
+        t.setAttribute("aria-selected", String(on));
+        t.tabIndex = on ? 0 : -1;
+        // reinicia a barra de progresso
+        var bar = t.querySelector(".ax-bar"); bar.style.animation = "none"; void bar.offsetWidth; bar.style.animation = "";
+      });
+      panels.forEach(function (p, k) { p.classList.toggle("on", k === cur); });
+      if (focus) tabs[cur].focus();
+      schedule();
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (stopped || !inView || box.classList.contains("paused")) return;
+      timer = setTimeout(function () { show(cur + 1); }, DUR);
+    }
+    function stop() { stopped = true; clearTimeout(timer); box.classList.remove("auto"); }
+    box.style.setProperty("--ax-dur", DUR / 1000 + "s");
+    if (!reduce) box.classList.add("auto");
+    tabs.forEach(function (t, i) {
+      t.addEventListener("click", function () { stop(); show(i); });
+      t.addEventListener("keydown", function (e) {
+        var d = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+        if (d) { e.preventDefault(); stop(); show(cur + d, true); }
+      });
+    });
+    box.addEventListener("pointerenter", function () { box.classList.add("paused"); clearTimeout(timer); });
+    box.addEventListener("pointerleave", function () { box.classList.remove("paused"); if (!stopped) show(cur); });
+    box.addEventListener("click", function (e) {
+      var a = e.target.closest("[data-goto]");
+      if (!a) return;
+      var p = projects.filter(function (p) { return slug(p) === a.getAttribute("data-goto"); })[0];
+      if (p) { e.preventDefault(); focusProject(p); }
+    });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        inView = es[0].isIntersecting;
+        if (inView && !stopped) show(cur); else clearTimeout(timer);
+      }, { threshold: 0.4 }).observe(box);
+    }
+    show(0);
+  })();
 
   /* ---------------- Brilho seguindo o cursor nas linhas de pesquisa ---------------- */
   if (finePointer && !reduce) {

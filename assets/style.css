@@ -505,26 +505,72 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .infra div { background: var(--surface); padding: 10px 14px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 .infra dt { color: var(--muted); font-size: 14px; }
 .infra dd { margin: 0; font: 500 14px "IBM Plex Mono", monospace; }
-/* Áreas de atuação */
-.areas { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
-.area-group {
-  --g: var(--accent);
-  padding: 18px 20px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border);
-  border-top: 3px solid var(--g); transition: transform .4s var(--ease), box-shadow .3s;
+/* ---------- Áreas de atuação (eixos) ---------- */
+.axes { --g: var(--accent); }
+.g1 { --g: var(--cat-ia); } .g2 { --g: var(--accent); } .g3 { --g: var(--cat-ensino); } .g4 { --g: var(--base-g); }
+.ax-tabs { display: none; flex-direction: column; gap: 8px; }
+.ax-tabs button {
+  position: relative; overflow: hidden; display: flex; gap: 14px; align-items: flex-start; text-align: left; width: 100%;
+  font: inherit; color: var(--text); cursor: pointer; padding: 16px 18px; border-radius: 14px;
+  background: transparent; border: 1px solid transparent; transition: background-color .3s, border-color .3s, box-shadow .3s;
 }
-.area-group:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-.area-group.g1 { --g: var(--cat-ia); }
-.area-group.g2 { --g: var(--accent); }
-.area-group.g3 { --g: var(--cat-ensino); }
-.area-group.g4 { --g: var(--base-g); }
-.area-group h4 { margin: 0 0 10px; font: 600 12px "IBM Plex Mono", monospace; letter-spacing: .05em; text-transform: uppercase; color: var(--g); }
-.area-group ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.area-group li { position: relative; padding-left: 16px; font-size: 15px; line-height: 1.4; }
-.area-group li::before { content: ""; position: absolute; left: 0; top: .5em; width: 6px; height: 6px; border-radius: 50%; background: var(--g); }
-.js .area-group[data-reveal] {
-  transition: opacity .8s var(--ease), translate .8s var(--ease), transform .4s var(--ease), box-shadow .3s;
-  transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s;
+.ax-tabs button:hover { background: color-mix(in srgb, var(--surface) 60%, transparent); }
+.ax-tabs button[aria-selected="true"] { background: var(--surface); border-color: var(--border); box-shadow: var(--shadow); }
+.ax-tabs .ax-n { font: 600 13px "IBM Plex Mono", monospace; color: var(--g); padding-top: 2px; }
+.ax-t { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ax-t b { font-size: 16px; line-height: 1.3; }
+.ax-t small { font-size: 13px; color: var(--muted); }
+.ax-tabs button::before {
+  content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--g); transform: scaleY(0); transition: transform .4s var(--ease);
 }
+.ax-tabs button[aria-selected="true"]::before { transform: scaleY(1); }
+.ax-bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: var(--g); opacity: .5; transform: scaleX(0); transform-origin: left; }
+.axes.auto .ax-tabs button[aria-selected="true"] .ax-bar { animation: axbar var(--ax-dur, 8s) linear forwards; }
+.axes.paused .ax-bar { animation-play-state: paused !important; }
+@keyframes axbar { to { transform: scaleX(1); } }
+
+.ax-panels { display: grid; gap: 16px; }
+.axis {
+  position: relative; overflow: hidden; padding: 28px; border-radius: var(--radius);
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+}
+.axis::before {
+  content: ""; position: absolute; right: -120px; top: -120px; width: 320px; height: 320px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--g) 16%, transparent), transparent);
+}
+.axis header { position: relative; display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+.axis header .ax-n { font: 600 44px/1 "IBM Plex Mono", monospace; color: var(--g); opacity: .35; letter-spacing: -.04em; }
+.ax-sub { margin: 0 0 4px; font: 600 12px "IBM Plex Mono", monospace; letter-spacing: .05em; text-transform: uppercase; color: var(--g); }
+.axis h3 { font-size: clamp(21px, 2.4vw, 26px); letter-spacing: -.02em; }
+.ax-lead { position: relative; margin: 0 0 22px; font-size: 17px; color: var(--muted); max-width: 62ch; }
+.ax-cols { position: relative; display: grid; gap: 22px; }
+@media (min-width: 640px) { .ax-cols { grid-template-columns: 1fr 1.5fr; } }
+.ax-cols h4 { margin: 0 0 10px; font: 600 11px "IBM Plex Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.ax-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ax-chips li {
+  font-size: 14px; font-weight: 500; padding: 4px 11px; border-radius: 999px; white-space: nowrap;
+  background: color-mix(in srgb, var(--g) 12%, transparent); color: color-mix(in srgb, var(--g) 80%, var(--text));
+}
+.ax-practice { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.ax-practice li { display: flex; align-items: baseline; gap: 10px; font-size: 15px; line-height: 1.45; }
+.kind {
+  flex: none; width: 86px; text-align: center; font: 600 10.5px/1.9 "IBM Plex Mono", monospace; letter-spacing: .04em; text-transform: uppercase;
+  border-radius: 6px; border: 1px solid color-mix(in srgb, var(--g) 40%, var(--border)); color: var(--g);
+}
+a.kind-tool { text-decoration: none; background: color-mix(in srgb, var(--g) 12%, transparent); }
+a.kind-tool:hover { background: var(--g); color: var(--surface); }
+
+@media (min-width: 900px) {
+  .js .axes { display: grid; grid-template-columns: minmax(280px, 340px) 1fr; gap: 24px; align-items: start; }
+  .js .ax-tabs { display: flex; }
+  .js .axis:not(.on) { display: none; }
+  .js .axis.on { animation: axIn .5s var(--ease); }
+  .js .axis.on .ax-chips li, .js .axis.on .ax-practice li { animation: axIn .5s var(--ease) backwards; }
+  .js .axis.on .ax-chips li:nth-child(n) { animation-delay: calc(var(--k, 0) * 40ms + 120ms); }
+  .js .axis.on .ax-practice li { animation-delay: calc(var(--k, 0) * 70ms + 200ms); }
+}
+@keyframes axIn { from { opacity: 0; translate: 0 10px; } }
 
 /* ---------- Footer ---------- */
 .footer { border-top: 1px solid var(--border); padding: 72px 0 40px; font-size: 15px; position: relative; overflow: hidden; }
