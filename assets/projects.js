@@ -6,9 +6,10 @@
  *   category  : uma das chaves de CATEGORIES
  *   status    : "beta", "estável" etc.
  */
+// A ordem das categorias define a ordem de exibição: bioinformática sempre primeiro.
 window.CATEGORIES = {
-  ia: "Plugins de IA para pesquisa",
   bio: "Bioinformática",
+  ia: "Plugins de IA para pesquisa",
   ensino: "Ensino e dados abertos",
 };
 

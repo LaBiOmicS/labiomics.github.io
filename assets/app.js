@@ -1,8 +1,15 @@
 (function () {
   "use strict";
 
-  var projects = window.PROJECTS || [];
   var categories = window.CATEGORIES || {};
+  // Ordena pela ordem das categorias (bioinformática primeiro), mantendo a ordem original dentro de cada uma.
+  var catOrder = Object.keys(categories);
+  var projects = (window.PROJECTS || []).map(function (p, i) { return { p: p, i: i }; })
+    .sort(function (a, b) {
+      var ca = catOrder.indexOf(a.p.category), cb = catOrder.indexOf(b.p.category);
+      return (ca < 0 ? 99 : ca) - (cb < 0 ? 99 : cb) || a.i - b.i;
+    })
+    .map(function (x) { return x.p; });
   var root = document.documentElement;
   var reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
   var reduce = reduceMQ.matches;
