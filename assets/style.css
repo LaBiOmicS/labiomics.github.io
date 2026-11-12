@@ -335,8 +335,6 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .btn-primary:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 88%, #fff); }
 .btn-glow:hover { box-shadow: 0 8px 28px color-mix(in srgb, var(--accent) 45%, transparent); }
-.btn .arrow { display: block; flex: none; transition: transform .3s var(--ease); }
-.btn:hover .arrow { transform: translateY(3px); }
 .btn:focus-visible, button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ---------- Sections ---------- */
