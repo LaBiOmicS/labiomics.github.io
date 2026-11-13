@@ -76,7 +76,7 @@ window.PROJECTS = [
       "Pontuação pelas regras da OMS, psicometria e estatística para publicação de questionários WHOQOL.",
     details:
       "Suporta WHOQOL-BREF, OLD, EUROHIS-QOL 8, HIV, SRPB, DIS e WHOQOL-100. Gera tabelas APA, figuras e rascunho de métodos e resultados a partir de um pacote Python testado e determinístico.",
-    platforms: ["Claude Code", "Antigravity", "Gemini CLI"],
+    platforms: ["Claude Code", "Antigravity"],
     tags: ["qualidade de vida", "psicometria", "WHOQOL-BREF", "MCP"],
     language: "Python",
     license: "MIT",
