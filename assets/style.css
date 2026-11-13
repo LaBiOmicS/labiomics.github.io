@@ -495,12 +495,15 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .infra-title { margin-top: 28px; }
 .person { padding: 22px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); }
 .person .kicker { margin-bottom: 12px; }
-.person-top { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.person-top { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 12px; }
 .person-avatar {
   flex: none; width: 64px; height: 64px; border-radius: 50%; object-fit: cover; background: #000;
   box-shadow: 0 0 0 3px var(--surface), 0 0 0 5px var(--accent);
 }
 .person h3 { margin: 0; font-size: 18px; line-height: 1.3; }
+/* O nome nunca quebra: se não couber ao lado da foto, desce inteiro para baixo dela. */
+.person-title { display: block; font-size: 13px; font-weight: 500; color: var(--muted); }
+.person-name { white-space: nowrap; }
 .person p { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
 .person-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .person-links .btn { padding: 7px 13px; font-size: 14px; }

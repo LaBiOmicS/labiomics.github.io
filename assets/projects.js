@@ -5,6 +5,8 @@
  *   site      : página do projeto
  *   category  : uma das chaves de CATEGORIES
  *   status    : "beta", "estável" etc.
+ *   version   : último release publicado no GitHub (ou a versão do código, se ainda não houver release).
+ *               Exibida de imediato; o site a substitui pelo release mais recente buscado na API do GitHub.
  */
 // A ordem das categorias define a ordem de exibição: bioinformática sempre primeiro.
 window.CATEGORIES = {
@@ -15,8 +17,25 @@ window.CATEGORIES = {
 
 window.PROJECTS = [
   {
+    name: "nextSSR",
+    repo: "LaBiOmicS/nextSSR",
+    version: "v0.2.0",
+    site: "https://labiomics.github.io/nextSSR/",
+    category: "bio",
+    status: "beta",
+    summary:
+      "Busca rápida e precisa de microssatélites (SSR), compatível com o MISA, na linha de comando ou no navegador.",
+    details:
+      "Substituto direto do MISA escrito em Rust, com saída idêntica byte a byte no modo compatível. O modo nativo encontra SSRs imperfeitos, desenha primers e confere por PCR in silico que cada par amplifica um único produto. Relatório HTML, GFF3, BED e TSV; no navegador, os dados são analisados localmente, sem upload.",
+    platforms: ["CLI", "Navegador"],
+    tags: ["microssatélites", "MISA", "primers", "PCR in silico", "WebAssembly"],
+    language: "Rust",
+    license: "MIT",
+  },
+  {
     name: "academic-peer-review",
     repo: "LaBiOmicS/academic-peer-review",
+    version: "v1.4.1",
     site: "https://labiomics.github.io/academic-peer-review/",
     category: "ia",
     status: "beta",
@@ -32,6 +51,7 @@ window.PROJECTS = [
   {
     name: "congress-abstract-review",
     repo: "LaBiOmicS/congress-abstract-review",
+    version: "v0.1.1",
     site: "https://labiomics.github.io/congress-abstract-review/",
     category: "ia",
     status: "beta",
@@ -47,6 +67,7 @@ window.PROJECTS = [
   {
     name: "whoqol-toolkit",
     repo: "LaBiOmicS/whoqol-toolkit",
+    version: "v0.3.0",
     site: "https://labiomics.github.io/whoqol-toolkit/",
     category: "ia",
     status: "beta",
@@ -62,6 +83,7 @@ window.PROJECTS = [
   {
     name: "HumaninFinder",
     repo: "LaBiOmicS/humaninfinder",
+    version: "v1.0.0b4",
     site: "https://labiomics.github.io/humaninfinder/",
     category: "bio",
     status: "beta",
@@ -78,9 +100,10 @@ window.PROJECTS = [
   {
     name: "EpiDados",
     repo: "LaBiOmicS/epidados",
+    version: "v0.1.0",
     site: "https://labiomics.github.io/epidados",
     category: "ensino",
-    status: "em desenvolvimento",
+    status: "beta",
     summary:
       "Dados reais do DATASUS para ensinar saúde, epidemiologia e ciência de dados.",
     details:

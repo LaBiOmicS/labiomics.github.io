@@ -464,15 +464,20 @@
   }
 
   // Última versão publicada, buscada na API pública do GitHub (com cache de 6 h).
+  // Enquanto a API não responde, ou se ela falhar ou o repositório não tiver release, vale p.version (projects.js).
   var versions = {};
   function setVersion(repo) {
     var el = grid.querySelector('[data-version="' + repo + '"]');
-    if (!el || !(repo in versions)) return;
+    if (!el) return;
+    var p = projects.filter(function (x) { return x.repo === repo; })[0] || {};
+    var v = versions[repo] || p.version;
+    if (!v && !(repo in versions)) return;
     el.classList.remove("loading");
-    el.textContent = versions[repo] || "—";
+    el.textContent = v || "—";
   }
   function loadVersions() {
-    var KEY = "labiomics-versions-v2", TTL = 6 * 3600 * 1000;
+    projects.forEach(function (p) { setVersion(p.repo); });
+    var KEY = "labiomics-versions-v3", TTL = 6 * 3600 * 1000;
     try {
       var cached = JSON.parse(store(KEY) || "null");
       if (cached && Date.now() - cached.t < TTL) { versions = cached.v; Object.keys(versions).forEach(setVersion); return; }
@@ -484,7 +489,7 @@
         .then(function (list) {
           // Inclui pre-releases; ignora rascunhos. A API devolve da mais recente para a mais antiga.
           var rel = list.filter(function (r) { return !r.draft; })[0];
-          versions[p.repo] = rel ? rel.tag_name : "sem release";
+          versions[p.repo] = rel ? rel.tag_name : null;
         })
         // Falha de rede ou limite da API: mostra "—" e não grava no cache.
         .catch(function () { versions[p.repo] = null; failed = true; })
