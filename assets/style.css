@@ -79,6 +79,8 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
 @media (min-width: 720px) { .wrap { padding: 0 32px; } }
 .muted { color: var(--muted); }
+/* Garante que o atributo hidden vença qualquer display (ex.: .card { display: flex }). */
+[hidden] { display: none !important; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 ::selection { background: var(--accent); color: var(--accent-ink); }
 
@@ -785,34 +787,34 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
   content: ""; position: absolute; left: 50%; top: 0; width: 900px; height: 400px; margin-left: -450px; pointer-events: none;
   background: radial-gradient(closest-side, var(--accent-soft), transparent);
 }
+/* Painel de contato: mesma linguagem dos blocos claros (PPGs, formulário): tinta suave, borda e cards brancos. */
 .cta-panel {
+  --gx: var(--cat-ia); --gb: var(--accent);
   position: relative; overflow: hidden; isolation: isolate; margin-bottom: 64px;
-  display: grid; gap: 32px; padding: clamp(28px, 5vw, 56px); border-radius: 24px;
-  color: #fff; background: linear-gradient(125deg, #0b6e4f 0%, #145f73 45%, #3b5bdb 100%);
-  box-shadow: 0 20px 60px color-mix(in srgb, #0b6e4f 30%, transparent);
+  display: grid; gap: 28px; padding: clamp(24px, 4vw, 44px); border-radius: 22px;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--gb) 9%, var(--surface)), color-mix(in srgb, var(--gx) 9%, var(--surface)));
+  border: 1px solid var(--border); box-shadow: var(--shadow);
 }
-@media (min-width: 900px) { .cta-panel { grid-template-columns: 1.4fr 1fr; align-items: center; gap: 56px; } }
-.cta-art { position: absolute; right: -60px; top: -40px; width: 420px; height: 520px; z-index: -1; color: #fff; opacity: .1; animation: drift 14s ease-in-out infinite alternate; }
+.cta-panel::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, var(--gb), var(--gx)); }
+@media (min-width: 900px) { .cta-panel { grid-template-columns: 1.3fr 1fr; align-items: center; gap: 48px; } }
+.cta-art { position: absolute; right: -60px; top: -40px; width: 420px; height: 520px; z-index: -1; color: var(--accent); opacity: .07; animation: drift 14s ease-in-out infinite alternate; }
 @keyframes drift { to { translate: 0 -40px; rotate: 4deg; } }
-.cta-panel .kicker { color: rgba(255,255,255,.75); }
-.cta-panel h2 { color: #fff; font-size: clamp(32px, 4.6vw, 52px); letter-spacing: -.03em; font-weight: 800; }
-.cta-main > p:not(.kicker) { margin: 14px 0 28px; font-size: 17px; color: rgba(255,255,255,.85); max-width: 52ch; }
+@media (prefers-reduced-motion: reduce) { .cta-art { animation: none; } }
+.cta-panel h2 { margin: 0; font-size: clamp(28px, 4vw, 40px); letter-spacing: -.025em; font-weight: 800; }
+.cta-main > p:not(.kicker) { margin: 12px 0 24px; font-size: 17px; color: var(--muted); max-width: 52ch; }
 .cta-actions { display: flex; flex-wrap: wrap; gap: 10px; }
-.cta-mail { background: #fff; color: #0b3d30; border-color: #fff; white-space: normal; overflow-wrap: anywhere; text-align: left; }
-.cta-mail:hover { border-color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
 .cta-mail { white-space: nowrap; }
-@media (max-width: 420px) { .cta-mail { font-size: 14px; padding: 10px 14px; } }
-.cta-copy { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.35); font-family: "IBM Plex Mono", monospace; font-size: 14px; }
-.cta-copy:hover { border-color: #fff; }
-.cta-copy.done { background: #fff; color: #0b3d30; }
-.cta-info { margin: 0; display: grid; gap: 0; border-radius: 16px; background: rgba(0,0,0,.14); border: 1px solid rgba(255,255,255,.18); backdrop-filter: blur(6px); }
-.cta-info div { padding: 16px 20px; }
-.cta-info div + div { border-top: 1px solid rgba(255,255,255,.14); }
-.cta-info dt { font: 600 11px "IBM Plex Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.65); margin-bottom: 4px; }
+@media (max-width: 420px) { .cta-mail { white-space: normal; overflow-wrap: anywhere; font-size: 14px; padding: 10px 14px; } }
+.cta-copy { font-family: "IBM Plex Mono", monospace; font-size: 14px; }
+.cta-copy.done { border-color: var(--accent); color: var(--accent); }
+.cta-info { margin: 0; display: grid; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.cta-info > div { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; align-items: start; padding: 16px 18px; }
+.cta-info > div + div { border-top: 1px solid var(--border); }
+.cta-ico { grid-row: span 2; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 11px; color: var(--accent); background: var(--accent-soft); }
+.cta-info dt { font: 500 11px "IBM Plex Mono", monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
 .cta-info dd { margin: 0; }
-.cta-info a { color: #fff; text-decoration: none; font-weight: 500; font-size: 15px; line-height: 1.5; }
-.cta-info a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.cta-panel .btn:focus-visible, .cta-info a:focus-visible { outline-color: #fff; }
+.cta-info a { color: var(--text); text-decoration: none; font-weight: 500; font-size: 15px; line-height: 1.5; }
+.cta-info a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .footer-inner { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; padding-top: 28px; border-top: 1px solid var(--border); }
 .quote { margin: 6px 0 0; font-style: italic; }
 .footer-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; }

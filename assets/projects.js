@@ -31,6 +31,7 @@ window.PROJECTS = [
     tags: ["microssatélites", "MISA", "primers", "PCR in silico", "WebAssembly"],
     language: "Rust",
     license: "MIT",
+    extra: { label: "Rodar no navegador", url: "https://labiomics.github.io/nextSSR/" },
   },
   {
     name: "academic-peer-review",
