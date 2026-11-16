@@ -34,6 +34,22 @@ window.PROJECTS = [
     extra: { label: "Rodar no navegador", url: "https://labiomics.github.io/nextSSR/" },
   },
   {
+    name: "q2-periobiome",
+    repo: "LaBiOmicS/q2-periobiome",
+    version: "2026.10.0",
+    site: "https://labiomics.github.io/q2-periobiome/",
+    category: "bio",
+    status: "beta",
+    summary:
+      "Plugin do QIIME 2 que calcula complexos de Socransky e índices de disbiose a partir de dados de 16S rRNA subgengival.",
+    details:
+      "Para cada amostra, reporta a abundância relativa dos complexos de Socransky, o SMDI (49 espécies e versão simplificada), o PC2014_moderate e medidas de controle de qualidade, cada referência rastreável à literatura. Validado em 16 conjuntos públicos de 16S, com relatório HTML offline e comparação entre grupos.",
+    platforms: ["QIIME 2", "CLI"],
+    tags: ["microbioma oral", "periodontite", "16S rRNA", "disbiose", "QIIME 2"],
+    language: "Python",
+    license: "MIT",
+  },
+  {
     name: "academic-peer-review",
     repo: "LaBiOmicS/academic-peer-review",
     version: "v1.4.1",
