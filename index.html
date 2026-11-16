@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=16cc88ce">
+  <link rel="stylesheet" href="assets/style.css?v=1eb8df43">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -183,6 +183,7 @@
         </div>
 
         <div class="grid" id="grid" aria-live="polite"></div>
+        <nav class="pager" id="pager" aria-label="Páginas de projetos" hidden></nav>
         <p class="empty" id="empty" hidden>Nenhum projeto encontrado.</p>
 
         <div class="subsection" id="workflows">
@@ -195,6 +196,7 @@
             <div class="filters" id="wf-filters" role="tablist" aria-label="Motores de workflow"><span class="pill" aria-hidden="true"></span></div>
           </div>
           <div class="grid" id="wf-grid" aria-live="polite"></div>
+          <nav class="pager" id="wf-pager" aria-label="Páginas de workflows" hidden></nav>
           <p class="empty" id="wf-empty" hidden>Nenhum workflow encontrado.</p>
         </div>
       </div>
@@ -583,9 +585,29 @@
         </ul>
       </div>
     </div>
+    <div class="dx-lane" id="dx-lane" aria-hidden="true">
+      <div class="dx" id="dx">
+        <p class="dx-say" id="dx-say"></p>
+        <svg class="dx-svg" viewBox="-30 -4 60 96" width="78" height="125">
+          <g class="dx-bob">
+            <g class="dx-leg dx-leg-l"><path d="M-5 70v12"/><path class="dx-shoe" d="M-10 84h8a3 3 0 0 0-3-4h-3a2 2 0 0 0-2 2z"/></g>
+            <g class="dx-leg dx-leg-r"><path d="M5 70v12"/><path class="dx-shoe" d="M10 84h-8a3 3 0 0 1 3-4h3a2 2 0 0 1 2 2z"/></g>
+            <path class="dx-arm dx-arm-l" d="M-12 44q-9 4-12 12"/>
+            <path class="dx-arm dx-arm-r" d="M12 44q9 4 12 12"/>
+            <g class="dx-body" transform="translate(0 30)"><g transform="translate(0 0)"><g class="dx-rung" style="--k:0"><line x1="-11" x2="11"/><circle class="dx-n0" cx="-11" r="3.3"/><circle class="dx-n2" cx="11" r="3.3"/></g></g><g transform="translate(0 7)"><g class="dx-rung" style="--k:1"><line x1="-11" x2="11"/><circle class="dx-n1" cx="-11" r="3.3"/><circle class="dx-n3" cx="11" r="3.3"/></g></g><g transform="translate(0 14)"><g class="dx-rung" style="--k:2"><line x1="-11" x2="11"/><circle class="dx-n2" cx="-11" r="3.3"/><circle class="dx-n0" cx="11" r="3.3"/></g></g><g transform="translate(0 21)"><g class="dx-rung" style="--k:3"><line x1="-11" x2="11"/><circle class="dx-n3" cx="-11" r="3.3"/><circle class="dx-n1" cx="11" r="3.3"/></g></g><g transform="translate(0 28)"><g class="dx-rung" style="--k:4"><line x1="-11" x2="11"/><circle class="dx-n0" cx="-11" r="3.3"/><circle class="dx-n2" cx="11" r="3.3"/></g></g><g transform="translate(0 35)"><g class="dx-rung" style="--k:5"><line x1="-11" x2="11"/><circle class="dx-n1" cx="-11" r="3.3"/><circle class="dx-n3" cx="11" r="3.3"/></g></g></g>
+            <g class="dx-head">
+              <circle cx="0" cy="16" r="15"/>
+              <g class="dx-eyes"><ellipse cx="-5.5" cy="14" rx="2.4" ry="3"/><ellipse cx="5.5" cy="14" rx="2.4" ry="3"/></g>
+              <path class="dx-smile" d="M-5 21q5 4.5 10 0"/>
+              <circle class="dx-cheek" cx="-10" cy="20" r="2.2"/><circle class="dx-cheek" cx="10" cy="20" r="2.2"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
   </footer>
 
   <script src="assets/projects.js?v=7fa4c287"></script>
-  <script src="assets/app.js?v=94d2a5b5"></script>
+  <script src="assets/app.js?v=0a5bb6f8"></script>
 </body>
 </html>

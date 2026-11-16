@@ -849,6 +849,89 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
 .footer-links a { color: var(--muted); text-decoration: none; overflow-wrap: anywhere; }
 .footer-links a:hover { color: var(--accent); }
 
+/* ---------- Paginação ---------- */
+.pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 10px; margin-top: 32px; }
+.pager button {
+  font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; color: var(--muted);
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-width: 40px; height: 40px; padding: 0 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--surface);
+  transition: color .2s, border-color .2s, background-color .2s, transform .2s var(--ease);
+}
+.pager button:hover:not(:disabled) { color: var(--text); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); transform: translateY(-1px); }
+.pager button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pager button:disabled { opacity: .4; cursor: default; }
+.pager button[aria-current="page"] { background: var(--text); color: var(--bg); border-color: transparent; }
+.pg-nums { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
+.pg-gap { display: grid; place-items: center; min-width: 24px; color: var(--muted); }
+.pg-info { flex-basis: 100%; margin: 2px 0 0; text-align: center; font: 12px "IBM Plex Mono", monospace; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (max-width: 520px) { .pg-step span { display: none; } .pg-step { padding: 0; } }
+
+/* ---------- Mascote: fita de DNA andando no rodapé ---------- */
+.footer:has(.dx-lane) { padding-bottom: 0; }
+.dx-lane {
+  position: relative; height: 150px; margin-top: 12px;
+  /* Chão: uma sequência de bases bem apagada. */
+  background:
+    linear-gradient(var(--border), var(--border)) left 100% / 100% 1px no-repeat;
+}
+.dx-lane::after {
+  content: "ATGCGTACGTTAGCCATGGCATCGATCGGCTAAGCTTGCAATGCGTACGTTAGCCATGGCATCGATCGGCTAAGCTTGCAATGCGTACGTTAGCCATGGATGCGTACGTTAGCCATGGCATCGATCGGCTAAGCTTGCAATGCGTACGTTAGCCATGGCATCGATCGGCTAAGCTTGCAATGCGTACGTTAGCCATGGATGCGTACGTTAGCCATGGCATCGATCGGCTAAGCTTGCAATGCGTACGTTAGCCATGGCATCGATCGGCTAAGCTTGCAATGCGTACGTTAGCCATGG";
+  position: absolute; left: 0; right: 0; bottom: 3px; overflow: hidden; white-space: nowrap; pointer-events: none;
+  font: 500 10px/1 "IBM Plex Mono", monospace; letter-spacing: .4em; color: var(--muted); opacity: .35;
+}
+.dx {
+  --x: 0px; --dir: 1;
+  position: absolute; left: 0; bottom: 14px; width: 78px; height: 125px; z-index: 1;
+  transform: translateX(var(--x)); cursor: pointer; -webkit-tap-highlight-color: transparent;
+}
+.dx-svg { display: block; filter: drop-shadow(0 4px 6px color-mix(in srgb, var(--accent) 25%, transparent)); overflow: visible; transform: scaleX(var(--dir)); transition: transform .35s var(--ease); }
+.dx-svg * { stroke-linecap: round; stroke-linejoin: round; }
+.dx-head circle:first-child { fill: var(--accent); }
+.dx-eyes ellipse { fill: var(--surface); }
+.dx-eyes { transform-box: fill-box; transform-origin: center; animation: dx-blink 4.2s infinite; }
+.dx-smile { fill: none; stroke: var(--surface); stroke-width: 1.8; }
+.dx-cheek { fill: var(--cat-ensino); opacity: .45; }
+.dx-rung line { stroke: var(--muted); stroke-width: 2.6; opacity: .7; }
+.dx-n0 { fill: var(--accent); } .dx-n1 { fill: var(--accent-2); } .dx-n2 { fill: var(--cat-ensino); } .dx-n3 { fill: var(--base-g); }
+.dx-rung { transform-box: view-box; transform-origin: 0 0; animation: dx-twist 2.4s ease-in-out infinite; animation-delay: calc(var(--k) * -.3s); }
+.dx-arm, .dx-leg path:first-child { fill: none; stroke: var(--text); stroke-width: 2.6; }
+.dx-shoe { fill: var(--accent-2); }
+.dx-arm, .dx-leg { transform-box: view-box; }
+.dx-arm-l { transform-origin: -12px 44px; } .dx-arm-r { transform-origin: 12px 44px; }
+.dx-leg-l { transform-origin: -5px 70px; } .dx-leg-r { transform-origin: 5px 70px; }
+.dx.walking .dx-leg-l { animation: dx-step .5s ease-in-out infinite alternate; }
+.dx.walking .dx-leg-r { animation: dx-step .5s ease-in-out infinite alternate-reverse; }
+.dx.walking .dx-arm-l { animation: dx-swing .5s ease-in-out infinite alternate-reverse; }
+.dx.walking .dx-arm-r { animation: dx-swing .5s ease-in-out infinite alternate; }
+.dx.walking .dx-bob { animation: dx-bob .25s ease-in-out infinite alternate; }
+.dx.waving .dx-arm-r { animation: dx-wave .35s ease-in-out infinite alternate; }
+.dx.hop .dx-bob { animation: dx-hop .6s var(--ease); }
+.dx:hover .dx-head circle:first-child, .dx:focus-visible .dx-head circle:first-child { fill: color-mix(in srgb, var(--accent) 80%, var(--accent-2)); }
+.footer:not(.dx-on) .dx * { animation-play-state: paused !important; }
+.dx-say {
+  position: absolute; bottom: calc(100% + 4px); left: 50%; translate: -50% 0; margin: 0;
+  width: max-content; max-width: min(260px, 70vw); padding: 7px 11px; border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow);
+  font-size: 13px; line-height: 1.4; color: var(--text); text-align: center;
+  opacity: 0; scale: .85; transform-origin: bottom center; pointer-events: none;
+  transition: opacity .25s, scale .3s var(--ease);
+}
+.dx-say::after {
+  content: ""; position: absolute; left: 50%; top: 100%; width: 8px; height: 8px; margin: -4px 0 0 -4px; rotate: 45deg;
+  background: var(--surface); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border);
+}
+.dx-say.show { opacity: 1; scale: 1; }
+.dx-say.edge-l { left: 0; translate: 0 0; } .dx-say.edge-l::after { left: 30px; }
+.dx-say.edge-r { left: auto; right: 0; translate: 0 0; } .dx-say.edge-r::after { left: auto; right: 26px; }
+@keyframes dx-twist { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(-1); } }
+@keyframes dx-step { from { transform: rotate(-22deg); } to { transform: rotate(22deg); } }
+@keyframes dx-swing { from { transform: rotate(-28deg); } to { transform: rotate(18deg); } }
+@keyframes dx-wave { from { transform: rotate(-150deg); } to { transform: rotate(-110deg); } }
+@keyframes dx-bob { from { transform: translateY(0); } to { transform: translateY(-2px); } }
+@keyframes dx-hop { 40% { transform: translateY(-18px); } 70% { transform: translateY(0); } 85% { transform: translateY(-4px); } }
+@keyframes dx-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }

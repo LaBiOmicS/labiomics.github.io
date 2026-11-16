@@ -382,8 +382,73 @@
 
   function applyFilter() {
     var term = norm(q.value.trim());
-    empty.hidden = flipFilter(grid, function (p) { return matches(p, term); }) > 0;
+    empty.hidden = projPager.update(function (p) { return matches(p, term); }, true) > 0;
   }
+
+  // Paginação de 9 em 9 sobre os cards que passam no filtro. update(keep, reset) devolve quantos casam no total.
+  var PER_PAGE = 9;
+  var ICON_PREV = '<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg>';
+  var ICON_NEXT = '<svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>';
+  function makePager(box, nav, noun) {
+    var page = 0, keep = function () { return true; }, list = [];
+    function pageNums(pages) {
+      if (pages <= 7) return Array.apply(null, Array(pages)).map(function (_, i) { return i; });
+      var out = [0], lo = Math.max(1, page - 1), hi = Math.min(pages - 2, page + 1);
+      if (page <= 2) hi = 3;
+      if (page >= pages - 3) lo = pages - 4;
+      if (lo > 1) out.push(-1);
+      for (var i = lo; i <= hi; i++) out.push(i);
+      if (hi < pages - 2) out.push(-1);
+      out.push(pages - 1);
+      return out;
+    }
+    function draw(pages) {
+      nav.hidden = pages <= 1;
+      if (nav.hidden) { nav.innerHTML = ""; return; }
+      var from = page * PER_PAGE + 1, to = Math.min(list.length, from + PER_PAGE - 1);
+      nav.innerHTML =
+        '<button type="button" class="pg-step" data-page="' + (page - 1) + '"' + (page === 0 ? " disabled" : "") + ' aria-label="Página anterior">' + ICON_PREV + "<span>Anterior</span></button>" +
+        '<ol class="pg-nums">' + pageNums(pages).map(function (n) {
+          return n < 0 ? '<li class="pg-gap" aria-hidden="true">…</li>'
+            : '<li><button type="button" data-page="' + n + '"' + (n === page ? ' aria-current="page"' : "") + ' aria-label="Página ' + (n + 1) + '">' + (n + 1) + "</button></li>";
+        }).join("") + "</ol>" +
+        '<button type="button" class="pg-step" data-page="' + (page + 1) + '"' + (page === pages - 1 ? " disabled" : "") + ' aria-label="Próxima página"><span>Próxima</span>' + ICON_NEXT + "</button>" +
+        '<p class="pg-info">' + from + "–" + to + " de " + list.length + " " + noun + "</p>";
+    }
+    function render() {
+      var pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+      if (page >= pages) page = pages - 1;
+      var onPage = list.slice(page * PER_PAGE, (page + 1) * PER_PAGE);
+      flipFilter(box, function (p, c) { return onPage.indexOf(c) !== -1; });
+      draw(pages);
+    }
+    nav.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-page]");
+      if (!b || b.disabled) return;
+      page = +b.getAttribute("data-page");
+      render();
+      // Volta ao topo da grade se ela já saiu da tela.
+      var top = box.getBoundingClientRect().top;
+      if (top < 80) window.scrollTo({ top: window.pageYOffset + top - 96, behavior: reduce ? "auto" : "smooth" });
+    });
+    return {
+      update: function (k, reset) {
+        if (k) keep = k;
+        if (reset) page = 0;
+        list = Array.prototype.filter.call(box.children, function (c) { return keep(c._p); });
+        render();
+        return list.length;
+      },
+      // Leva até a página que contém o card.
+      reveal: function (el) {
+        var i = list.indexOf(el);
+        if (i < 0) return;
+        var p = Math.floor(i / PER_PAGE);
+        if (p !== page) { page = p; render(); }
+      },
+    };
+  }
+  var projPager = makePager(grid, $("pager"), "projetos");
 
   // Filtragem com animação FLIP: os cards que permanecem deslizam até a nova posição.
   // Devolve quantos cards ficaram visíveis.
@@ -391,7 +456,7 @@
     var cards = Array.prototype.slice.call(box.children);
     var first = cards.map(function (c) { return c.hidden ? null : c.getBoundingClientRect(); });
     var shown = 0;
-    cards.forEach(function (c) { c.hidden = !keep(c._p); if (!c.hidden) shown++; });
+    cards.forEach(function (c) { c.hidden = !keep(c._p, c); if (!c.hidden) shown++; });
     if (reduce || !cards[0] || !cards[0].animate) return shown;
     var n = 0;
     cards.forEach(function (c, i) {
@@ -465,6 +530,7 @@
     if (active !== "all" || q.value) { q.value = ""; setFilter("all"); }
     var el = $("p-" + slug(p));
     if (!el) return;
+    projPager.reveal(el);
     el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
     el.classList.add("in");
     el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
@@ -603,13 +669,15 @@
       el.style.setProperty("--i", i % 3);
       if (finePointer && !reduce) tilt(el);
     });
+    var wfPager = makePager(wfGrid, $("wf-pager"), "workflows");
+    wfPager.update(wfMatches, true);
     wfFilters.addEventListener("click", function (e) {
       var b = e.target.closest("button");
       if (!b) return;
       wfActive = b.getAttribute("data-cat");
       wfFilters.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); });
       movePill(wfFilters);
-      wfEmpty.hidden = flipFilter(wfGrid, wfMatches) > 0;
+      wfEmpty.hidden = wfPager.update(wfMatches, true) > 0;
     });
     wfGrid.addEventListener("click", function (e) {
       var b = e.target.closest(".run-copy");
@@ -1194,6 +1262,88 @@
       return done;
     }
   });
+
+  /* ---------------- Mascote do rodapé ---------------- */
+  // Uma fita de DNA que passeia pelo rodapé, para de vez em quando e fala uma curiosidade quando clicada.
+  (function mascot() {
+    var lane = $("dx-lane"), dx = $("dx"), say = $("dx-say"), footer = lane && lane.closest(".footer");
+    if (!lane || !dx) return;
+    var FACTS = [
+      "Oi! Eu sou o Dedê, a fita de DNA do LaBiOmicS.",
+      "O genoma humano tem cerca de 3,1 bilhões de pares de bases.",
+      "A pareia com T, C pareia com G. Somos inseparáveis!",
+      "Uma volta completa da dupla hélice tem cerca de 10,5 pares de bases.",
+      "Esticado, o DNA de uma célula humana mede uns 2 metros.",
+      "São 64 códons para só 20 aminoácidos. Redundância é charme.",
+      "Uma colher de solo pode ter mais de mil espécies de bactérias.",
+      "Bioinformática: biologia com Ctrl+F turbinado.",
+    ];
+    var W = 78, x = 0, dir = 1, speed = 38, state = "walk", until = 0, last = 0, raf = 0, running = false, visible = false, fact = 0, sayT = 0;
+    var laneW = function () { return lane.clientWidth; };
+
+    function setState(s, ms) {
+      state = s;
+      until = performance.now() + (ms || 0);
+      dx.classList.toggle("walking", s === "walk");
+      dx.classList.toggle("waving", s === "wave");
+    }
+    function place() {
+      dx.style.setProperty("--x", x.toFixed(1) + "px");
+      dx.style.setProperty("--dir", dir);
+    }
+    function frame(now) {
+      if (!running) return;
+      var dt = Math.min(0.05, (now - (last || now)) / 1000);
+      last = now;
+      var max = Math.max(0, laneW() - W);
+      if (state === "walk") {
+        x += dir * speed * dt;
+        if (x <= 0 || x >= max) { x = Math.max(0, Math.min(max, x)); dir = -dir; }
+        // De vez em quando para, acena e segue.
+        if (Math.random() < dt * 0.08) setState(Math.random() < 0.5 ? "wave" : "idle", 1600 + Math.random() * 1800);
+      } else if (now > until) {
+        if (Math.random() < 0.3) dir = -dir;
+        setState("walk");
+      }
+      place();
+      raf = requestAnimationFrame(frame);
+    }
+    function start() {
+      if (running || reduce || !visible || document.hidden) return;
+      running = true; last = 0;
+      footer.classList.add("dx-on");
+      raf = requestAnimationFrame(frame);
+    }
+    function stop() {
+      running = false; cancelAnimationFrame(raf);
+      footer.classList.remove("dx-on");
+    }
+    function talk() {
+      say.textContent = FACTS[fact++ % FACTS.length];
+      var r = dx.getBoundingClientRect(), lr = lane.getBoundingClientRect();
+      say.classList.toggle("edge-l", r.left - lr.left < 110);
+      say.classList.toggle("edge-r", lr.right - r.right < 110);
+      say.classList.add("show");
+      dx.classList.remove("hop"); void dx.offsetWidth; dx.classList.add("hop");
+      setState("wave", 2600);
+      clearTimeout(sayT);
+      sayT = setTimeout(function () { say.classList.remove("show"); }, 4200);
+    }
+
+    // Começa num ponto aleatório da pista.
+    x = Math.random() * Math.max(0, laneW() - W);
+    dir = Math.random() < 0.5 ? 1 : -1;
+    setState(reduce ? "idle" : "walk");
+    place();
+
+    dx.addEventListener("click", talk);
+    dx.addEventListener("animationend", function (e) { if (e.animationName === "dx-hop") dx.classList.remove("hop"); });
+    window.addEventListener("resize", function () { x = Math.min(x, Math.max(0, laneW() - W)); place(); });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(lane);
+    } else { visible = true; start(); }
+    document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+  })();
 
   /* ---------------- Início ---------------- */
   renderStats();
