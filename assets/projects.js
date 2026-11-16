@@ -131,3 +131,36 @@ window.PROJECTS = [
     license: "MIT",
   },
 ];
+
+/*
+ * Catálogo de workflows (Snakemake e/ou Nextflow), exibido abaixo dos projetos de software.
+ * Para adicionar um workflow, acrescente um objeto a WORKFLOWS:
+ *   name, repo, version, site, status, summary, details, tags, license : como em PROJECTS
+ *   engines : uma ou mais chaves de ENGINES, ex.: ["snakemake"], ["nextflow"] ou ["snakemake", "nextflow"]
+ *   run     : (opcional) comando de execução por motor, mostrado no card
+ *
+ * Exemplo:
+ *   {
+ *     name: "rnaseq-flow",
+ *     repo: "LaBiOmicS/rnaseq-flow",
+ *     version: "v0.1.0",
+ *     site: "https://labiomics.github.io/rnaseq-flow/",
+ *     status: "beta",
+ *     engines: ["snakemake", "nextflow"],
+ *     summary: "Do FASTQ à expressão diferencial.",
+ *     details: "Controle de qualidade, alinhamento, quantificação e DESeq2, com containers versionados.",
+ *     tags: ["RNA-seq", "transcriptômica"],
+ *     license: "MIT",
+ *     run: {
+ *       snakemake: "snakemake --use-conda --cores 8",
+ *       nextflow: "nextflow run LaBiOmicS/rnaseq-flow -profile docker",
+ *     },
+ *   },
+ */
+// A ordem dos motores define a ordem dos filtros e dos selos nos cards.
+window.ENGINES = {
+  snakemake: "Snakemake",
+  nextflow: "Nextflow",
+};
+
+window.WORKFLOWS = [];

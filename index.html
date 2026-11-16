@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=c66ff8a3">
+  <link rel="stylesheet" href="assets/style.css?v=16cc88ce">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -184,6 +184,19 @@
 
         <div class="grid" id="grid" aria-live="polite"></div>
         <p class="empty" id="empty" hidden>Nenhum projeto encontrado.</p>
+
+        <div class="subsection" id="workflows">
+          <div class="section-head" data-reveal>
+            <p class="kicker">Pipelines reprodutíveis</p>
+            <h3 class="sub-title">Workflows</h3>
+            <p class="muted">Análises completas em Snakemake e Nextflow, com containers e ambientes versionados. Alguns rodam nos dois motores.</p>
+          </div>
+          <div class="toolbar" id="wf-toolbar" data-reveal>
+            <div class="filters" id="wf-filters" role="tablist" aria-label="Motores de workflow"><span class="pill" aria-hidden="true"></span></div>
+          </div>
+          <div class="grid" id="wf-grid" aria-live="polite"></div>
+          <p class="empty" id="wf-empty" hidden>Nenhum workflow encontrado.</p>
+        </div>
       </div>
     </section>
 
@@ -572,7 +585,7 @@
     </div>
   </footer>
 
-  <script src="assets/projects.js?v=e210dbe3"></script>
-  <script src="assets/app.js?v=e78340ac"></script>
+  <script src="assets/projects.js?v=7fa4c287"></script>
+  <script src="assets/app.js?v=94d2a5b5"></script>
 </body>
 </html>

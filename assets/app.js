@@ -11,6 +11,9 @@
     })
     .map(function (x) { return x.p; });
   var root = document.documentElement;
+  var engines = window.ENGINES || {};
+  var workflows = window.WORKFLOWS || [];
+
   var reduceMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
   var reduce = reduceMQ.matches;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -285,7 +288,7 @@
   function renderStats() {
     var stats = [
       ["Linhas de pesquisa", document.querySelectorAll(".rline").length, ""],
-      ["Ferramentas abertas", projects.length, ""],
+      ["Ferramentas abertas", projects.length + workflows.length, ""],
       ["Código aberto", 100, "%"],
     ];
     $("stats").innerHTML = stats.map(function (s) {
@@ -316,7 +319,7 @@
     var track = $("marquee");
     if (!track) return;
     var kws = Array.prototype.map.call(document.querySelectorAll(".rline-tags li"), function (li) { return li.textContent; });
-    var html = kws.concat(projects.map(function (p) { return p.name; }))
+    var html = kws.concat(projects.concat(workflows).map(function (p) { return p.name; }))
       .map(function (a) { return "<span>" + esc(a) + "</span>"; }).join("");
     track.innerHTML = html + html;
   })();
@@ -377,15 +380,19 @@
     });
   }
 
-  // Filtragem com animação FLIP: os cards que permanecem deslizam até a nova posição.
   function applyFilter() {
     var term = norm(q.value.trim());
-    var cards = Array.prototype.slice.call(grid.children);
+    empty.hidden = flipFilter(grid, function (p) { return matches(p, term); }) > 0;
+  }
+
+  // Filtragem com animação FLIP: os cards que permanecem deslizam até a nova posição.
+  // Devolve quantos cards ficaram visíveis.
+  function flipFilter(box, keep) {
+    var cards = Array.prototype.slice.call(box.children);
     var first = cards.map(function (c) { return c.hidden ? null : c.getBoundingClientRect(); });
     var shown = 0;
-    cards.forEach(function (c) { c.hidden = !matches(c._p, term); if (!c.hidden) shown++; });
-    empty.hidden = shown > 0;
-    if (reduce || !cards[0] || !cards[0].animate) return;
+    cards.forEach(function (c) { c.hidden = !keep(c._p); if (!c.hidden) shown++; });
+    if (reduce || !cards[0] || !cards[0].animate) return shown;
     var n = 0;
     cards.forEach(function (c, i) {
       if (c.hidden) return;
@@ -403,6 +410,7 @@
         );
       }
     });
+    return shown;
   }
 
   function renderFilters() {
@@ -423,13 +431,12 @@
     filtersEl.querySelectorAll("button").forEach(function (b) {
       b.setAttribute("aria-selected", String(b.getAttribute("data-cat") === cat));
     });
-    movePill();
+    movePill(filtersEl);
     applyFilter();
   }
   // Pílula deslizante que acompanha o filtro ativo.
-  var pill = filtersEl.querySelector(".pill");
-  function movePill() {
-    var b = filtersEl.querySelector('[aria-selected="true"]');
+  function movePill(box) {
+    var b = box.querySelector('[aria-selected="true"]'), pill = box.querySelector(".pill");
     if (!b || !pill) return;
     pill.style.width = b.offsetWidth + "px";
     pill.style.height = b.offsetHeight + "px";
@@ -466,24 +473,25 @@
   // Última versão publicada, buscada na API pública do GitHub (com cache de 6 h).
   // Enquanto a API não responde, ou se ela falhar ou o repositório não tiver release, vale p.version (projects.js).
   var versions = {};
+  var repos = projects.concat(workflows);
   function setVersion(repo) {
-    var el = grid.querySelector('[data-version="' + repo + '"]');
-    if (!el) return;
-    var p = projects.filter(function (x) { return x.repo === repo; })[0] || {};
+    var p = repos.filter(function (x) { return x.repo === repo; })[0] || {};
     var v = versions[repo] || p.version;
     if (!v && !(repo in versions)) return;
-    el.classList.remove("loading");
-    el.textContent = v || "—";
+    document.querySelectorAll('[data-version="' + repo + '"]').forEach(function (el) {
+      el.classList.remove("loading");
+      el.textContent = v || "—";
+    });
   }
   function loadVersions() {
-    projects.forEach(function (p) { setVersion(p.repo); });
-    var KEY = "labiomics-versions-v3", TTL = 6 * 3600 * 1000;
+    repos.forEach(function (p) { setVersion(p.repo); });
+    var KEY = "labiomics-versions-v4", TTL = 6 * 3600 * 1000;
     try {
       var cached = JSON.parse(store(KEY) || "null");
       if (cached && Date.now() - cached.t < TTL) { versions = cached.v; Object.keys(versions).forEach(setVersion); return; }
     } catch (e) { /* armazenamento indisponível */ }
-    var pending = projects.length, failed = false;
-    projects.forEach(function (p) {
+    var pending = repos.length, failed = false;
+    repos.forEach(function (p) {
       fetch("https://api.github.com/repos/" + p.repo + "/releases?per_page=10")
         .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
         .then(function (list) {
@@ -513,7 +521,104 @@
       $("projetos").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
     }
   });
-  window.addEventListener("resize", movePill);
+  window.addEventListener("resize", moveAllPills);
+
+  /* ---------------- Workflows (Snakemake / Nextflow) ---------------- */
+  var wfGrid = $("wf-grid"), wfEmpty = $("wf-empty"), wfFilters = $("wf-filters");
+  var wfActive = "all";
+  var engOrder = Object.keys(engines);
+  var ICON_COPY =
+    '<svg aria-hidden="true" viewBox="0 0 24 24" width="15" height="15"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></g></svg>';
+
+  function wfEngines(w) {
+    return engOrder.filter(function (k) { return (w.engines || []).indexOf(k) !== -1; });
+  }
+  function wfCard(w) {
+    var gh = "https://github.com/" + w.repo, eng = wfEngines(w);
+    var badges = eng.map(function (k) {
+      return '<li class="eng eng-' + k + '">' + esc(engines[k]) + "</li>";
+    }).join("");
+    var tags = (w.tags || []).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+    var run = eng.filter(function (k) { return w.run && w.run[k]; }).map(function (k) {
+      return '<div class="run-line"><span class="eng eng-' + k + '">' + esc(engines[k]) + "</span>" +
+        "<code>" + esc(w.run[k]) + "</code>" +
+        '<button type="button" class="run-copy" data-copy="' + esc(w.run[k]) + '" aria-label="Copiar comando ' + esc(engines[k]) + '">' + ICON_COPY + "</button></div>";
+    }).join("");
+    return (
+      '<article class="card wf-card" id="w-' + slug(w) + '" data-cat="bio">' +
+        '<div class="card-top">' +
+          '<span class="avatar" aria-hidden="true">' + esc(initials(w.name)) + "</span>" +
+          "<div>" +
+            '<h3 title="' + esc(w.name) + '">' + esc(w.name).replace(/-/g, "-<wbr>") + "</h3>" +
+            '<p class="cat"><span>Workflow</span><span class="status">' + esc(w.status) + "</span></p>" +
+          "</div>" +
+        "</div>" +
+        '<p class="summary">' + esc(w.summary) + "</p>" +
+        (w.details ? '<p class="details">' + esc(w.details) + "</p>" : "") +
+        '<ul class="platforms engines" aria-label="Motores">' + badges + "</ul>" +
+        (run ? '<div class="run" aria-label="Como rodar">' + run + "</div>" : "") +
+        (tags ? '<ul class="tags" aria-label="Temas">' + tags + "</ul>" : "") +
+        '<dl class="meta">' +
+          "<div><dt>Licença</dt><dd>" + esc(w.license) + "</dd></div>" +
+          '<div><dt>Versão</dt><dd class="loading" data-version="' + esc(w.repo) + '">…</dd></div>' +
+        "</dl>" +
+        '<div class="actions">' +
+          (w.site ? '<a class="btn btn-primary" href="' + esc(w.site) + '" target="_blank" rel="noopener">' + ICON_WEB + " Documentação</a>" : "") +
+          '<a class="btn" href="' + esc(gh) + '" target="_blank" rel="noopener">' + ICON_GH + " GitHub</a>" +
+        "</div>" +
+      "</article>"
+    );
+  }
+  function wfMatches(w) {
+    var eng = wfEngines(w);
+    if (wfActive === "all") return true;
+    if (wfActive === "both") return eng.length > 1;
+    return eng.indexOf(wfActive) !== -1;
+  }
+  function renderWorkflows() {
+    if (!wfGrid) return;
+    if (!workflows.length) {
+      $("wf-toolbar").hidden = true;
+      wfEmpty.hidden = false;
+      wfEmpty.innerHTML = 'Os primeiros workflows estão a caminho. Acompanhe no <a href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">GitHub do LaBiOmicS</a>.';
+      return;
+    }
+    var counts = { all: workflows.length, both: 0 };
+    workflows.forEach(function (w) {
+      var eng = wfEngines(w);
+      eng.forEach(function (k) { counts[k] = (counts[k] || 0) + 1; });
+      if (eng.length > 1) counts.both++;
+    });
+    var items = [["all", "Todos"]]
+      .concat(engOrder.filter(function (k) { return counts[k]; }).map(function (k) { return [k, engines[k]]; }))
+      .concat(counts.both ? [["both", "Nos dois motores"]] : []);
+    wfFilters.insertAdjacentHTML("beforeend", items.map(function (it) {
+      return '<button type="button" role="tab" data-cat="' + it[0] + '" aria-selected="' + (it[0] === wfActive) + '">' +
+        esc(it[1]) + ' <span class="count">' + counts[it[0]] + "</span></button>";
+    }).join(""));
+    wfGrid.innerHTML = workflows.map(wfCard).join("");
+    Array.prototype.forEach.call(wfGrid.children, function (el, i) {
+      el._p = workflows[i];
+      el.setAttribute("data-reveal", "");
+      el.style.setProperty("--i", i % 3);
+      if (finePointer && !reduce) tilt(el);
+    });
+    wfFilters.addEventListener("click", function (e) {
+      var b = e.target.closest("button");
+      if (!b) return;
+      wfActive = b.getAttribute("data-cat");
+      wfFilters.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-selected", String(x === b)); });
+      movePill(wfFilters);
+      wfEmpty.hidden = flipFilter(wfGrid, wfMatches) > 0;
+    });
+    wfGrid.addEventListener("click", function (e) {
+      var b = e.target.closest(".run-copy");
+      if (!b) return;
+      var txt = b.getAttribute("data-copy");
+      var ok = function () { b.classList.add("copied"); setTimeout(function () { b.classList.remove("copied"); }, 1400); };
+      if (navigator.clipboard) navigator.clipboard.writeText(txt).then(ok, function () {});
+    });
+  }
 
   /* ---------------- Dogma central: DNA -> mRNA -> proteína ---------------- */
   var BIO = (function () {
@@ -1095,9 +1200,11 @@
   renderFilters();
   renderGrid();
   applyFilter();
+  renderWorkflows();
   observeReveal();
   loadVersions();
-  requestAnimationFrame(movePill);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(movePill);
+  function moveAllPills() { movePill(filtersEl); if (wfFilters) movePill(wfFilters); }
+  requestAnimationFrame(moveAllPills);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(moveAllPills);
   reduceMQ.addEventListener && reduceMQ.addEventListener("change", function () { location.reload(); });
 })();
