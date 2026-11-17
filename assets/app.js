@@ -1190,7 +1190,7 @@
       var lv = steps[idx].querySelector("b").textContent;
       sec.setAttribute("data-axis", axis);
       // linha da trilha preenche até a etapa escolhida
-      var vertical = window.matchMedia("(max-width: 720px)").matches;
+      var vertical = window.matchMedia("(max-width: 979px)").matches;
       var a = steps[0].querySelector(".step-dot").getBoundingClientRect(), c = steps[idx].querySelector(".step-dot").getBoundingClientRect();
       if (vertical) { fill.style.width = ""; fill.style.height = (c.top - a.top) + "px"; }
       else { fill.style.height = ""; fill.style.width = (c.left - a.left) + "px"; }

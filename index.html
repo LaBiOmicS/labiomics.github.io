@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=468fb492">
+  <link rel="stylesheet" href="assets/style.css?v=e312663d">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -494,15 +494,25 @@
               <span class="step-dot" aria-hidden="true">2</span>
               <span class="step-txt"><small>Graduação</small><b>Estágio</b><em>Rotina de laboratório: análises, pipelines e ferramentas.</em></span>
             </label>
+            <label class="step" data-level="tutoria">
+              <input type="radio" name="opp-level" value="tutoria">
+              <span class="step-dot" aria-hidden="true">3</span>
+              <span class="step-txt"><small>Graduação</small><b>Tutoria</b><em>Apoio a turmas e cursos, aprendendo a ensinar bioinformática.</em></span>
+            </label>
             <label class="step" data-level="mestrado">
               <input type="radio" name="opp-level" value="mestrado">
-              <span class="step-dot" aria-hidden="true">3</span>
+              <span class="step-dot" aria-hidden="true">4</span>
               <span class="step-txt"><small>Pós-graduação</small><b>Mestrado</b><em>Dissertação em um dos dois PPGs da UMC.</em></span>
             </label>
             <label class="step" data-level="doutorado">
               <input type="radio" name="opp-level" value="doutorado">
-              <span class="step-dot" aria-hidden="true">4</span>
+              <span class="step-dot" aria-hidden="true">5</span>
               <span class="step-txt"><small>Pós-graduação</small><b>Doutorado</b><em>Pesquisa original, artigos e ferramentas abertas.</em></span>
+            </label>
+            <label class="step" data-level="posdoc">
+              <input type="radio" name="opp-level" value="posdoc">
+              <span class="step-dot" aria-hidden="true">6</span>
+              <span class="step-txt"><small>Após o doutorado</small><b>Pós-doutorado</b><em>Projeto próprio, coorientação e liderança de linhas de pesquisa.</em></span>
             </label>
           </div>
         </fieldset>
@@ -569,7 +579,7 @@
         </div>
         <dl class="cta-info">
           <div><span class="cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></svg></span><dt>Onde estamos</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=Universidade%20de%20Mogi%20das%20Cruzes%2C%20Av.%20Dr.%20C%C3%A2ndido%20Xavier%20de%20Almeida%20Souza%2C%20200%2C%20Mogi%20das%20Cruzes%20-%20SP" target="_blank" rel="noopener">NIB | NPT · Universidade de Mogi das Cruzes<br>Av. Dr. Cândido Xavier de Almeida Souza,&nbsp;200<br>Mogi das Cruzes, SP</a></dd></div>
-          <div><span class="cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></svg></span><dt>Estudantes</dt><dd><a href="#oportunidades">IC, estágio, Mestrado e Doutorado</a></dd></div>
+          <div><span class="cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5M22 9v6"/></svg></span><dt>Estudantes</dt><dd><a href="#oportunidades">Iniciação Científica, Estágio, Tutoria, Mestrado, Doutorado e Pós-Doutorado</a></dd></div>
           <div><span class="cta-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span><dt>Código aberto</dt><dd><a href="https://github.com/LaBiOmicS" target="_blank" rel="noopener">github.com/LaBiOmicS</a></dd></div>
         </dl>
       </div>
@@ -617,6 +627,6 @@
   </footer>
 
   <script src="assets/projects.js?v=7fa4c287"></script>
-  <script src="assets/app.js?v=2280b111"></script>
+  <script src="assets/app.js?v=912aec34"></script>
 </body>
 </html>
