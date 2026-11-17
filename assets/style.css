@@ -978,8 +978,14 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
 @keyframes dx-float { from { translate: 0 0; } to { translate: 0 -6px; } }
 
 /* ---------- Reduced motion ---------- */
+/* Windows (“Efeitos de animação” desligado), VMs, área de trabalho remota e vários desktops Linux
+   reportam “reduce” sem o visitante saber. Em vez de desligar tudo, cortamos só o movimento amplo
+   (deslocamentos, rolagem suave, inclinação, giros) e mantemos fades e animações contidas. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
-  .js [data-reveal] { opacity: 1; translate: none; }
+  html { scroll-behavior: auto; }
+  .js [data-reveal] { translate: none; }
+  .rotator.out { transform: none; filter: none; }
+  .marquee-track { animation-duration: 120s; }
+  .hub-core::after { animation: none; }
   .card { transform: none; }
 }

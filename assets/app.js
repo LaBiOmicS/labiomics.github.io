@@ -148,7 +148,7 @@
       raf = requestAnimationFrame(loop);
     }
     function start() {
-      if (running || reduce || !visible || document.hidden) return;
+      if (running || !visible || document.hidden) return;
       running = true; raf = requestAnimationFrame(loop);
     }
     function stop() { running = false; cancelAnimationFrame(raf); }
@@ -157,9 +157,8 @@
       var r = hero.getBoundingClientRect();
       mouse.tx = e.clientX - r.left; mouse.ty = e.clientY - r.top;
       if (mouse.x < -1000) { mouse.x = mouse.tx; mouse.y = mouse.ty; }
-      if (reduce) { mouse.x = mouse.tx; mouse.y = mouse.ty; draw(); }
     });
-    hero.addEventListener("pointerleave", function () { mouse.tx = -9999; mouse.x = -9999; if (reduce) draw(); });
+    hero.addEventListener("pointerleave", function () { mouse.tx = -9999; mouse.x = -9999; });
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(hero);
     }
@@ -250,13 +249,12 @@
       draw();
       raf = requestAnimationFrame(loop);
     }
-    function start() { if (running || reduce || !visible || document.hidden) return; running = true; raf = requestAnimationFrame(loop); }
+    function start() { if (running || !visible || document.hidden) return; running = true; raf = requestAnimationFrame(loop); }
     function stop() { running = false; cancelAnimationFrame(raf); }
 
     stage.addEventListener("pointermove", function (e) {
       var r = stage.getBoundingClientRect();
       ptr.active = true; ptr.tx = e.clientX - r.left;
-      if (reduce) { ptr.x = ptr.tx; draw(); }
     });
     stage.addEventListener("pointerleave", function () { ptr.active = false; });
     if ("IntersectionObserver" in window) {
@@ -272,7 +270,7 @@
   (function rotator() {
     var el = $("rotator");
     var words = ["bioinformática", "avaliação científica com IA", "ensino com dados reais"];
-    if (!el || reduce) return;
+    if (!el) return;
     var i = 0;
     setInterval(function () {
       el.classList.add("out");
@@ -293,13 +291,12 @@
     ];
     $("stats").innerHTML = stats.map(function (s) {
       return '<div><dt>' + s[0] + '</dt><dd data-count="' + s[1] + '" data-suffix="' + s[2] + '">' +
-        (reduce ? s[1] + s[2] : "0" + s[2]) + "</dd></div>";
+        "0" + s[2] + "</dd></div>";
     }).join("");
   }
   function runCounters(scope) {
     scope.querySelectorAll("[data-count]").forEach(function (el) {
       var end = +el.getAttribute("data-count"), suf = el.getAttribute("data-suffix") || "";
-      if (reduce) { el.textContent = end + suf; return; }
       var t0 = performance.now(), dur = 1400;
       (function tick(now) {
         var k = Math.min(1, (now - t0) / dur);
@@ -457,7 +454,7 @@
     var first = cards.map(function (c) { return c.hidden ? null : c.getBoundingClientRect(); });
     var shown = 0;
     cards.forEach(function (c) { c.hidden = !keep(c._p, c); if (!c.hidden) shown++; });
-    if (reduce || !cards[0] || !cards[0].animate) return shown;
+    if (!cards[0] || !cards[0].animate) return shown;
     var n = 0;
     cards.forEach(function (c, i) {
       if (c.hidden) return;
@@ -465,10 +462,10 @@
       if (!f) {
         c.classList.add("in");
         c.animate(
-          [{ opacity: 0, transform: "translateY(16px) scale(.96)" }, { opacity: 1, transform: "none" }],
+          reduce ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 0, transform: "translateY(16px) scale(.96)" }, { opacity: 1, transform: "none" }],
           { duration: 450, delay: 40 * n++, easing: "cubic-bezier(.2,.8,.2,1)", fill: "backwards" }
         );
-      } else if (f.left !== l.left || f.top !== l.top) {
+      } else if (!reduce && (f.left !== l.left || f.top !== l.top)) {
         c.animate(
           [{ transform: "translate(" + (f.left - l.left) + "px," + (f.top - l.top) + "px)" }, { transform: "none" }],
           { duration: 500, easing: "cubic-bezier(.2,.8,.2,1)" }
@@ -787,7 +784,7 @@
       else if (random) load(BIO.randomGene(36 + ((Math.random() * 24) | 0)), true);
       else go(0);
     }
-    function play() { clearInterval(timer); if (!reduce) timer = setInterval(tick, 750); }
+    function play() { clearInterval(timer); timer = setInterval(tick, 750); }
 
     view.addEventListener("pointerenter", function () { hover = true; });
     view.addEventListener("pointerleave", function () { hover = false; });
@@ -1022,14 +1019,7 @@
     termStart = function () {
       if (started) { if (input) input.focus({ preventScroll: true }); return; }
       started = true;
-      if (reduce) {
-        script.forEach(function (s) { line('<span class="t-ps">$</span> ' + esc(s.cmd)); run(s.cmd); });
-        line("");
-        line('<span class="t-dim"># digite </span><span class="t-bio">ajuda</span><span class="t-dim"> para ver os comandos</span>');
-        prompt();
-      } else {
-        setTimeout(function () { play(0); }, 250);
-      }
+      setTimeout(function () { play(0); }, 250);
     };
   })();
 
@@ -1084,7 +1074,7 @@
   /* ---------------- Revelação ao rolar ---------------- */
   function observeReveal() {
     var els = document.querySelectorAll("[data-reveal]");
-    if (!("IntersectionObserver" in window) || reduce) {
+    if (!("IntersectionObserver" in window)) {
       els.forEach(function (el) { el.classList.add("in"); });
       runCounters(document);
       return;
@@ -1106,7 +1096,7 @@
     if (!box) return;
     var tabs = Array.prototype.slice.call(box.querySelectorAll(".ax-tabs [role=tab]"));
     var panels = Array.prototype.slice.call(box.querySelectorAll(".axis"));
-    var cur = 0, timer = 0, DUR = 8000, stopped = reduce, inView = false;
+    var cur = 0, timer = 0, DUR = 8000, stopped = false, inView = false;
     panels.forEach(function (p) {
       p.querySelectorAll(".ax-chips li, .ax-practice li").forEach(function (li, k) { li.style.setProperty("--k", k); });
     });
@@ -1130,7 +1120,7 @@
     }
     function stop() { stopped = true; clearTimeout(timer); box.classList.remove("auto"); }
     box.style.setProperty("--ax-dur", DUR / 1000 + "s");
-    if (!reduce) box.classList.add("auto");
+    box.classList.add("auto");
     tabs.forEach(function (t, i) {
       t.addEventListener("click", function () { stop(); show(i); });
       t.addEventListener("keydown", function (e) {
@@ -1156,7 +1146,7 @@
   })();
 
   /* ---------------- Brilho seguindo o cursor nas linhas de pesquisa ---------------- */
-  if (finePointer && !reduce) {
+  if (finePointer) {
     document.querySelectorAll(".rline").forEach(function (el) {
       el.addEventListener("pointermove", function (e) {
         var r = el.getBoundingClientRect();
@@ -1388,7 +1378,7 @@
       raf = requestAnimationFrame(frame);
     }
     function start() {
-      if (running || (reduce && !playing) || !visible || document.hidden) return;
+      if (running || !visible || document.hidden) return;
       running = true; last = 0;
       footer.classList.add("dx-on");
       raf = requestAnimationFrame(frame);
@@ -1419,8 +1409,7 @@
       } else {
         clearBases();
         y = 0; vy = 0; place();
-        setState(reduce ? "idle" : "walk");
-        if (reduce) stop();
+        setState("walk");
       }
     }
     function jump() { if (playing && y === 0) vy = JUMP; }
@@ -1428,7 +1417,7 @@
     // Começa num ponto aleatório da pista.
     x = Math.random() * Math.max(0, laneW() - W);
     dir = Math.random() < 0.5 ? 1 : -1;
-    setState(reduce ? "idle" : "walk");
+    setState("walk");
     place();
 
     dx.addEventListener("click", function () {

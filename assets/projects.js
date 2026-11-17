@@ -163,4 +163,22 @@ window.ENGINES = {
   nextflow: "Nextflow",
 };
 
-window.WORKFLOWS = [];
+window.WORKFLOWS = [
+  {
+    name: "humaninFlow",
+    repo: "LaBiOmicS/humaninFlow",
+    site: "https://labiomics.github.io/humaninFlow/",
+    status: "beta",
+    engines: ["snakemake", "nextflow"],
+    summary:
+      "Busca de Humanin e SHLP1-6 em larga escala, de um mitogenoma a coortes inteiras e montagens nucleares.",
+    details:
+      "Leva o HumaninFinder para Nextflow DSL2 e Snakemake: valida os FASTA de entrada, paraleliza em estação de trabalho ou cluster HPC e cruza os peptídeos encontrados com os metadados clínicos e epidemiológicos das amostras.",
+    tags: ["peptídeos mitocondriais", "MT-RNR2", "HPC", "genômica populacional"],
+    license: "MIT",
+    run: {
+      snakemake: "snakemake -s workflow/snakemake/Snakefile --cores 4 --use-conda",
+      nextflow: "nextflow run workflow/nextflow/main.nf -profile test,docker",
+    },
+  },
+];
