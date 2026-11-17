@@ -1263,22 +1263,27 @@
     }
   });
 
-  /* ---------------- Mascote do rodapé ---------------- */
-  // Uma fita de DNA que passeia pelo rodapé, para de vez em quando e fala uma curiosidade quando clicada.
+  /* ---------------- Mascote do rodapé: Mr. DNA ---------------- */
+  // Passeia sozinho pelo rodapé e fala uma curiosidade quando clicado.
+  // No modo jogo, anda com ←/→ (ou A/D), pula com espaço/↑ e coleta bases: cada 3 bases viram um códon traduzido.
   (function mascot() {
     var lane = $("dx-lane"), dx = $("dx"), say = $("dx-say"), footer = lane && lane.closest(".footer");
+    var playBtn = $("dx-play"), hud = $("dx-hud"), basesEl = $("dx-bases"), pad = $("dx-pad");
     if (!lane || !dx) return;
     var FACTS = [
-      "Oi! Eu sou o Dedê, a fita de DNA do LaBiOmicS.",
+      "Oi! Eu sou o Mr. DNA, a fita de DNA do LaBiOmicS.",
       "O genoma humano tem cerca de 3,1 bilhões de pares de bases.",
       "A pareia com T, C pareia com G. Somos inseparáveis!",
       "Uma volta completa da dupla hélice tem cerca de 10,5 pares de bases.",
       "Esticado, o DNA de uma célula humana mede uns 2 metros.",
       "São 64 códons para só 20 aminoácidos. Redundância é charme.",
       "Uma colher de solo pode ter mais de mil espécies de bactérias.",
-      "Bioinformática: biologia com Ctrl+F turbinado.",
+      "Quer jogar? Clique em \"Jogar com o Mr. DNA\" aqui do lado.",
     ];
-    var W = 78, x = 0, dir = 1, speed = 38, state = "walk", until = 0, last = 0, raf = 0, running = false, visible = false, fact = 0, sayT = 0;
+    var W = 78, GROUND = 14, WALK = 38, RUN = 190, JUMP = 470, GRAV = 1300;
+    var x = 0, y = 0, vy = 0, dir = 1, state = "walk", until = 0, last = 0, raf = 0;
+    var running = false, visible = false, fact = 0, sayT = 0, playing = false;
+    var keys = { left: false, right: false }, bases = [], codon = "", protein = "", collected = 0;
     var laneW = function () { return lane.clientWidth; };
 
     function setState(s, ms) {
@@ -1289,15 +1294,89 @@
     }
     function place() {
       dx.style.setProperty("--x", x.toFixed(1) + "px");
+      dx.style.setProperty("--y", y.toFixed(1) + "px");
       dx.style.setProperty("--dir", dir);
     }
+    function speak(text, ms) {
+      say.textContent = text;
+      var r = dx.getBoundingClientRect(), lr = lane.getBoundingClientRect();
+      say.classList.toggle("edge-l", r.left - lr.left < 110);
+      say.classList.toggle("edge-r", lr.right - r.right < 110);
+      say.classList.add("show");
+      clearTimeout(sayT);
+      sayT = setTimeout(function () { say.classList.remove("show"); }, ms || 4200);
+    }
+
+    /* --- Bases coletáveis --- */
+    function spawn() {
+      if (!playing) return;
+      var high = Math.random() < 0.45;
+      // No chão, evita a área dos botões de toque (quando visíveis).
+      var max = laneW() - 30 - (high || !pad.offsetWidth ? 0 : pad.offsetWidth + 16), bx, tries = 0;
+      do { bx = 20 + Math.random() * (max - 20); } while (Math.abs(bx - (x + W / 2)) < 140 && tries++ < 20);
+      var b = { x: bx, h: high ? 170 : 40, base: "ATCG"[(Math.random() * 4) | 0], el: document.createElement("span") };
+      b.el.className = "dx-base b-" + b.base;
+      b.el.textContent = b.base;
+      b.el.style.left = bx.toFixed(0) + "px";
+      b.el.style.bottom = (GROUND + b.h).toFixed(0) + "px";
+      b.el.style.animationDelay = (-Math.random() * 1.6).toFixed(2) + "s";
+      basesEl.appendChild(b.el);
+      bases.push(b);
+    }
+    function collect(b) {
+      bases.splice(bases.indexOf(b), 1);
+      b.el.classList.add("got");
+      setTimeout(function () { b.el.remove(); }, 320);
+      collected++;
+      codon += b.base;
+      if (codon.length === 3) {
+        var aa = BIO.aa(codon), n = BIO.NAMES[aa];
+        if (aa === "*") {
+          speak(codon + " é códon de parada! " + (protein ? "Proteína pronta: " + protein + " (" + protein.length + " aa)." : "Nada para traduzir ainda."), 3600);
+          protein = "";
+        } else {
+          protein += aa;
+          speak(codon + " → " + n[0] + " (" + n[1] + ")", 2200);
+        }
+        codon = "";
+      }
+      drawHud();
+      setTimeout(spawn, 500);
+    }
+    function clearBases() {
+      bases.forEach(function (b) { b.el.remove(); });
+      bases = [];
+    }
+    function drawHud() {
+      var slots = "";
+      for (var i = 0; i < 3; i++) slots += '<span class="slot">' + (codon[i] || "·") + "</span>";
+      var prot = protein.length > 24 ? "…" + protein.slice(-24) : protein;
+      hud.innerHTML = "Códon " + slots + " · bases <b>" + collected + "</b>" +
+        (prot ? ' · proteína <span class="prot">' + esc(prot) + "</span>" : "") +
+        '<span class="keys">← → andar · espaço pular · Esc sair</span>';
+    }
+
+    /* --- Laço principal --- */
     function frame(now) {
       if (!running) return;
       var dt = Math.min(0.05, (now - (last || now)) / 1000);
       last = now;
       var max = Math.max(0, laneW() - W);
-      if (state === "walk") {
-        x += dir * speed * dt;
+      if (playing) {
+        var mv = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+        if (mv) dir = mv;
+        x = Math.max(0, Math.min(max, x + mv * RUN * dt));
+        vy -= GRAV * dt;
+        y = Math.max(0, y + vy * dt);
+        if (y === 0) vy = 0;
+        dx.classList.toggle("jumping", y > 0);
+        dx.classList.toggle("walking", !!mv && y === 0);
+        var cx = x + W / 2;
+        bases.slice().forEach(function (b) {
+          if (Math.abs(cx - b.x) < 30 && b.h > y && b.h < y + 125) collect(b);
+        });
+      } else if (state === "walk") {
+        x += dir * WALK * dt;
         if (x <= 0 || x >= max) { x = Math.max(0, Math.min(max, x)); dir = -dir; }
         // De vez em quando para, acena e segue.
         if (Math.random() < dt * 0.08) setState(Math.random() < 0.5 ? "wave" : "idle", 1600 + Math.random() * 1800);
@@ -1309,7 +1388,7 @@
       raf = requestAnimationFrame(frame);
     }
     function start() {
-      if (running || reduce || !visible || document.hidden) return;
+      if (running || (reduce && !playing) || !visible || document.hidden) return;
       running = true; last = 0;
       footer.classList.add("dx-on");
       raf = requestAnimationFrame(frame);
@@ -1317,18 +1396,34 @@
     function stop() {
       running = false; cancelAnimationFrame(raf);
       footer.classList.remove("dx-on");
+      keys.left = keys.right = false;
     }
-    function talk() {
-      say.textContent = FACTS[fact++ % FACTS.length];
-      var r = dx.getBoundingClientRect(), lr = lane.getBoundingClientRect();
-      say.classList.toggle("edge-l", r.left - lr.left < 110);
-      say.classList.toggle("edge-r", lr.right - r.right < 110);
-      say.classList.add("show");
-      dx.classList.remove("hop"); void dx.offsetWidth; dx.classList.add("hop");
-      setState("wave", 2600);
-      clearTimeout(sayT);
-      sayT = setTimeout(function () { say.classList.remove("show"); }, 4200);
+
+    /* --- Liga/desliga o modo jogo --- */
+    function setPlaying(on) {
+      playing = on;
+      lane.classList.toggle("playing", on);
+      playBtn.setAttribute("aria-pressed", String(on));
+      playBtn.querySelector("span").textContent = on ? "Sair do jogo" : "Jogar com o Mr. DNA";
+      keys.left = keys.right = false;
+      dx.classList.remove("jumping", "waving");
+      if (on) {
+        codon = ""; protein = ""; collected = 0; vy = 0;
+        drawHud();
+        clearBases();
+        for (var i = 0; i < 4; i++) spawn();
+        speak("Pegue as bases! A cada 3, eu traduzo o códon.", 3200);
+        // Espera a pista terminar de crescer e rola até o fim da página, onde ela fica.
+        setTimeout(function () { window.scrollTo({ top: document.documentElement.scrollHeight, behavior: reduce ? "auto" : "smooth" }); }, 520);
+        start();
+      } else {
+        clearBases();
+        y = 0; vy = 0; place();
+        setState(reduce ? "idle" : "walk");
+        if (reduce) stop();
+      }
     }
+    function jump() { if (playing && y === 0) vy = JUMP; }
 
     // Começa num ponto aleatório da pista.
     x = Math.random() * Math.max(0, laneW() - W);
@@ -1336,8 +1431,44 @@
     setState(reduce ? "idle" : "walk");
     place();
 
-    dx.addEventListener("click", talk);
+    dx.addEventListener("click", function () {
+      if (playing) return;
+      speak(FACTS[fact++ % FACTS.length]);
+      dx.classList.remove("hop"); void dx.offsetWidth; dx.classList.add("hop");
+      setState("wave", 2600);
+    });
     dx.addEventListener("animationend", function (e) { if (e.animationName === "dx-hop") dx.classList.remove("hop"); });
+    playBtn.addEventListener("click", function () { setPlaying(!playing); });
+
+    var KEYMAP = { ArrowLeft: "left", a: "left", A: "left", ArrowRight: "right", d: "right", D: "right" };
+    document.addEventListener("keydown", function (e) {
+      if (!playing) return;
+      var tag = (e.target.tagName || "").toLowerCase();
+      if (tag === "input" || tag === "textarea" || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (KEYMAP[e.key]) { keys[KEYMAP[e.key]] = true; e.preventDefault(); }
+      else if (e.key === " " || e.key === "ArrowUp" || e.key === "w" || e.key === "W") { jump(); e.preventDefault(); }
+      else if (e.key === "ArrowDown") e.preventDefault();
+      else if (e.key === "Escape") { setPlaying(false); playBtn.focus(); }
+    });
+    document.addEventListener("keyup", function (e) { if (KEYMAP[e.key]) keys[KEYMAP[e.key]] = false; });
+    window.addEventListener("blur", function () { keys.left = keys.right = false; });
+
+    // Controles de toque.
+    pad.addEventListener("pointerdown", function (e) {
+      var b = e.target.closest("[data-key]");
+      if (!b) return;
+      e.preventDefault();
+      var k = b.getAttribute("data-key");
+      if (k === "jump") jump(); else { keys[k] = true; b.setPointerCapture(e.pointerId); }
+    });
+    ["pointerup", "pointercancel", "lostpointercapture"].forEach(function (ev) {
+      pad.addEventListener(ev, function (e) {
+        var b = e.target.closest && e.target.closest("[data-key]");
+        if (b && b.getAttribute("data-key") !== "jump") keys[b.getAttribute("data-key")] = false;
+      });
+    });
+    pad.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+
     window.addEventListener("resize", function () { x = Math.min(x, Math.max(0, laneW() - W)); place(); });
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(lane);

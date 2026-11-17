@@ -870,7 +870,7 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
 /* ---------- Mascote: fita de DNA andando no rodapé ---------- */
 .footer:has(.dx-lane) { padding-bottom: 0; }
 .dx-lane {
-  position: relative; height: 150px; margin-top: 12px;
+  position: relative; height: 150px; margin-top: 12px; transition: height .5s var(--ease), background-color .4s;
   /* Chão: uma sequência de bases bem apagada. */
   background:
     linear-gradient(var(--border), var(--border)) left 100% / 100% 1px no-repeat;
@@ -880,10 +880,10 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
   position: absolute; left: 0; right: 0; bottom: 3px; overflow: hidden; white-space: nowrap; pointer-events: none;
   font: 500 10px/1 "IBM Plex Mono", monospace; letter-spacing: .4em; color: var(--muted); opacity: .35;
 }
-.dx {
-  --x: 0px; --dir: 1;
+.dx-bot {
+  --x: 0px; --y: 0px; --dir: 1;
   position: absolute; left: 0; bottom: 14px; width: 78px; height: 125px; z-index: 1;
-  transform: translateX(var(--x)); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transform: translate(var(--x), calc(var(--y) * -1)); cursor: pointer; -webkit-tap-highlight-color: transparent;
 }
 .dx-svg { display: block; filter: drop-shadow(0 4px 6px color-mix(in srgb, var(--accent) 25%, transparent)); overflow: visible; transform: scaleX(var(--dir)); transition: transform .35s var(--ease); }
 .dx-svg * { stroke-linecap: round; stroke-linejoin: round; }
@@ -900,15 +900,15 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
 .dx-arm, .dx-leg { transform-box: view-box; }
 .dx-arm-l { transform-origin: -12px 44px; } .dx-arm-r { transform-origin: 12px 44px; }
 .dx-leg-l { transform-origin: -5px 70px; } .dx-leg-r { transform-origin: 5px 70px; }
-.dx.walking .dx-leg-l { animation: dx-step .5s ease-in-out infinite alternate; }
-.dx.walking .dx-leg-r { animation: dx-step .5s ease-in-out infinite alternate-reverse; }
-.dx.walking .dx-arm-l { animation: dx-swing .5s ease-in-out infinite alternate-reverse; }
-.dx.walking .dx-arm-r { animation: dx-swing .5s ease-in-out infinite alternate; }
-.dx.walking .dx-bob { animation: dx-bob .25s ease-in-out infinite alternate; }
-.dx.waving .dx-arm-r { animation: dx-wave .35s ease-in-out infinite alternate; }
-.dx.hop .dx-bob { animation: dx-hop .6s var(--ease); }
-.dx:hover .dx-head circle:first-child, .dx:focus-visible .dx-head circle:first-child { fill: color-mix(in srgb, var(--accent) 80%, var(--accent-2)); }
-.footer:not(.dx-on) .dx * { animation-play-state: paused !important; }
+.dx-bot.walking .dx-leg-l { animation: dx-step .5s ease-in-out infinite alternate; }
+.dx-bot.walking .dx-leg-r { animation: dx-step .5s ease-in-out infinite alternate-reverse; }
+.dx-bot.walking .dx-arm-l { animation: dx-swing .5s ease-in-out infinite alternate-reverse; }
+.dx-bot.walking .dx-arm-r { animation: dx-swing .5s ease-in-out infinite alternate; }
+.dx-bot.walking .dx-bob { animation: dx-bob .25s ease-in-out infinite alternate; }
+.dx-bot.waving .dx-arm-r { animation: dx-wave .35s ease-in-out infinite alternate; }
+.dx-bot.hop .dx-bob { animation: dx-hop .6s var(--ease); }
+.dx-bot:hover .dx-head circle:first-child, .dx-bot:focus-visible .dx-head circle:first-child { fill: color-mix(in srgb, var(--accent) 80%, var(--accent-2)); }
+.footer:not(.dx-on) .dx-bot * { animation-play-state: paused !important; }
 .dx-say {
   position: absolute; bottom: calc(100% + 4px); left: 50%; translate: -50% 0; margin: 0;
   width: max-content; max-width: min(260px, 70vw); padding: 7px 11px; border-radius: 12px;
@@ -931,6 +931,50 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
 @keyframes dx-bob { from { transform: translateY(0); } to { transform: translateY(-2px); } }
 @keyframes dx-hop { 40% { transform: translateY(-18px); } 70% { transform: translateY(0); } 85% { transform: translateY(-4px); } }
 @keyframes dx-blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
+
+/* Modo jogo */
+.dx-play {
+  position: absolute; right: 16px; top: 8px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px;
+  font: 500 13px Inter, system-ui, sans-serif; color: var(--muted); cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border);
+  transition: color .2s, border-color .2s, background-color .2s;
+}
+.dx-play:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.dx-play:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.dx-lane.playing { height: 210px; }
+.dx-lane.playing .dx-play { color: var(--accent-ink); background: var(--accent); border-color: transparent; }
+.dx-hud {
+  position: absolute; left: 16px; top: 8px; z-index: 2; max-width: calc(100% - 260px);
+  font: 500 12px/1.5 "IBM Plex Mono", monospace; color: var(--muted); opacity: 0; transition: opacity .3s;
+}
+.dx-lane.playing .dx-hud { opacity: 1; }
+.dx-hud b { color: var(--text); font-weight: 600; }
+.dx-hud .slot { display: inline-block; min-width: 1.1em; text-align: center; border-bottom: 1px solid var(--border); margin-right: 2px; color: var(--text); }
+.dx-hud .prot { color: var(--accent); overflow-wrap: anywhere; }
+.dx-hud .keys { display: block; opacity: .8; }
+@media (max-width: 640px) { .dx-hud { top: 48px; max-width: calc(100% - 32px); } .dx-hud .keys { display: none; } .dx-lane.playing { height: 250px; } }
+.dx-bases { position: absolute; inset: 0; pointer-events: none; }
+.dx-base {
+  position: absolute; left: 0; bottom: 0; width: 28px; height: 28px; margin: 0 0 -14px -14px; border-radius: 50%;
+  display: grid; place-items: center; font: 700 14px "IBM Plex Mono", monospace; color: #fff;
+  background: var(--c); box-shadow: 0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent), 0 4px 10px color-mix(in srgb, var(--c) 35%, transparent);
+  animation: dx-float 1.6s ease-in-out infinite alternate; transition: opacity .3s, scale .3s var(--ease);
+}
+.dx-base.got { opacity: 0; scale: 1.8; }
+.dx-base.b-A { --c: var(--accent); } .dx-base.b-T { --c: var(--cat-ensino); } .dx-base.b-C { --c: var(--accent-2); } .dx-base.b-G { --c: var(--base-g); }
+.dx-pad { position: absolute; right: 16px; bottom: 22px; z-index: 2; display: none; gap: 8px; }
+.dx-pad button {
+  width: 46px; height: 46px; border-radius: 50%; font-size: 16px; color: var(--text); cursor: pointer;
+  background: color-mix(in srgb, var(--surface) 85%, transparent); border: 1px solid var(--border); box-shadow: var(--shadow);
+  touch-action: none; -webkit-user-select: none; user-select: none;
+}
+.dx-pad button:active { background: var(--accent-soft); }
+@media (hover: none), (pointer: coarse) { .dx-lane.playing .dx-pad { display: flex; } }
+.dx-bot.jumping .dx-leg-l { transform: rotate(-30deg); } .dx-bot.jumping .dx-leg-r { transform: rotate(25deg); }
+.dx-bot.jumping .dx-arm-l { transform: rotate(120deg); } .dx-bot.jumping .dx-arm-r { transform: rotate(-120deg); }
+.dx-lane.playing .dx-bot { cursor: default; }
+@keyframes dx-float { from { translate: 0 0; } to { translate: 0 -6px; } }
 
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
