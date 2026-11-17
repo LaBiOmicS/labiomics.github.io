@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=6c643485">
+  <link rel="stylesheet" href="assets/style.css?v=cdbeb0b9">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -57,6 +57,10 @@
 
   <main>
     <section class="hero" id="inicio">
+      <div class="hero-bg" aria-hidden="true">
+        <span class="blob blob-t"></span><span class="blob blob-a"></span><span class="blob blob-g"></span><span class="blob blob-c"></span>
+        <span class="dots-grid"></span>
+      </div>
       <canvas class="helix" id="helix" aria-hidden="true"></canvas>
       <div class="wrap hero-grid">
         <div class="hero-copy">
@@ -78,6 +82,8 @@
           <dl class="stats" id="stats" data-reveal></dl>
         </div>
 
+        <div class="lab-stage" id="lab-stage">
+        <span class="lab-glow" aria-hidden="true"></span>
         <div class="term lab" id="lab" data-reveal>
           <div class="term-bar">
             <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -111,6 +117,7 @@
           <div class="pane" id="pane-term" role="tabpanel" aria-labelledby="tab-term" hidden>
             <div class="term-body" id="term" role="log" aria-label="Terminal interativo do LaBiOmicS"></div>
           </div>
+        </div>
         </div>
       </div>
     </section>
@@ -627,6 +634,6 @@
   </footer>
 
   <script src="assets/projects.js?v=b380a8a2"></script>
-  <script src="assets/app.js?v=5f15dfba"></script>
+  <script src="assets/app.js?v=35ffedd3"></script>
 </body>
 </html>

@@ -84,6 +84,7 @@
         G: cs.getPropertyValue("--base-g").trim(),
         rung: cs.getPropertyValue("--muted").trim(),
         text: cs.getPropertyValue("--text").trim(),
+        dark: cs.getPropertyValue("color-scheme").trim() === "dark",
       };
     }
     function resize() {
@@ -91,17 +92,18 @@
       W = hero.clientWidth; H = hero.clientHeight;
       canvas.width = W * dpr; canvas.height = H * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      var n = Math.ceil(W / 14) + 4;
+      var n = Math.ceil(W / 12) + 4;
       while (seq.length < n) seq.push(BASES[(Math.random() * 4) | 0]);
       if (!running) draw();
     }
     function draw() {
       ctx.clearRect(0, 0, W, H);
       var mobile = W < 980;
-      var cy = H - (mobile ? 70 : 100);
-      var A = mobile ? 34 : 52;
-      var step = mobile ? 14 : 16;
-      var tilt = 0;
+      var cy = H - (mobile ? 78 : 118);
+      var A = mobile ? 40 : 66;
+      var step = mobile ? 13 : 17;
+      var tilt = mobile ? -0.03 : -0.05;   // sobe levemente para a direita
+      var glow = colors.dark;
       ctx.lineWidth = 1.5;
       for (var i = 0; i < seq.length; i++) {
         var x = i * step - 20;
@@ -115,20 +117,28 @@
         var y1 = base + s1 * amp, y2 = base - s1 * amp;
         var z1 = (c1 + 1) / 2, z2 = 1 - z1;
         var b1 = seq[i], b2 = PAIR[b1];
+        // fita de fundo mais apagada dá profundidade
+        var fade = Math.max(0, Math.min(1, (x + 20) / 120, (W - x + 20) / 120));
+        if (fade <= 0) continue;
 
         // degrau (par de bases)
         var g = ctx.createLinearGradient(x, y1, x, y2);
         g.addColorStop(0, colors[b1]); g.addColorStop(1, colors[b2]);
         ctx.strokeStyle = g;
-        ctx.globalAlpha = 0.12 + 0.2 * Math.min(z1, z2) + 0.35 * near * vy;
+        ctx.globalAlpha = (0.14 + 0.22 * Math.min(z1, z2) + 0.35 * near * vy) * fade;
         ctx.beginPath(); ctx.moveTo(x, y1); ctx.lineTo(x, y2); ctx.stroke();
         // nucleotídeos (fundo primeiro)
         var pts = z1 < z2 ? [[y1, z1, b1], [y2, z2, b2]] : [[y2, z2, b2], [y1, z1, b1]];
         for (var k = 0; k < 2; k++) {
           var p = pts[k];
-          ctx.globalAlpha = 0.25 + 0.65 * p[1];
+          var rad = 1.8 + 3.6 * p[1] + 1.8 * near * vy;
           ctx.fillStyle = colors[p[2]];
-          ctx.beginPath(); ctx.arc(x, p[0], 1.6 + 3.2 * p[1] + 1.5 * near * vy, 0, 6.2832); ctx.fill();
+          if (glow && p[1] > 0.55) {   // halo nos nucleotídeos da frente (tema escuro)
+            ctx.globalAlpha = (0.10 + 0.18 * near * vy) * p[1] * fade;
+            ctx.beginPath(); ctx.arc(x, p[0], rad * 3.2, 0, 6.2832); ctx.fill();
+          }
+          ctx.globalAlpha = (0.25 + 0.7 * p[1]) * fade;
+          ctx.beginPath(); ctx.arc(x, p[0], rad, 0, 6.2832); ctx.fill();
           if (near * vy > 0.35 && p[1] > 0.5) {
             ctx.globalAlpha = near * vy * 0.9;
             ctx.fillStyle = colors.text;
@@ -264,6 +274,26 @@
     window.addEventListener("resize", resize);
     themeListeners.push(function () { readColors(); draw(); });
     readColors(); resize(); start();
+  })();
+
+  /* ---------------- Inclinação 3D do painel do hero ---------------- */
+  (function labTilt() {
+    var hero = $("inicio"), lab = $("lab");
+    if (!hero || !lab || !finePointer || reduce || window.innerWidth < 980) return;
+    var raf = 0, rx = 0, ry = 0;
+    function set() { raf = 0; lab.style.setProperty("--rx", rx.toFixed(2) + "deg"); lab.style.setProperty("--ry", ry.toFixed(2) + "deg"); }
+    hero.addEventListener("pointermove", function (e) {
+      if (lab.contains(e.target)) { rx = ry = 0; }   // parado enquanto a pessoa usa o painel
+      else {
+        var r = lab.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / window.innerWidth;
+        var dy = (e.clientY - (r.top + r.height / 2)) / window.innerHeight;
+        ry = Math.max(-1, Math.min(1, dx * 2)) * 7;
+        rx = Math.max(-1, Math.min(1, -dy * 2)) * 5;
+      }
+      if (!raf) raf = requestAnimationFrame(set);
+    });
+    hero.addEventListener("pointerleave", function () { rx = ry = 0; if (!raf) raf = requestAnimationFrame(set); });
   })();
 
   /* ---------------- Palavra rotativa ---------------- */
