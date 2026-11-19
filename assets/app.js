@@ -456,7 +456,8 @@
       render();
       // Volta ao topo da grade se ela já saiu da tela.
       var top = box.getBoundingClientRect().top;
-      if (top < 80) window.scrollTo({ top: window.pageYOffset + top - 96, behavior: reduce ? "auto" : "smooth" });
+      var off = document.querySelector(".topbar").offsetHeight + 12;
+      if (top < off) window.scrollTo({ top: window.pageYOffset + top - off, behavior: reduce ? "auto" : "smooth" });
     });
     return {
       update: function (k, reset) {
@@ -1493,6 +1494,26 @@
       new IntersectionObserver(function (es) { visible = es[0].isIntersecting; visible ? start() : stop(); }).observe(lane);
     } else { visible = true; start(); }
     document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+  })();
+
+  /* ---------------- Menu sanduíche (telas estreitas) ---------------- */
+  (function menu() {
+    var btn = $("menu-toggle"), nav = $("nav");
+    if (!btn || !nav) return;
+    function set(open) {
+      nav.classList.toggle("open", open);
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      btn.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+    }
+    btn.addEventListener("click", function () { set(!nav.classList.contains("open")); });
+    nav.addEventListener("click", function (e) { if (e.target.closest("a")) set(false); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && nav.classList.contains("open")) { set(false); btn.focus(); }
+    });
+    document.addEventListener("click", function (e) {
+      if (nav.classList.contains("open") && !nav.contains(e.target) && !btn.contains(e.target)) set(false);
+    });
+    window.matchMedia("(min-width: 901px)").addEventListener("change", function (m) { if (m.matches) set(false); });
   })();
 
   /* ---------------- Início ---------------- */
