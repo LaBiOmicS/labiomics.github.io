@@ -100,15 +100,15 @@ window.PROJECTS = [
   {
     name: "HumaninFinder",
     repo: "LaBiOmicS/humaninfinder",
-    version: "v1.0.0b4",
+    version: "v1.0.0b5",
     site: "https://labiomics.github.io/humaninfinder/",
     category: "bio",
     status: "beta",
     summary:
       "Localização e anotação por homologia de Humanin e SHLP1-6 em mitogenomas, contigs e montagens nucleares.",
     details:
-      "Localiza cada peptídeo pela posição no gene MT-RNR2 com perfis HMM, distinguindo cópias mitocondriais de NUMTs. Disponível no PyPI e executável no navegador.",
-    platforms: ["CLI", "PyPI", "Navegador"],
+      "Localiza cada peptídeo pela posição no gene MT-RNR2 com perfis HMM, distinguindo cópias mitocondriais de NUMTs. Disponível no PyPI, como container Docker e executável no navegador.",
+    platforms: ["CLI", "PyPI", "Container", "Navegador"],
     tags: ["peptídeos mitocondriais", "MT-RNR2", "HMM", "genômica"],
     language: "Python",
     license: "MIT",
