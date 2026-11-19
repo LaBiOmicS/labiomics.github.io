@@ -167,6 +167,7 @@ window.WORKFLOWS = [
   {
     name: "humaninFlow",
     repo: "LaBiOmicS/humaninFlow",
+    version: "v1.1.0",
     site: "https://labiomics.github.io/humaninFlow/",
     status: "beta",
     engines: ["snakemake", "nextflow"],
