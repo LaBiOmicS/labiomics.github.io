@@ -1525,6 +1525,44 @@
     document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
   })();
 
+  /* ---------------- Homenagem: nome de Dayhoff em código de aminoácidos ---------------- */
+  // Grade de "sequência" com MARGARET / OAKLEY / DAYHOFF em destaque. As outras letras sofrem
+  // mutações pontuais de tempos em tempos, em alusão às matrizes PAM.
+  (function dayhoff() {
+    var box = $("dh-seq");
+    if (!box) return;
+    var COLS = 13, ROWS = 9, AA = "ACDEFGHIKLMNPQRSTVWY";
+    var KIND = { A: "hyd", V: "hyd", L: "hyd", I: "hyd", M: "hyd", F: "hyd", W: "hyd", Y: "pol", S: "pol", T: "pol", N: "pol", Q: "pol", C: "pol",
+      K: "pos", R: "pos", H: "pos", D: "neg", E: "neg", G: "spc", P: "spc", O: "spc" };
+    var NAME = { 2: "MARGARET", 4: "OAKLEY", 6: "DAYHOFF" };
+    var cells = [], free = [];
+    function rnd() { return AA[(Math.random() * AA.length) | 0]; }
+    function setL(el, ch) { el.textContent = ch; el.className = "k-" + (KIND[ch] || "hyd") + (el.dataset.name ? " name" + (ch === "O" ? " pyl" : "") : ""); }
+    for (var r = 0; r < ROWS; r++) {
+      var word = NAME[r] || "", start = Math.floor((COLS - word.length) / 2);
+      for (var c = 0; c < COLS; c++) {
+        var el = document.createElement("span"), ch = word[c - start];
+        if (ch) el.dataset.name = "1"; else free.push(el);
+        setL(el, ch || rnd());
+        box.appendChild(el);
+        cells.push(el);
+      }
+    }
+    if (reduce || !("IntersectionObserver" in window)) return;
+    var timer = 0;
+    function mutate() {
+      var el = free[(Math.random() * free.length) | 0], ch;
+      do { ch = rnd(); } while (ch === el.textContent);
+      setL(el, ch);
+      el.classList.add("mut");
+      setTimeout(function () { el.classList.remove("mut"); }, 900);
+    }
+    new IntersectionObserver(function (es) {
+      clearInterval(timer);
+      if (es[0].isIntersecting) timer = setInterval(mutate, 650);
+    }).observe(box);
+  })();
+
   /* ---------------- Menu sanduíche (telas estreitas) ---------------- */
   (function menu() {
     var btn = $("menu-toggle"), nav = $("nav");

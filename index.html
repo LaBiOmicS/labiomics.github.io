@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=0ff4d221">
+  <link rel="stylesheet" href="assets/style.css?v=b7ff5e85">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -363,7 +363,7 @@
             <ul class="parasite-src" aria-label="Fontes de dados públicos que usamos">
               <li>NCBI SRA</li><li>ENA</li><li>GenBank</li><li>DATASUS</li>
             </ul>
-            <p class="ref">Longo DL, Drazen JM. Data Sharing. <em>N Engl J Med</em> 2016;374:276–277. <a href="https://doi.org/10.1056/NEJMe1516564" target="_blank" rel="noopener">doi:10.1056/NEJMe1516564</a></p>
+            <p class="ref">Longo DL, Drazen JM. Data Sharing. <span class="nw"><em>N Engl J Med</em> 2016;374:276–277.</span> <a href="https://doi.org/10.1056/NEJMe1516564" target="_blank" rel="noopener">doi:10.1056/NEJMe1516564</a></p>
           </div>
         </div>
 
@@ -379,7 +379,7 @@
             <li data-reveal style="--i:2"><span class="fair-l" aria-hidden="true">I</span><h4>Interoperable <small>interoperável</small></h4><p>Formatos padrão da área (FASTA, FASTQ, GFF3, BED, TSV) e metadados descritos, para encaixar em outras ferramentas.</p></li>
             <li data-reveal style="--i:3"><span class="fair-l" aria-hidden="true">R</span><h4>Reusable <small>reutilizável</small></h4><p>Licença aberta, documentação com exemplos de uso e a origem de cada dado registrada.</p></li>
           </ol>
-          <p class="ref" data-reveal>Wilkinson MD <em>et al.</em> The FAIR Guiding Principles for scientific data management and stewardship. <em>Sci Data</em> 2016;3:160018. <a href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">doi:10.1038/sdata.2016.18</a></p>
+          <p class="ref" data-reveal>Wilkinson MD <em>et al.</em> The FAIR Guiding Principles for scientific data management and stewardship. <span class="nw"><em>Sci Data</em> 2016;3:160018.</span> <a href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">doi:10.1038/sdata.2016.18</a></p>
         </div>
 
         <div class="subsection" id="3r">
@@ -420,12 +420,44 @@
               <p>É aqui que os dados públicos entram de novo: testamos hipóteses em amostras de outros estudos e benchmarks.</p>
             </article>
           </div>
-          <p class="ref" data-reveal>Os termos variam entre áreas. Seguimos as definições da ACM (2020) e das National Academies of Sciences (2019).</p>
+          <p class="ref" data-reveal>Os termos variam entre áreas. Seguimos as definições da ACM (2020) e das <span class="nw">National Academies of Sciences (2019)</span>.</p>
         </div>
       </div>
     </section>
 
-    <section id="projetos" class="section">
+    <section id="dayhoff" class="section dayhoff" aria-labelledby="dayhoff-title">
+      <div class="wrap dh-grid">
+        <figure class="dh-portrait" data-reveal>
+          <div class="dh-seq" id="dh-seq" aria-hidden="true"></div>
+          <figcaption>
+            O nome dela, escrito no código de uma letra que ela mesma criou.
+            O <b>O</b> é a pirrolisina, o 22º aminoácido, descoberto só em 2002.
+          </figcaption>
+        </figure>
+        <div class="dh-copy" data-reveal style="--i:1">
+          <p class="kicker">Homenagem</p>
+          <h2 id="dayhoff-title">Margaret Oakley Dayhoff</h2>
+          <p class="dh-sub">1925–1983 · a mãe da bioinformática</p>
+          <p>
+            Química e pioneira no uso de computadores em biologia, Dayhoff reuniu todas as sequências de proteínas
+            conhecidas num único livro e o distribuiu para quem quisesse usar, décadas antes de existirem a internet e os
+            bancos de dados públicos. Boa parte do que fazemos aqui, de alinhar sequências a reconstruir filogenias,
+            começa no trabalho dela.
+          </p>
+          <ul class="dh-legacy">
+            <li><span class="dh-year">1965</span><div><b>Atlas of Protein Sequence and Structure</b><small>A primeira coleção de sequências de proteínas, origem do Protein Information Resource (PIR).</small></div></li>
+            <li><span class="dh-year">A·R·N</span><div><b>Código de uma letra</b><small>Os aminoácidos como letras únicas (A, R, N, D…), o alfabeto que até hoje usamos em FASTA.</small></div></li>
+            <li><span class="dh-year">1978</span><div><b>Matrizes PAM</b><small>Modelos de substituição de aminoácidos para pontuar alinhamentos e medir distância evolutiva.</small></div></li>
+          </ul>
+          <blockquote class="dh-quote">
+            <p>“Mãe e pai da bioinformática.”</p>
+            <footer>David Lipman, ex-diretor do NCBI</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos" class="section section-alt">
       <div class="wrap">
         <div class="section-head" data-reveal>
           <p class="kicker">05 · Ferramentas abertas</p>
@@ -462,7 +494,7 @@
       </div>
     </section>
 
-    <section id="sobre" class="section section-alt">
+    <section id="sobre" class="section">
       <div class="wrap about">
         <div data-reveal>
           <p class="kicker">06 · O laboratório</p>
@@ -516,7 +548,7 @@
       </div>
     </section>
 
-    <section id="bits" class="section bits" aria-labelledby="bits-title">
+    <section id="bits" class="section section-alt bits" aria-labelledby="bits-title">
       <div class="wrap">
         <div class="section-head" data-reveal>
           <p class="kicker">bio → bits</p>
@@ -532,7 +564,7 @@
       </div>
     </section>
 
-    <section id="oportunidades" class="section section-alt opp">
+    <section id="oportunidades" class="section opp">
       <div class="wrap">
         <div class="section-head opp-head" data-reveal>
           <p class="kicker">07 · Oportunidades</p>
@@ -760,6 +792,6 @@
   </div>
 
   <script src="assets/projects.js?v=95763254"></script>
-  <script src="assets/app.js?v=a8d06c53"></script>
+  <script src="assets/app.js?v=839abb79"></script>
 </body>
 </html>

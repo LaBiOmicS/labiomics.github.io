@@ -83,6 +83,9 @@ body {
 a { color: var(--accent); -webkit-tap-highlight-color: transparent; }
 button { -webkit-tap-highlight-color: transparent; }
 h1, h2, h3 { line-height: 1.15; margin: 0; }
+/* Quebra de linha mais equilibrada: títulos sem linhas desiguais e parágrafos sem palavra sozinha no fim. */
+h1, h2, h3, h4, .r3-q, .kicker { text-wrap: balance; }
+p, li, dd { text-wrap: pretty; }
 .wrap { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
 @media (min-width: 720px) { .wrap { padding: 0 32px; } }
 .muted { color: var(--muted); }
@@ -131,6 +134,7 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 @media (min-width: 1200px) { .logo { height: 100px; } }
 @media (max-width: 1040px) { .logo { height: 64px; } }
 @media (max-width: 520px) { .logo { height: 64px; } }
+@media (max-width: 360px) { .logo { height: 52px; } }
 /* Menu sanduíche em todos os tamanhos de tela. */
 .topbar nav a {
   position: relative; display: block; color: var(--muted); text-decoration: none; font-size: 16px; font-weight: 500;
@@ -592,7 +596,7 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 }
 
 /* ---------- Ciência aberta ---------- */
-.ref { margin: 20px 0 0; font-size: 13px; color: var(--muted); max-width: 80ch; }
+.ref { margin: 20px 0 0; font-size: 13px; color: var(--muted); }
 .ref a { overflow-wrap: anywhere; }
 .parasite {
   display: grid; gap: 32px; align-items: center; padding: 32px; border-radius: 24px;
@@ -616,7 +620,8 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .parasite-eyebrow { margin: 0 0 6px; font: 500 13px "IBM Plex Mono", monospace; color: var(--accent); letter-spacing: .04em; }
 .parasite-copy h3 { font-size: clamp(22px, 2.6vw, 28px); letter-spacing: -.02em; font-weight: 800; margin-bottom: 14px; }
 .parasite-copy p { margin: 0 0 12px; max-width: 64ch; }
-.parasite-copy .ref { margin-top: 16px; }
+.parasite-copy .ref { margin-top: 16px; max-width: none; }
+.nw { white-space: nowrap; }
 .parasite-src { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
 .parasite-src li { font: 500 12px "IBM Plex Mono", monospace; padding: 3px 9px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); }
 .osci .subsection { margin-top: 64px; padding-top: 48px; }
@@ -646,6 +651,45 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .r3-grid .chg { border: 1px solid transparent; background: var(--accent-soft); }
 .r3-grid .chg dd { color: var(--accent); }
 .r3 > p:last-child { margin: auto 0 0; color: var(--muted); font-size: 15px; }
+
+/* ---------- Homenagem a Margaret Dayhoff ---------- */
+.dh-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: center; }
+@media (min-width: 940px) { .dh-grid { grid-template-columns: auto 1fr; gap: 64px; } }
+.dh-portrait { margin: 0; justify-self: center; display: grid; gap: 14px; max-width: 100%; }
+.dh-seq {
+  --cell: min(30px, calc((100vw - 104px) / 13));
+  display: grid; grid-template-columns: repeat(13, var(--cell)); gap: 3px; padding: 16px; justify-content: center; border-radius: 20px;
+  background: #140c22; border: 1px solid color-mix(in srgb, var(--accent) 35%, #2c2338);
+  box-shadow: 0 20px 50px color-mix(in srgb, var(--accent) 25%, transparent), inset 0 0 60px rgb(109 40 217 / .18);
+  font: 600 calc(var(--cell) * .5)/1 "IBM Plex Mono", monospace;
+}
+.dh-seq span {
+  display: grid; place-items: center; aspect-ratio: 1; border-radius: 5px;
+  color: var(--c, #8a7fa3); background: color-mix(in srgb, var(--c, #8a7fa3) 10%, transparent);
+  opacity: .5; transition: background-color .5s, color .5s, opacity .5s, transform .5s var(--ease);
+}
+.dh-seq .k-hyd { --c: #8f96ff; } .dh-seq .k-pol { --c: #4fd6a0; } .dh-seq .k-pos { --c: #f47fb8; }
+.dh-seq .k-neg { --c: #ffb066; } .dh-seq .k-spc { --c: #e47cf5; }
+.dh-seq span.name { opacity: 1; color: #170a2e; background: #b18cff; box-shadow: 0 0 14px rgb(177 140 255 / .55); }
+.dh-seq span.name.pyl { background: #ffb066; box-shadow: 0 0 14px rgb(255 176 102 / .6); }
+.dh-seq span.mut { opacity: 1; transform: scale(1.18); background: color-mix(in srgb, var(--c) 35%, transparent); }
+.dh-portrait figcaption { max-width: 34ch; margin: 0 auto; text-align: center; font-size: 13px; color: var(--muted); }
+.dh-portrait figcaption b { color: #c2410c; font-family: "IBM Plex Mono", monospace; }
+:root[data-theme="dark"] .dh-portrait figcaption b { color: #ffb066; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .dh-portrait figcaption b { color: #ffb066; } }
+.dh-sub { margin: 6px 0 18px; font: 500 14px "IBM Plex Mono", monospace; color: var(--muted); }
+.dh-copy > p:not(.kicker):not(.dh-sub) { max-width: 62ch; margin: 0 0 22px; }
+.dh-legacy { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 10px; }
+.dh-legacy li {
+  display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; padding: 14px 16px;
+  border-radius: 14px; background: var(--surface); border: 1px solid var(--border);
+}
+.dh-year { font: 600 13px "IBM Plex Mono", monospace; color: var(--accent); padding-top: 2px; }
+.dh-legacy b { display: block; font-size: 15px; }
+.dh-legacy small { display: block; color: var(--muted); font-size: 14px; line-height: 1.5; margin-top: 2px; }
+.dh-quote { margin: 0; padding-left: 16px; border-left: 3px solid var(--accent); }
+.dh-quote p { margin: 0; font: italic 600 clamp(20px, 2.4vw, 24px)/1.3 "Playfair Display", Georgia, serif; }
+.dh-quote footer { margin-top: 6px; font-size: 13px; color: var(--muted); }
 
 /* ---------- About ---------- */
 .about { display: grid; gap: 40px; grid-template-columns: 1fr; }
