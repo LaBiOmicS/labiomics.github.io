@@ -1288,9 +1288,9 @@
   // Passeia sozinho pelo rodapé e fala uma curiosidade quando clicado.
   // No modo jogo, anda com ←/→ (ou A/D), pula com espaço/↑ e coleta bases: cada 3 bases viram um códon traduzido.
   (function mascot() {
-    var lane = $("dx-lane"), dx = $("dx"), say = $("dx-say"), footer = lane && lane.closest(".footer");
-    var playBtn = $("dx-play"), hud = $("dx-hud"), basesEl = $("dx-bases"), pad = $("dx-pad");
-    if (!lane || !dx) return;
+    var lane = $("dx-lane"), field = $("dx-field"), dx = $("dx"), say = $("dx-say"), footer = lane && lane.closest(".footer");
+    var playBtn = $("dx-play"), stats = $("dx-stats"), msg = $("dx-msg"), basesEl = $("dx-bases"), pad = $("dx-pad");
+    if (!lane || !field || !dx) return;
     var FACTS = [
       "Oi! Eu sou o Mr. DNA, a fita de DNA do LaBiOmicS.",
       "O genoma humano tem cerca de 3,1 bilhões de pares de bases.",
@@ -1299,13 +1299,13 @@
       "Esticado, o DNA de uma célula humana mede uns 2 metros.",
       "São 64 códons para só 20 aminoácidos. Redundância é charme.",
       "Uma colher de solo pode ter mais de mil espécies de bactérias.",
-      "Quer jogar? Clique em \"Jogar com o Mr. DNA\" aqui do lado.",
+      "Quer jogar? Clique em \"Jogar com o Mr. DNA\" aqui em cima.",
     ];
     var W = 78, GROUND = 14, WALK = 38, RUN = 190, JUMP = 470, GRAV = 1300;
     var x = 0, y = 0, vy = 0, dir = 1, state = "walk", until = 0, last = 0, raf = 0;
     var running = false, visible = false, fact = 0, sayT = 0, playing = false;
     var keys = { left: false, right: false }, bases = [], codon = "", protein = "", collected = 0;
-    var laneW = function () { return lane.clientWidth; };
+    var laneW = function () { return field.clientWidth; };
 
     function setState(s, ms) {
       state = s;
@@ -1317,12 +1317,25 @@
       dx.style.setProperty("--x", x.toFixed(1) + "px");
       dx.style.setProperty("--y", y.toFixed(1) + "px");
       dx.style.setProperty("--dir", dir);
+      if (say.classList.contains("show")) edges();
+    }
+    // Encosta o balão na borda quando o mascote está perto dela, para não ser cortado.
+    function edges() {
+      var room = Math.min(260, window.innerWidth - 48) / 2 - W / 2 + 8;
+      say.classList.toggle("edge-l", x < room);
+      say.classList.toggle("edge-r", laneW() - x - W < room);
     }
     function speak(text, ms) {
+      clearTimeout(sayT);
+      // No jogo, as falas vão para o placar acima da pista, sem cobrir as bases.
+      if (playing) {
+        say.classList.remove("show");
+        msg.textContent = text;
+        sayT = setTimeout(function () { msg.textContent = ""; }, ms || 4200);
+        return;
+      }
       say.textContent = text;
-      var r = dx.getBoundingClientRect(), lr = lane.getBoundingClientRect();
-      say.classList.toggle("edge-l", r.left - lr.left < 110);
-      say.classList.toggle("edge-r", lr.right - r.right < 110);
+      edges();
       say.classList.add("show");
       clearTimeout(sayT);
       sayT = setTimeout(function () { say.classList.remove("show"); }, ms || 4200);
@@ -1332,10 +1345,12 @@
     function spawn() {
       if (!playing) return;
       var high = Math.random() < 0.45;
-      // No chão, evita a área dos botões de toque (quando visíveis).
-      var max = laneW() - 30 - (high || !pad.offsetWidth ? 0 : pad.offsetWidth + 16), bx, tries = 0;
-      do { bx = 20 + Math.random() * (max - 20); } while (Math.abs(bx - (x + W / 2)) < 140 && tries++ < 20);
-      var b = { x: bx, h: high ? 170 : 40, base: "ATCG"[(Math.random() * 4) | 0], el: document.createElement("span") };
+      var max = laneW() - 30, bx, tries = 0;
+      var h = high ? 170 : 40;
+      // Longe do mascote e das outras bases na mesma altura.
+      function clash(px) { return Math.abs(px - (x + W / 2)) < 140 || bases.some(function (o) { return o.h === h && Math.abs(o.x - px) < 48; }); }
+      do { bx = 20 + Math.random() * (max - 20); } while (clash(bx) && tries++ < 30);
+      var b = { x: bx, h: h, base: "ATCG"[(Math.random() * 4) | 0], el: document.createElement("span") };
       b.el.className = "dx-base b-" + b.base;
       b.el.textContent = b.base;
       b.el.style.left = bx.toFixed(0) + "px";
@@ -1372,9 +1387,8 @@
       var slots = "";
       for (var i = 0; i < 3; i++) slots += '<span class="slot">' + (codon[i] || "·") + "</span>";
       var prot = protein.length > 24 ? "…" + protein.slice(-24) : protein;
-      hud.innerHTML = "Códon " + slots + " · bases <b>" + collected + "</b>" +
-        (prot ? ' · proteína <span class="prot">' + esc(prot) + "</span>" : "") +
-        '<span class="keys">← → andar · espaço pular · Esc sair</span>';
+      stats.innerHTML = "Códon " + slots + " · bases <b>" + collected + "</b>" +
+        (prot ? ' · proteína <span class="prot">' + esc(prot) + "</span>" : "");
     }
 
     /* --- Laço principal --- */
@@ -1439,6 +1453,7 @@
         start();
       } else {
         clearBases();
+        clearTimeout(sayT); msg.textContent = "";
         y = 0; vy = 0; place();
         setState("walk");
       }
@@ -1513,7 +1528,6 @@
     document.addEventListener("click", function (e) {
       if (nav.classList.contains("open") && !nav.contains(e.target) && !btn.contains(e.target)) set(false);
     });
-    window.matchMedia("(min-width: 901px)").addEventListener("change", function (m) { if (m.matches) set(false); });
   })();
 
   /* ---------------- Início ---------------- */

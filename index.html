@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=b3eb79db">
+  <link rel="stylesheet" href="assets/style.css?v=1926a528">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -40,6 +40,7 @@
           <a href="#pesquisa">Pesquisa</a>
           <a href="#projetos">Projetos</a>
           <a href="#metodologia">Metodologia</a>
+          <a href="#ciencia-aberta">Ciência aberta</a>
           <a href="#sobre">Sobre</a>
           <a href="#oportunidades">Oportunidades</a>
           <a href="#contato">Contato</a>
@@ -50,7 +51,7 @@
         <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
       <button class="menu-toggle" id="menu-toggle" type="button" aria-controls="nav" aria-expanded="false" aria-label="Abrir menu">
-        <span class="menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="menu-bars" aria-hidden="true"><span></span><span></span><span></span></span><span class="menu-label" aria-hidden="true">Menu</span>
       </button>
     </div>
   </header>
@@ -234,16 +235,122 @@
           <li data-reveal style="--i:3">
             <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6zm-3 9 2 2 4-4"/></svg></span>
             <h3>Ferramenta aberta</h3>
-            <p>O método vira software livre, com código público no GitHub, licença MIT e dados F.A.I.R.</p>
+            <p>O método vira software livre, com código público no GitHub e licença MIT.</p>
           </li>
         </ol>
       </div>
     </section>
 
-    <section id="sobre" class="section section-alt">
+    <section id="ciencia-aberta" class="section section-alt osci">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="kicker">04 · Ciência aberta</p>
+          <h2>Ciência que pode ser conferida</h2>
+          <p class="muted">Reaproveitamos dados públicos, publicamos o que produzimos e organizamos cada análise para que outras pessoas consigam refazê-la.</p>
+        </div>
+
+        <div class="parasite" data-reveal>
+          <div class="seal-wrap">
+            <svg class="seal" viewBox="0 0 240 240" role="img" aria-labelledby="seal-title">
+              <title id="seal-title">Selo Proud Research Parasite do LaBiOmicS: dados públicos, ciência nova</title>
+              <defs><path id="seal-arc" d="M120 120m-93 0a93 93 0 1 1 186 0a93 93 0 1 1-186 0"/></defs>
+              <circle class="seal-bg" cx="120" cy="120" r="118"/>
+              <circle class="seal-line" cx="120" cy="120" r="111"/>
+              <g class="seal-ring">
+                <text class="seal-txt"><textPath href="#seal-arc" textLength="580" lengthAdjust="spacing">PROUD RESEARCH PARASITE ✦ PUBLIC DATA ✦ NEW SCIENCE ✦</textPath></text>
+              </g>
+              <circle class="seal-line" cx="120" cy="120" r="76"/>
+              <g class="seal-phage" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path class="ph-head" d="M120 58l19 11v22l-19 11-19-11V69z"/>
+                <path class="ph-dna" d="M113 68c0 6 14 6 14 12s-14 6-14 12M127 68c0 6-14 6-14 12s14 6 14 12"/>
+                <path d="M112 102h16M115 106v26M125 106v26M115 112h10M115 119h10M115 126h10M106 132h28"/>
+                <path d="M108 132l-12 10 4 12M132 132l12 10-4 12M113 132l-6 13 6 11M127 132l6 13-6 11"/>
+              </g>
+              <text class="seal-lab" x="120" y="180" text-anchor="middle">LaBiOmicS</text>
+            </svg>
+          </div>
+          <div class="parasite-copy">
+            <p class="parasite-eyebrow">Proud research parasites</p>
+            <h3>Parasitas de pesquisa, com orgulho</h3>
+            <p>
+              Em 2016, um editorial do <em>New England Journal of Medicine</em> chamou de <em>research parasites</em> os
+              cientistas que analisam dados gerados por outros grupos. A comunidade adotou o termo como elogio, e hoje ele
+              dá nome até a um prêmio, o <em>Research Parasite Award</em>.
+            </p>
+            <p>
+              O LaBiOmicS faz parte dessa turma. Boa parte das nossas perguntas é respondida com dados que já estão em
+              bancos públicos: reanalisar o que foi sequenciado com dinheiro público testa resultados antigos, gera
+              hipóteses novas e multiplica o retorno desse investimento. Os autores originais de cada dado são sempre citados.
+            </p>
+            <ul class="parasite-src" aria-label="Fontes de dados públicos que usamos">
+              <li>NCBI SRA</li><li>ENA</li><li>GenBank</li><li>DATASUS</li>
+            </ul>
+            <p class="ref">Longo DL, Drazen JM. Data Sharing. <em>N Engl J Med</em> 2016;374:276–277. <a href="https://doi.org/10.1056/NEJMe1516564" target="_blank" rel="noopener">doi:10.1056/NEJMe1516564</a></p>
+          </div>
+        </div>
+
+        <div class="subsection" id="fair">
+          <div class="section-head" data-reveal>
+            <p class="kicker">Princípios FAIR</p>
+            <h3 class="sub-title">Dados e software que outros conseguem usar</h3>
+            <p class="muted">Quatro critérios para que o que publicamos seja encontrado e aproveitado, por pessoas e por máquinas.</p>
+          </div>
+          <ol class="fair">
+            <li data-reveal style="--i:0"><span class="fair-l" aria-hidden="true">F</span><h4>Findable <small>localizável</small></h4><p>Dados citados pelo número de acesso (SRA, ENA, GenBank) e ferramentas com repositório e versões publicadas.</p></li>
+            <li data-reveal style="--i:1"><span class="fair-l" aria-hidden="true">A</span><h4>Accessible <small>acessível</small></h4><p>Código aberto a qualquer pessoa, sem cadastro, e dados brutos em repositórios públicos internacionais.</p></li>
+            <li data-reveal style="--i:2"><span class="fair-l" aria-hidden="true">I</span><h4>Interoperable <small>interoperável</small></h4><p>Formatos padrão da área (FASTA, FASTQ, GFF3, BED, TSV) e metadados descritos, para encaixar em outras ferramentas.</p></li>
+            <li data-reveal style="--i:3"><span class="fair-l" aria-hidden="true">R</span><h4>Reusable <small>reutilizável</small></h4><p>Licença aberta, documentação com exemplos de uso e a origem de cada dado registrada.</p></li>
+          </ol>
+          <p class="ref" data-reveal>Wilkinson MD <em>et al.</em> The FAIR Guiding Principles for scientific data management and stewardship. <em>Sci Data</em> 2016;3:160018. <a href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">doi:10.1038/sdata.2016.18</a></p>
+        </div>
+
+        <div class="subsection" id="3r">
+          <div class="section-head" data-reveal>
+            <p class="kicker">Os três Rs</p>
+            <h3 class="sub-title">Repetir, reproduzir, replicar</h3>
+            <p class="muted">Parecem sinônimos, mas cada um testa uma coisa diferente. O que muda é quem refaz a análise e com quais dados.</p>
+          </div>
+          <div class="rrr">
+            <article class="r3" data-reveal style="--i:0">
+              <p class="r3-q"><span class="prompt">$&gt;</span> rodando de novo, sai o mesmo resultado?</p>
+              <h4>Repetibilidade</h4>
+              <dl class="r3-grid">
+                <div><dt>Equipe</dt><dd>mesma</dd></div>
+                <div><dt>Dados</dt><dd>mesmos</dd></div>
+                <div><dt>Código</dt><dd>mesmo</dd></div>
+              </dl>
+              <p>Versões de software fixadas, sementes aleatórias registradas e ambientes em container.</p>
+            </article>
+            <article class="r3" data-reveal style="--i:1">
+              <p class="r3-q"><span class="prompt">$&gt;</span> outra equipe chega ao mesmo resultado?</p>
+              <h4>Reprodutibilidade</h4>
+              <dl class="r3-grid">
+                <div class="chg"><dt>Equipe</dt><dd>outra</dd></div>
+                <div><dt>Dados</dt><dd>mesmos</dd></div>
+                <div><dt>Código</dt><dd>mesmo</dd></div>
+              </dl>
+              <p>Workflows públicos, prontos para rodar do dado bruto à figura final, em qualquer infraestrutura.</p>
+            </article>
+            <article class="r3" data-reveal style="--i:2">
+              <p class="r3-q"><span class="prompt">$&gt;</span> com dados novos, a conclusão se sustenta?</p>
+              <h4>Replicabilidade</h4>
+              <dl class="r3-grid">
+                <div class="chg"><dt>Equipe</dt><dd>outra</dd></div>
+                <div class="chg"><dt>Dados</dt><dd>novos</dd></div>
+                <div class="chg"><dt>Código</dt><dd>outro</dd></div>
+              </dl>
+              <p>É aqui que os dados públicos entram de novo: testamos hipóteses em amostras de outros estudos e benchmarks.</p>
+            </article>
+          </div>
+          <p class="ref" data-reveal>Os termos variam entre áreas. Seguimos as definições da ACM (2020) e das National Academies of Sciences (2019).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" class="section">
       <div class="wrap about">
         <div data-reveal>
-          <p class="kicker">04 · O laboratório</p>
+          <p class="kicker">05 · O laboratório</p>
           <h2>Sobre o laboratório</h2>
           <p>
             O LaBiOmicS (Laboratório de Bioinformática e Ciências Ômicas) faz parte do Núcleo Integrado de
@@ -260,11 +367,8 @@
             codificantes (lncRNAs) no transcriptoma canino.
           </p>
           <p>
-            O trabalho segue os princípios da Ciência Aberta. O código é publicado em repositórios públicos com licenças
-            permissivas; as análises rodam em containers (Docker, Singularity) e gerenciadores de workflow (Nextflow,
-            Snakemake), para que possam ser replicadas em qualquer infraestrutura; e os dados seguem os princípios
-            F.A.I.R. O laboratório também reanalisa dados públicos depositados no SRA e no ENA para testar novas
-            hipóteses, ampliando o retorno do investimento público em ciência.
+            Todo o trabalho segue os princípios da Ciência Aberta: dados, código e métodos ficam disponíveis para quem
+            quiser conferir ou reaproveitar. <a href="#ciencia-aberta">Veja como fazemos</a>.
           </p>
         </div>
         <div data-reveal style="--i:1">
@@ -297,10 +401,10 @@
       </div>
     </section>
 
-    <section id="atuacao" class="section">
+    <section id="atuacao" class="section section-alt">
       <div class="wrap">
         <div class="section-head" data-reveal>
-          <p class="kicker">05 · Atuação</p>
+          <p class="kicker">06 · Atuação</p>
           <h2>Áreas de atuação</h2>
           <p class="muted">Quatro eixos que se conectam: os dados ômicos alimentam os modelos computacionais, que respondem a perguntas de saúde e viram inovação.</p>
         </div>
@@ -412,7 +516,7 @@
       </div>
     </section>
 
-    <section id="bits" class="section section-alt bits" aria-labelledby="bits-title">
+    <section id="bits" class="section bits" aria-labelledby="bits-title">
       <div class="wrap">
         <div class="section-head" data-reveal>
           <p class="kicker">bio → bits</p>
@@ -428,10 +532,10 @@
       </div>
     </section>
 
-    <section id="oportunidades" class="section opp">
+    <section id="oportunidades" class="section section-alt opp">
       <div class="wrap">
         <div class="section-head opp-head" data-reveal>
-          <p class="kicker">06 · Oportunidades</p>
+          <p class="kicker">07 · Oportunidades</p>
           <h2>Venha fazer ciência com a gente</h2>
           <p class="muted">Dois caminhos que se encontram na bioinformática. Procuramos estudantes com vontade de aprender na prática, em projetos reais e com código aberto.</p>
         </div>
@@ -570,7 +674,7 @@
           </g>
         </svg>
         <div class="cta-main">
-          <p class="kicker">07 · Contato</p>
+          <p class="kicker">08 · Contato</p>
           <h2>Vamos colaborar?</h2>
           <p>Universidades, institutos e empresas interessados em pesquisa conjunta, projetos de P&amp;D ou nas nossas ferramentas abertas: escreva para o laboratório.</p>
           <div class="cta-actions">
@@ -606,19 +710,24 @@
           <li class="ob ob-data"><span class="ob-l"><svg aria-hidden="true" viewBox="0 0 16 16" width="11" height="11"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4.5 7V4.8a3.5 3.5 0 0 1 6.8-1.2"/><rect x="2.5" y="7" width="11" height="7.5" rx="1.6" fill="currentColor"/></svg>open</span><span class="ob-r">data</span></li>
           <li class="ob ob-source"><span class="ob-l"><svg aria-hidden="true" viewBox="0 0 16 16" width="11" height="11"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4.5 7V4.8a3.5 3.5 0 0 1 6.8-1.2"/><rect x="2.5" y="7" width="11" height="7.5" rx="1.6" fill="currentColor"/></svg>open</span><span class="ob-r">source</span></li>
           <li class="ob ob-knowledge"><span class="ob-l"><svg aria-hidden="true" viewBox="0 0 16 16" width="11" height="11"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4.5 7V4.8a3.5 3.5 0 0 1 6.8-1.2"/><rect x="2.5" y="7" width="11" height="7.5" rx="1.6" fill="currentColor"/></svg>open</span><span class="ob-r">knowledge</span></li>
+          <li><a class="ob ob-parasite" href="#ciencia-aberta"><span class="ob-l"><svg aria-hidden="true" viewBox="0 0 16 16" width="11" height="11"><path fill="currentColor" d="M8 1l4 2.3v4.4L8 10 4 7.7V3.3z"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M8 10v3M5 15l3-2 3 2"/></svg>research</span><span class="ob-r">parasite</span></a></li>
         </ul>
       </div>
     </div>
     <div class="dx-lane" id="dx-lane">
-      <div class="dx-hud" id="dx-hud" aria-live="polite"></div>
-      <button type="button" class="dx-play" id="dx-play" aria-pressed="false">
-        <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 11h4M8 9v4M15 12h.01M18 10h.01M17.3 5H6.7a4 4 0 0 0-4 3.6l-.6 5.2A3 3 0 0 0 5 17c1 0 1.5-.5 2-1l1.4-1.4A2 2 0 0 1 9.8 14h4.4a2 2 0 0 1 1.4.6L17 16c.5.5 1 1 2 1a3 3 0 0 0 2.9-3.2l-.6-5.2A4 4 0 0 0 17.3 5z"/></svg>
-        <span>Jogar com o Mr. DNA</span>
-      </button>
-      <div class="dx-bases" id="dx-bases" aria-hidden="true"></div>
-      <div class="dx-pad" id="dx-pad" aria-hidden="true">
-        <button type="button" data-key="left" tabindex="-1">◀</button><button type="button" data-key="jump" tabindex="-1">▲</button><button type="button" data-key="right" tabindex="-1">▶</button>
+      <div class="dx-top">
+        <div class="dx-hud" id="dx-hud">
+          <span class="dx-stats" id="dx-stats"></span>
+          <span class="dx-msg" id="dx-msg" aria-live="polite"></span>
+          <span class="keys">← → andar · espaço pular · Esc sair</span>
+        </div>
+        <button type="button" class="dx-play" id="dx-play" aria-pressed="false">
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 11h4M8 9v4M15 12h.01M18 10h.01M17.3 5H6.7a4 4 0 0 0-4 3.6l-.6 5.2A3 3 0 0 0 5 17c1 0 1.5-.5 2-1l1.4-1.4A2 2 0 0 1 9.8 14h4.4a2 2 0 0 1 1.4.6L17 16c.5.5 1 1 2 1a3 3 0 0 0 2.9-3.2l-.6-5.2A4 4 0 0 0 17.3 5z"/></svg>
+          <span>Jogar com o Mr. DNA</span>
+        </button>
       </div>
+      <div class="dx-field" id="dx-field">
+      <div class="dx-bases" id="dx-bases" aria-hidden="true"></div>
       <div class="dx-bot" id="dx" aria-hidden="true">
         <p class="dx-say" id="dx-say"></p>
         <svg class="dx-svg" viewBox="-30 -4 60 96" width="78" height="125">
@@ -637,10 +746,14 @@
           </g>
         </svg>
       </div>
+      </div>
+      <div class="dx-pad" id="dx-pad" aria-hidden="true">
+        <button type="button" data-key="left" tabindex="-1">◀</button><button type="button" data-key="jump" tabindex="-1">▲</button><button type="button" data-key="right" tabindex="-1">▶</button>
+      </div>
     </div>
   </footer>
 
   <script src="assets/projects.js?v=95763254"></script>
-  <script src="assets/app.js?v=22febde7"></script>
+  <script src="assets/app.js?v=5600b701"></script>
 </body>
 </html>
