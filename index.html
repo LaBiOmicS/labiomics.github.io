@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=68ca1130">
+  <link rel="stylesheet" href="assets/style.css?v=7be8e96f">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -58,6 +58,34 @@
   </header>
 
   <main>
+    <!-- Hero comemorativo: substitui o hero comum só em 11 de março (data local do visitante). Prévia: ?dia-da-bioinformatica -->
+    <section class="bday" id="dia-da-bioinformatica" aria-labelledby="bday-title" hidden>
+      <div class="bday-rain" id="bday-rain" aria-hidden="true"></div>
+      <div class="wrap bday-grid">
+        <div class="bday-copy">
+          <p class="bday-kicker"><span class="prompt">$&gt;</span> date +%d/%m <span class="bday-out">11/03</span></p>
+          <h1 id="bday-title">Feliz Dia da Bioinformática!</h1>
+          <p class="bday-lead">
+            Hoje é aniversário de <b>Margaret Oakley Dayhoff</b>, que nasceu em 11 de março de 1925. Em sua homenagem,
+            a AB3C escolheu a data para celebrar a bioinformática e quem faz dela uma ciência.
+          </p>
+          <dl class="bday-stats">
+            <div><dt><span data-bday-since="1925">100</span> anos</dt><dd>do nascimento de Dayhoff</dd></div>
+            <div><dt><span data-bday-since="1965">60</span> anos</dt><dd>do <em>Atlas of Protein Sequence and Structure</em></dd></div>
+          </dl>
+          <div class="bday-actions">
+            <a class="btn bday-btn-main" href="#dayhoff">Conheça Margaret Dayhoff</a>
+            <a class="btn bday-btn" href="https://site.ab3c.org.br/ab3c/anuncios/173-dia-da-bioinformatica" target="_blank" rel="noopener">#DiadaBioinformática</a>
+          </div>
+        </div>
+        <div class="bday-cal" aria-hidden="true">
+          <small>março</small>
+          <b>11</b>
+          <span>Dia da Bioinformática</span>
+        </div>
+      </div>
+    </section>
+
     <section class="hero" id="inicio">
       <div class="hero-bg" aria-hidden="true">
         <span class="blob blob-t"></span><span class="blob blob-a"></span><span class="blob blob-g"></span><span class="blob blob-c"></span>
@@ -796,6 +824,6 @@
   </div>
 
   <script src="assets/projects.js?v=95763254"></script>
-  <script src="assets/app.js?v=839abb79"></script>
+  <script src="assets/app.js?v=972bb392"></script>
 </body>
 </html>

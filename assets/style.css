@@ -183,6 +183,48 @@ p, li, dd { text-wrap: pretty; }
 [data-dark="true"] .i-sun { opacity: 0; transform: rotate(90deg) scale(.5); }
 [data-dark="true"] .i-moon { opacity: 1; transform: none; }
 
+/* ---------- Hero comemorativo: Dia da Bioinformática (11 de março) ---------- */
+.bday {
+  position: relative; overflow: hidden; isolation: isolate; color: #fff; padding: 56px 0 72px;
+  min-height: min(88vh, 820px); display: flex; align-items: center;
+  background: radial-gradient(120% 140% at 85% 10%, #c026d3 0, transparent 55%), linear-gradient(135deg, #4f46e5, #6d28d9 55%, #3b0a6b);
+}
+.bday-rain { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.bday-rain span {
+  position: absolute; top: -40px; font: 700 var(--s, 18px) "IBM Plex Mono", monospace; color: rgb(255 255 255 / var(--o, .35));
+  animation: bday-fall var(--d, 9s) linear infinite; animation-delay: var(--dl, 0s);
+}
+@keyframes bday-fall { to { top: 104%; transform: rotate(var(--r, 180deg)); } }
+@media (prefers-reduced-motion: reduce) { .bday-rain { display: none; } }
+.bday-grid { display: grid; gap: 32px; align-items: center; width: 100%; }
+@media (min-width: 860px) { .bday-grid { grid-template-columns: 1fr auto; gap: 56px; } }
+.bday-kicker { margin: 0 0 12px; font: 500 14px "IBM Plex Mono", monospace; color: rgb(255 255 255 / .8); }
+.bday-kicker .prompt { color: #ffb066; }
+.bday-out { margin-left: 6px; padding: 2px 8px; border-radius: 6px; background: rgb(255 255 255 / .15); color: #fff; }
+.bday h1 { font-size: clamp(32px, 5.5vw, 56px); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
+.bday-lead { margin: 16px 0 24px; max-width: 58ch; font-size: 17px; color: rgb(255 255 255 / .9); }
+.bday-lead b { color: #fff; }
+.bday-stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 28px; }
+.bday-stats div { padding: 12px 16px; border-radius: 14px; background: rgb(255 255 255 / .12); border: 1px solid rgb(255 255 255 / .2); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.bday-stats dt { font: 800 24px/1.1 Inter, system-ui, sans-serif; }
+.bday-stats dd { margin: 2px 0 0; font-size: 13px; color: rgb(255 255 255 / .8); }
+.bday-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.bday .bday-btn-main { background: #fff; border-color: #fff; color: #3b0a6b; font-weight: 600; }
+.bday .bday-btn-main:hover { background: #f1ecf8; border-color: #f1ecf8; }
+.bday .bday-btn { background: transparent; border-color: rgb(255 255 255 / .5); color: #fff; }
+.bday .bday-btn:hover { border-color: #fff; background: rgb(255 255 255 / .1); }
+.bday-cal {
+  justify-self: center; display: grid; width: 220px; text-align: center; border-radius: 28px; overflow: hidden;
+  background: #fff; color: #1b1424; box-shadow: 0 24px 60px rgb(20 0 50 / .45); rotate: 4deg;
+  animation: bday-bob 4s ease-in-out infinite alternate;
+}
+.bday-cal small { display: block; padding: 10px 0; background: #ffb066; color: #3b0a6b; font: 700 15px "IBM Plex Mono", monospace; text-transform: uppercase; letter-spacing: .12em; }
+.bday-cal b { display: block; padding: 8px 0 0; font: 800 120px/1 Inter, system-ui, sans-serif; letter-spacing: -.05em; background: linear-gradient(135deg, #6d28d9, #c026d3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.bday-cal span { display: block; padding: 4px 16px 18px; font: 600 13px "IBM Plex Mono", monospace; color: #625a70; }
+@keyframes bday-bob { to { translate: 0 -8px; rotate: 1deg; } }
+@media (prefers-reduced-motion: reduce) { .bday-cal { animation: none; } }
+@media (max-width: 859px) { .bday-cal { width: 180px; } .bday-cal b { font-size: 96px; } }
+
 /* ---------- Hero ---------- */
 .hero { position: relative; overflow: hidden; padding: 48px 0 200px; min-height: min(94vh, 900px); display: flex; align-items: center; isolation: isolate; }
 /* Aurora nas cores das bases (A azul, T verde, C laranja, G roxo) + grade de pontos de flow cell. */

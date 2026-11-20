@@ -1525,6 +1525,36 @@
     document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
   })();
 
+  /* ---------------- Dia da Bioinformática (11 de março) ---------------- */
+  // O hero comemorativo fica escondido no HTML e, só no dia, substitui o hero comum (data local do visitante).
+  // Para pré-visualizar em qualquer dia: ?dia-da-bioinformatica
+  (function bioinfoDay() {
+    var sec = $("dia-da-bioinformatica");
+    if (!sec) return;
+    var now = new Date();
+    var preview = /[?&]dia-da-bioinformatica\b/.test(location.search);
+    if (!preview && !(now.getMonth() === 2 && now.getDate() === 11)) return;
+    // No dia, o comemorativo ocupa o lugar do hero comum.
+    sec.hidden = false;
+    var hero = $("inicio");
+    if (hero) hero.hidden = true;
+    var brand = document.querySelector(".brand");
+    if (brand) brand.setAttribute("href", "#dia-da-bioinformatica");
+    sec.querySelectorAll("[data-bday-since]").forEach(function (el) {
+      el.textContent = now.getFullYear() - Number(el.getAttribute("data-bday-since"));
+    });
+    if (reduce) return;
+    // Chuva de letras de aminoácidos, o alfabeto que Dayhoff criou.
+    var rain = $("bday-rain"), AA = "ACDEFGHIKLMNPQRSTVWYO", html = "";
+    for (var i = 0; i < 34; i++) {
+      html += '<span style="left:' + (Math.random() * 100).toFixed(1) + "%;--s:" + (12 + Math.random() * 18).toFixed(0) +
+        "px;--o:" + (0.12 + Math.random() * 0.3).toFixed(2) + ";--d:" + (7 + Math.random() * 8).toFixed(1) +
+        "s;--dl:" + (-Math.random() * 15).toFixed(1) + "s;--r:" + ((Math.random() < 0.5 ? -1 : 1) * (90 + Math.random() * 270)).toFixed(0) +
+        'deg">' + AA[(Math.random() * AA.length) | 0] + "</span>";
+    }
+    rain.innerHTML = html;
+  })();
+
   /* ---------------- Homenagem: nome de Dayhoff em código de aminoácidos ---------------- */
   // Grade de "sequência" com MARGARET / OAKLEY / DAYHOFF em destaque. As outras letras sofrem
   // mutações pontuais de tempos em tempos, em alusão às matrizes PAM.
