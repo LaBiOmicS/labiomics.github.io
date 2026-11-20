@@ -756,8 +756,17 @@ p, li, dd { text-wrap: pretty; }
 
 /* ---------- About ---------- */
 .about { display: grid; gap: 40px; grid-template-columns: 1fr; }
-@media (min-width: 860px) { .about { grid-template-columns: 3fr 2fr; align-items: start; } }
+@media (min-width: 1100px) {
+  /* Colunas da mesma altura: a infraestrutura desce até o fim do card da coordenação. */
+  .about { grid-template-columns: 3fr 2fr; align-items: stretch; }
+  .about > div:first-child { display: flex; flex-direction: column; }
+  .about > div:first-child > p:not(.kicker) { margin: 0 0 14px; }
+  .about > div:first-child > h2 { margin-bottom: 16px; }
+  .about > div:first-child .infra-title { margin-top: auto; padding-top: 24px; }
+  .about > div:last-child > .person { height: 100%; }
+}
 .about p { max-width: 64ch; }
+.about .person p { max-width: none; }
 .about h2 { margin-bottom: 8px; }
 .about h3 { font-size: 17px; margin-bottom: 14px; }
 .infra-title { margin-top: 28px; }
