@@ -608,10 +608,9 @@ h1, h2, h3 { line-height: 1.15; margin: 0; }
 .seal-txt { fill: var(--accent-ink); font: 600 15.5px "IBM Plex Mono", monospace; }
 .seal-ring { transform-origin: 120px 120px; animation: seal-spin 60s linear infinite; }
 .seal:hover .seal-ring { animation-play-state: paused; }
-.seal-phage { stroke: var(--accent-ink); stroke-width: 3; }
+.seal-phage { stroke: var(--accent-ink); stroke-width: 2.6; }
 .seal-phage .ph-head { fill: color-mix(in srgb, var(--accent-ink) 14%, transparent); }
 .seal-phage .ph-dna { stroke-width: 2; opacity: .8; }
-.seal-lab { fill: var(--accent-ink); font: italic 700 17px "Playfair Display", Georgia, serif; letter-spacing: .02em; }
 @keyframes seal-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .seal-ring { animation: none; } .seal:hover { transform: none; } }
 .parasite-eyebrow { margin: 0 0 6px; font: 500 13px "IBM Plex Mono", monospace; color: var(--accent); letter-spacing: .04em; }
@@ -999,6 +998,30 @@ a.kind-tool:hover { background: var(--g); color: var(--surface); }
 :root[data-theme="dark"] .ob-source { --ob: #7c3aed; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .ob-source { --ob: #7c3aed; } }
 @media (max-width: 640px) { .open-badges { margin: 4px 0 0; grid-template-columns: repeat(2, 1fr); } .open-badges li:last-child:nth-child(odd) { grid-column: 1 / -1; } }
+
+/* ---------- Setas de navegação rápida ---------- */
+.jump { position: fixed; right: 16px; bottom: 16px; z-index: 25; display: grid; gap: 8px; pointer-events: none; }
+@media (min-width: 720px) { .jump { right: 24px; bottom: 24px; } }
+.jump-btn {
+  display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+  color: var(--text); background: color-mix(in srgb, var(--surface) 88%, transparent);
+  border: 1px solid var(--border); box-shadow: var(--shadow);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  opacity: 0; visibility: hidden; transform: translateY(8px) scale(.9);
+  transition: opacity .25s, transform .3s var(--ease), visibility 0s linear .3s, color .2s, border-color .2s, background-color .2s;
+}
+.jump-btn.show { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition-delay: 0s; }
+.jump-btn:hover { color: var(--accent-ink); background: var(--accent); border-color: var(--accent); }
+.jump.hide .jump-btn { opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(8px) scale(.9); }
+@media (prefers-reduced-motion: reduce) { .jump-btn { transition: none; } }
+/* Na pista do jogo, a seta para o topo vira um botão da própria barra. */
+.dx-top-btn {
+  flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; margin-left: auto;
+  font: 500 13px Inter, system-ui, sans-serif; color: var(--muted); cursor: pointer;
+  background: var(--surface); border: 1px solid var(--border); transition: color .2s, border-color .2s;
+}
+.dx-top-btn:hover { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
+.dx-lane.playing .dx-top-btn { margin-left: 0; }
 
 /* ---------- Paginação ---------- */
 .pager { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 10px; margin-top: 32px; }

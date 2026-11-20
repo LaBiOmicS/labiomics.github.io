@@ -1096,7 +1096,21 @@
       sections.forEach(function (s, i) { if (s && s.getBoundingClientRect().top <= mid) cur = i; });
       if (y + window.innerHeight >= document.documentElement.scrollHeight - 2) cur = sections.length - 1;
       links.forEach(function (a, i) { a.classList.toggle("active", i === cur); });
+      // Setas: ↑ depois de sair do topo, ↓ enquanto houver bastante página abaixo; somem quando a pista do jogo aparece.
+      if (jump) {
+        upBtn.classList.toggle("show", y > 500);
+        downBtn.classList.toggle("show", h - y > 900);
+        jump.classList.toggle("hide", !!lane && lane.getBoundingClientRect().top < window.innerHeight - 40);
+      }
     }
+    var jump = $("jump"), upBtn = $("jump-up"), downBtn = $("jump-down"), lane = $("dx-lane");
+    function goTo(top) { window.scrollTo({ top: top, behavior: reduce ? "auto" : "smooth" }); }
+    if (jump) {
+      upBtn.addEventListener("click", function () { goTo(0); });
+      downBtn.addEventListener("click", function () { goTo(document.documentElement.scrollHeight); });
+    }
+    var dxUp = $("dx-up");
+    if (dxUp) dxUp.addEventListener("click", function () { goTo(0); });
     window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     window.addEventListener("resize", update);
     update();

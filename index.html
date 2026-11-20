@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/style.css?v=1926a528">
+  <link rel="stylesheet" href="assets/style.css?v=0ff4d221">
   <script>
     document.documentElement.classList.add("js");
     try { var t = localStorage.getItem("labiomics-theme"); if (t) document.documentElement.setAttribute("data-theme", t); } catch (e) {}
@@ -38,9 +38,10 @@
       <nav id="nav" aria-label="Seções">
         <div class="nav-inner">
           <a href="#pesquisa">Pesquisa</a>
-          <a href="#projetos">Projetos</a>
+          <a href="#atuacao">Atuação</a>
           <a href="#metodologia">Metodologia</a>
           <a href="#ciencia-aberta">Ciência aberta</a>
+          <a href="#projetos">Projetos</a>
           <a href="#sobre">Sobre</a>
           <a href="#oportunidades">Oportunidades</a>
           <a href="#contato">Contato</a>
@@ -173,238 +174,10 @@
       </div>
     </section>
 
-    <section id="projetos" class="section section-alt">
-      <div class="wrap">
-        <div class="section-head" data-reveal>
-          <p class="kicker">02 · Ferramentas abertas</p>
-          <h2>Projetos</h2>
-          <p class="muted">Selecione uma categoria ou busque por nome, tema ou plataforma.</p>
-        </div>
-
-        <div class="toolbar" data-reveal>
-          <label class="search">
-            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm10 2-4.35-4.35"/></svg>
-            <input id="q" type="search" placeholder="Buscar projetos" autocomplete="off" aria-label="Buscar projetos">
-            <kbd>/</kbd>
-          </label>
-          <div class="filters" id="filters" role="tablist" aria-label="Categorias"><span class="pill" aria-hidden="true"></span></div>
-        </div>
-
-        <div class="grid" id="grid" aria-live="polite"></div>
-        <nav class="pager" id="pager" aria-label="Páginas de projetos" hidden></nav>
-        <p class="empty" id="empty" hidden>Nenhum projeto encontrado.</p>
-
-        <div class="subsection" id="workflows">
-          <div class="section-head" data-reveal>
-            <p class="kicker">Pipelines reprodutíveis</p>
-            <h3 class="sub-title">Workflows</h3>
-            <p class="muted">Análises completas em Snakemake e Nextflow, com containers e ambientes versionados. Alguns rodam nos dois motores.</p>
-          </div>
-          <div class="toolbar" id="wf-toolbar" data-reveal>
-            <div class="filters" id="wf-filters" role="tablist" aria-label="Motores de workflow"><span class="pill" aria-hidden="true"></span></div>
-          </div>
-          <div class="grid" id="wf-grid" aria-live="polite"></div>
-          <nav class="pager" id="wf-pager" aria-label="Páginas de workflows" hidden></nav>
-          <p class="empty" id="wf-empty" hidden>Nenhum workflow encontrado.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="metodologia" class="section">
-      <div class="wrap">
-        <div class="section-head" data-reveal>
-          <p class="kicker">03 · Abordagem metodológica</p>
-          <h2>Do sequenciamento à ferramenta aberta</h2>
-        </div>
-        <ol class="flow">
-          <li data-reveal style="--i:0">
-            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
-            <h3>Sequenciamento e coleta</h3>
-            <p>Dados brutos de plataformas NGS e curadoria de bancos públicos (NCBI, SRA, ENA), reanalisados para testar novas hipóteses.</p>
-          </li>
-          <li data-reveal style="--i:1">
-            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
-            <h3>Processamento in silico</h3>
-            <p>Pipelines e workflows reprodutíveis (Nextflow, Snakemake, containers Docker/Singularity e Galaxy).</p>
-          </li>
-          <li data-reveal style="--i:2">
-            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v6M12 15v6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M3 12h6M15 12h6M5.6 18.4l4.2-4.2M14.2 9.8l4.2-4.2"/></svg></span>
-            <h3>Integração biológica</h3>
-            <p>Estatística multivariada e biologia de sistemas para interpretar os fenômenos biológicos por trás dos dados.</p>
-          </li>
-          <li data-reveal style="--i:3">
-            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6zm-3 9 2 2 4-4"/></svg></span>
-            <h3>Ferramenta aberta</h3>
-            <p>O método vira software livre, com código público no GitHub e licença MIT.</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <section id="ciencia-aberta" class="section section-alt osci">
-      <div class="wrap">
-        <div class="section-head" data-reveal>
-          <p class="kicker">04 · Ciência aberta</p>
-          <h2>Ciência que pode ser conferida</h2>
-          <p class="muted">Reaproveitamos dados públicos, publicamos o que produzimos e organizamos cada análise para que outras pessoas consigam refazê-la.</p>
-        </div>
-
-        <div class="parasite" data-reveal>
-          <div class="seal-wrap">
-            <svg class="seal" viewBox="0 0 240 240" role="img" aria-labelledby="seal-title">
-              <title id="seal-title">Selo Proud Research Parasite do LaBiOmicS: dados públicos, ciência nova</title>
-              <defs><path id="seal-arc" d="M120 120m-93 0a93 93 0 1 1 186 0a93 93 0 1 1-186 0"/></defs>
-              <circle class="seal-bg" cx="120" cy="120" r="118"/>
-              <circle class="seal-line" cx="120" cy="120" r="111"/>
-              <g class="seal-ring">
-                <text class="seal-txt"><textPath href="#seal-arc" textLength="580" lengthAdjust="spacing">PROUD RESEARCH PARASITE ✦ PUBLIC DATA ✦ NEW SCIENCE ✦</textPath></text>
-              </g>
-              <circle class="seal-line" cx="120" cy="120" r="76"/>
-              <g class="seal-phage" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path class="ph-head" d="M120 58l19 11v22l-19 11-19-11V69z"/>
-                <path class="ph-dna" d="M113 68c0 6 14 6 14 12s-14 6-14 12M127 68c0 6-14 6-14 12s14 6 14 12"/>
-                <path d="M112 102h16M115 106v26M125 106v26M115 112h10M115 119h10M115 126h10M106 132h28"/>
-                <path d="M108 132l-12 10 4 12M132 132l12 10-4 12M113 132l-6 13 6 11M127 132l6 13-6 11"/>
-              </g>
-              <text class="seal-lab" x="120" y="180" text-anchor="middle">LaBiOmicS</text>
-            </svg>
-          </div>
-          <div class="parasite-copy">
-            <p class="parasite-eyebrow">Proud research parasites</p>
-            <h3>Parasitas de pesquisa, com orgulho</h3>
-            <p>
-              Em 2016, um editorial do <em>New England Journal of Medicine</em> chamou de <em>research parasites</em> os
-              cientistas que analisam dados gerados por outros grupos. A comunidade adotou o termo como elogio, e hoje ele
-              dá nome até a um prêmio, o <em>Research Parasite Award</em>.
-            </p>
-            <p>
-              O LaBiOmicS faz parte dessa turma. Boa parte das nossas perguntas é respondida com dados que já estão em
-              bancos públicos: reanalisar o que foi sequenciado com dinheiro público testa resultados antigos, gera
-              hipóteses novas e multiplica o retorno desse investimento. Os autores originais de cada dado são sempre citados.
-            </p>
-            <ul class="parasite-src" aria-label="Fontes de dados públicos que usamos">
-              <li>NCBI SRA</li><li>ENA</li><li>GenBank</li><li>DATASUS</li>
-            </ul>
-            <p class="ref">Longo DL, Drazen JM. Data Sharing. <em>N Engl J Med</em> 2016;374:276–277. <a href="https://doi.org/10.1056/NEJMe1516564" target="_blank" rel="noopener">doi:10.1056/NEJMe1516564</a></p>
-          </div>
-        </div>
-
-        <div class="subsection" id="fair">
-          <div class="section-head" data-reveal>
-            <p class="kicker">Princípios FAIR</p>
-            <h3 class="sub-title">Dados e software que outros conseguem usar</h3>
-            <p class="muted">Quatro critérios para que o que publicamos seja encontrado e aproveitado, por pessoas e por máquinas.</p>
-          </div>
-          <ol class="fair">
-            <li data-reveal style="--i:0"><span class="fair-l" aria-hidden="true">F</span><h4>Findable <small>localizável</small></h4><p>Dados citados pelo número de acesso (SRA, ENA, GenBank) e ferramentas com repositório e versões publicadas.</p></li>
-            <li data-reveal style="--i:1"><span class="fair-l" aria-hidden="true">A</span><h4>Accessible <small>acessível</small></h4><p>Código aberto a qualquer pessoa, sem cadastro, e dados brutos em repositórios públicos internacionais.</p></li>
-            <li data-reveal style="--i:2"><span class="fair-l" aria-hidden="true">I</span><h4>Interoperable <small>interoperável</small></h4><p>Formatos padrão da área (FASTA, FASTQ, GFF3, BED, TSV) e metadados descritos, para encaixar em outras ferramentas.</p></li>
-            <li data-reveal style="--i:3"><span class="fair-l" aria-hidden="true">R</span><h4>Reusable <small>reutilizável</small></h4><p>Licença aberta, documentação com exemplos de uso e a origem de cada dado registrada.</p></li>
-          </ol>
-          <p class="ref" data-reveal>Wilkinson MD <em>et al.</em> The FAIR Guiding Principles for scientific data management and stewardship. <em>Sci Data</em> 2016;3:160018. <a href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">doi:10.1038/sdata.2016.18</a></p>
-        </div>
-
-        <div class="subsection" id="3r">
-          <div class="section-head" data-reveal>
-            <p class="kicker">Os três Rs</p>
-            <h3 class="sub-title">Repetir, reproduzir, replicar</h3>
-            <p class="muted">Parecem sinônimos, mas cada um testa uma coisa diferente. O que muda é quem refaz a análise e com quais dados.</p>
-          </div>
-          <div class="rrr">
-            <article class="r3" data-reveal style="--i:0">
-              <p class="r3-q"><span class="prompt">$&gt;</span> rodando de novo, sai o mesmo resultado?</p>
-              <h4>Repetibilidade</h4>
-              <dl class="r3-grid">
-                <div><dt>Equipe</dt><dd>mesma</dd></div>
-                <div><dt>Dados</dt><dd>mesmos</dd></div>
-                <div><dt>Código</dt><dd>mesmo</dd></div>
-              </dl>
-              <p>Versões de software fixadas, sementes aleatórias registradas e ambientes em container.</p>
-            </article>
-            <article class="r3" data-reveal style="--i:1">
-              <p class="r3-q"><span class="prompt">$&gt;</span> outra equipe chega ao mesmo resultado?</p>
-              <h4>Reprodutibilidade</h4>
-              <dl class="r3-grid">
-                <div class="chg"><dt>Equipe</dt><dd>outra</dd></div>
-                <div><dt>Dados</dt><dd>mesmos</dd></div>
-                <div><dt>Código</dt><dd>mesmo</dd></div>
-              </dl>
-              <p>Workflows públicos, prontos para rodar do dado bruto à figura final, em qualquer infraestrutura.</p>
-            </article>
-            <article class="r3" data-reveal style="--i:2">
-              <p class="r3-q"><span class="prompt">$&gt;</span> com dados novos, a conclusão se sustenta?</p>
-              <h4>Replicabilidade</h4>
-              <dl class="r3-grid">
-                <div class="chg"><dt>Equipe</dt><dd>outra</dd></div>
-                <div class="chg"><dt>Dados</dt><dd>novos</dd></div>
-                <div class="chg"><dt>Código</dt><dd>outro</dd></div>
-              </dl>
-              <p>É aqui que os dados públicos entram de novo: testamos hipóteses em amostras de outros estudos e benchmarks.</p>
-            </article>
-          </div>
-          <p class="ref" data-reveal>Os termos variam entre áreas. Seguimos as definições da ACM (2020) e das National Academies of Sciences (2019).</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="sobre" class="section">
-      <div class="wrap about">
-        <div data-reveal>
-          <p class="kicker">05 · O laboratório</p>
-          <h2>Sobre o laboratório</h2>
-          <p>
-            O LaBiOmicS (Laboratório de Bioinformática e Ciências Ômicas) faz parte do Núcleo Integrado de
-            Biotecnologia (NIB) e do Núcleo de Pesquisas Tecnológicas (NPT) da Universidade de Mogi das Cruzes (UMC),
-            e dos Programas de Pós-Graduação em Biotecnologia e em Engenharia Biomédica da UMC. O laboratório pesquisa
-            genômica, transcriptômica, microbioma e metagenômica, combinando ciência de dados e biologia molecular para
-            responder perguntas sobre estrutura, função e evolução de sistemas biológicos.
-          </p>
-          <p>
-            Os projetos em andamento vão da saúde humana e animal à biotecnologia ambiental: o microbioma do leite
-            bovino em diferentes populações, assinaturas do microbioma intestinal no Transtorno do Espectro Autista,
-            a disbiose oral associada ao tabagismo e ao vaping, a dinâmica microbiana em biodigestores para otimizar
-            a produção de biogás, a filogenômica mitocondrial de peixes neotropicais e a prospecção de RNAs longos não
-            codificantes (lncRNAs) no transcriptoma canino.
-          </p>
-          <p>
-            Todo o trabalho segue os princípios da Ciência Aberta: dados, código e métodos ficam disponíveis para quem
-            quiser conferir ou reaproveitar. <a href="#ciencia-aberta">Veja como fazemos</a>.
-          </p>
-        </div>
-        <div data-reveal style="--i:1">
-          <article class="person">
-            <p class="kicker">Coordenação</p>
-            <div class="person-top">
-              <img class="person-avatar" src="images/fabiano-menegidio.jpg" alt="Foto do Prof. Dr. Fabiano Bezerra Menegidio" width="64" height="64" loading="lazy">
-              <h3><small class="person-title">Prof. Dr.</small> <span class="person-name">Fabiano Bezerra Menegidio</span></h3>
-            </div>
-            <p>
-              Coordenador do LaBiOmicS e docente dos Programas de Pós-Graduação em Engenharia Biomédica e em
-              Biotecnologia da UMC. Lidera projetos em transcriptômica, genômica, microbioma e metagenômica.
-            </p>
-            <p>
-              Une a academia ao empreendedorismo como cofundador e CTO das startups de base biotecnológica
-              EasyOmics, Brycon Soluções Biotecnológicas e Dayhoff Solutions.
-            </p>
-            <div class="person-links">
-              <a class="btn" href="http://lattes.cnpq.br/2745899638505571" target="_blank" rel="noopener">Currículo Lattes</a>
-              <a class="btn" href="https://www.linkedin.com/in/fabianomenegidio/" target="_blank" rel="noopener">LinkedIn</a>
-            </div>
-          </article>
-          <h3 class="infra-title">Infraestrutura</h3>
-          <dl class="infra">
-            <div><dt>Hardware local</dt><dd>2 servidores + 12 workstations</dd></div>
-            <div><dt>Plataformas externas</dt><dd>Galaxy Project (EUA, UE, AU)</dd></div>
-            <div><dt>Workflows</dt><dd>Nextflow / Snakemake</dd></div>
-          </dl>
-        </div>
-      </div>
-    </section>
-
     <section id="atuacao" class="section section-alt">
       <div class="wrap">
         <div class="section-head" data-reveal>
-          <p class="kicker">06 · Atuação</p>
+          <p class="kicker">02 · Atuação</p>
           <h2>Áreas de atuação</h2>
           <p class="muted">Quatro eixos que se conectam: os dados ômicos alimentam os modelos computacionais, que respondem a perguntas de saúde e viram inovação.</p>
         </div>
@@ -512,6 +285,233 @@
             </div>
           </article>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="metodologia" class="section">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="kicker">03 · Abordagem metodológica</p>
+          <h2>Do sequenciamento à ferramenta aberta</h2>
+        </div>
+        <ol class="flow">
+          <li data-reveal style="--i:0">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 7c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zm0 0v10c0 1.7 3.6 3 8 3s8-1.3 8-3V7M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+            <h3>Sequenciamento e coleta</h3>
+            <p>Dados brutos de plataformas NGS e curadoria de bancos públicos (NCBI, SRA, ENA), reanalisados para testar novas hipóteses.</p>
+          </li>
+          <li data-reveal style="--i:1">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="m8 9-4 3 4 3m8-6 4 3-4 3M14 5l-4 14"/></svg></span>
+            <h3>Processamento in silico</h3>
+            <p>Pipelines e workflows reprodutíveis (Nextflow, Snakemake, containers Docker/Singularity e Galaxy).</p>
+          </li>
+          <li data-reveal style="--i:2">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v6M12 15v6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M3 12h6M15 12h6M5.6 18.4l4.2-4.2M14.2 9.8l4.2-4.2"/></svg></span>
+            <h3>Integração biológica</h3>
+            <p>Estatística multivariada e biologia de sistemas para interpretar os fenômenos biológicos por trás dos dados.</p>
+          </li>
+          <li data-reveal style="--i:3">
+            <span class="flow-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 3v6c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6zm-3 9 2 2 4-4"/></svg></span>
+            <h3>Ferramenta aberta</h3>
+            <p>O método vira software livre, com código público no GitHub e licença MIT.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="ciencia-aberta" class="section section-alt osci">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="kicker">04 · Ciência aberta</p>
+          <h2>Ciência que pode ser conferida</h2>
+          <p class="muted">Reaproveitamos dados públicos, publicamos o que produzimos e organizamos cada análise para que outras pessoas consigam refazê-la.</p>
+        </div>
+
+        <div class="parasite" data-reveal>
+          <div class="seal-wrap">
+            <svg class="seal" viewBox="0 0 240 240" role="img" aria-labelledby="seal-title">
+              <title id="seal-title">Selo Proud Research Parasite, com um bacteriófago ao centro: dados públicos, ciência nova</title>
+              <defs><path id="seal-arc" d="M120 120m-93 0a93 93 0 1 1 186 0a93 93 0 1 1-186 0"/></defs>
+              <circle class="seal-bg" cx="120" cy="120" r="118"/>
+              <circle class="seal-line" cx="120" cy="120" r="111"/>
+              <g class="seal-ring">
+                <text class="seal-txt"><textPath href="#seal-arc" textLength="580" lengthAdjust="spacing">PROUD RESEARCH PARASITE ✦ PUBLIC DATA ✦ NEW SCIENCE ✦</textPath></text>
+              </g>
+              <circle class="seal-line" cx="120" cy="120" r="76"/>
+              <g class="seal-phage" transform="translate(120 120) scale(1.22) translate(-120 -107)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path class="ph-head" d="M120 58l19 11v22l-19 11-19-11V69z"/>
+                <path class="ph-dna" d="M113 68c0 6 14 6 14 12s-14 6-14 12M127 68c0 6-14 6-14 12s14 6 14 12"/>
+                <path d="M112 102h16M115 106v26M125 106v26M115 112h10M115 119h10M115 126h10M106 132h28"/>
+                <path d="M108 132l-12 10 4 12M132 132l12 10-4 12M113 132l-6 13 6 11M127 132l6 13-6 11"/>
+              </g>
+            </svg>
+          </div>
+          <div class="parasite-copy">
+            <p class="parasite-eyebrow">Proud research parasites</p>
+            <h3>Parasitas de pesquisa, com orgulho</h3>
+            <p>
+              Em 2016, um editorial do <em>New England Journal of Medicine</em> chamou de <em>research parasites</em> os
+              cientistas que analisam dados gerados por outros grupos. A comunidade adotou o termo como elogio, e hoje ele
+              dá nome até a um prêmio, o <em>Research Parasite Award</em>.
+            </p>
+            <p>
+              O LaBiOmicS faz parte dessa turma. Boa parte das nossas perguntas é respondida com dados que já estão em
+              bancos públicos: reanalisar o que foi sequenciado com dinheiro público testa resultados antigos, gera
+              hipóteses novas e multiplica o retorno desse investimento. Os autores originais de cada dado são sempre citados.
+            </p>
+            <ul class="parasite-src" aria-label="Fontes de dados públicos que usamos">
+              <li>NCBI SRA</li><li>ENA</li><li>GenBank</li><li>DATASUS</li>
+            </ul>
+            <p class="ref">Longo DL, Drazen JM. Data Sharing. <em>N Engl J Med</em> 2016;374:276–277. <a href="https://doi.org/10.1056/NEJMe1516564" target="_blank" rel="noopener">doi:10.1056/NEJMe1516564</a></p>
+          </div>
+        </div>
+
+        <div class="subsection" id="fair">
+          <div class="section-head" data-reveal>
+            <p class="kicker">Princípios FAIR</p>
+            <h3 class="sub-title">Dados e software que outros conseguem usar</h3>
+            <p class="muted">Quatro critérios para que o que publicamos seja encontrado e aproveitado, por pessoas e por máquinas.</p>
+          </div>
+          <ol class="fair">
+            <li data-reveal style="--i:0"><span class="fair-l" aria-hidden="true">F</span><h4>Findable <small>localizável</small></h4><p>Dados citados pelo número de acesso (SRA, ENA, GenBank) e ferramentas com repositório e versões publicadas.</p></li>
+            <li data-reveal style="--i:1"><span class="fair-l" aria-hidden="true">A</span><h4>Accessible <small>acessível</small></h4><p>Código aberto a qualquer pessoa, sem cadastro, e dados brutos em repositórios públicos internacionais.</p></li>
+            <li data-reveal style="--i:2"><span class="fair-l" aria-hidden="true">I</span><h4>Interoperable <small>interoperável</small></h4><p>Formatos padrão da área (FASTA, FASTQ, GFF3, BED, TSV) e metadados descritos, para encaixar em outras ferramentas.</p></li>
+            <li data-reveal style="--i:3"><span class="fair-l" aria-hidden="true">R</span><h4>Reusable <small>reutilizável</small></h4><p>Licença aberta, documentação com exemplos de uso e a origem de cada dado registrada.</p></li>
+          </ol>
+          <p class="ref" data-reveal>Wilkinson MD <em>et al.</em> The FAIR Guiding Principles for scientific data management and stewardship. <em>Sci Data</em> 2016;3:160018. <a href="https://doi.org/10.1038/sdata.2016.18" target="_blank" rel="noopener">doi:10.1038/sdata.2016.18</a></p>
+        </div>
+
+        <div class="subsection" id="3r">
+          <div class="section-head" data-reveal>
+            <p class="kicker">Os três Rs</p>
+            <h3 class="sub-title">Repetir, reproduzir, replicar</h3>
+            <p class="muted">Parecem sinônimos, mas cada um testa uma coisa diferente. O que muda é quem refaz a análise e com quais dados.</p>
+          </div>
+          <div class="rrr">
+            <article class="r3" data-reveal style="--i:0">
+              <p class="r3-q"><span class="prompt">$&gt;</span> rodando de novo, sai o mesmo resultado?</p>
+              <h4>Repetibilidade</h4>
+              <dl class="r3-grid">
+                <div><dt>Equipe</dt><dd>mesma</dd></div>
+                <div><dt>Dados</dt><dd>mesmos</dd></div>
+                <div><dt>Código</dt><dd>mesmo</dd></div>
+              </dl>
+              <p>Versões de software fixadas, sementes aleatórias registradas e ambientes em container.</p>
+            </article>
+            <article class="r3" data-reveal style="--i:1">
+              <p class="r3-q"><span class="prompt">$&gt;</span> outra equipe chega ao mesmo resultado?</p>
+              <h4>Reprodutibilidade</h4>
+              <dl class="r3-grid">
+                <div class="chg"><dt>Equipe</dt><dd>outra</dd></div>
+                <div><dt>Dados</dt><dd>mesmos</dd></div>
+                <div><dt>Código</dt><dd>mesmo</dd></div>
+              </dl>
+              <p>Workflows públicos, prontos para rodar do dado bruto à figura final, em qualquer infraestrutura.</p>
+            </article>
+            <article class="r3" data-reveal style="--i:2">
+              <p class="r3-q"><span class="prompt">$&gt;</span> com dados novos, a conclusão se sustenta?</p>
+              <h4>Replicabilidade</h4>
+              <dl class="r3-grid">
+                <div class="chg"><dt>Equipe</dt><dd>outra</dd></div>
+                <div class="chg"><dt>Dados</dt><dd>novos</dd></div>
+                <div class="chg"><dt>Código</dt><dd>outro</dd></div>
+              </dl>
+              <p>É aqui que os dados públicos entram de novo: testamos hipóteses em amostras de outros estudos e benchmarks.</p>
+            </article>
+          </div>
+          <p class="ref" data-reveal>Os termos variam entre áreas. Seguimos as definições da ACM (2020) e das National Academies of Sciences (2019).</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="projetos" class="section">
+      <div class="wrap">
+        <div class="section-head" data-reveal>
+          <p class="kicker">05 · Ferramentas abertas</p>
+          <h2>Projetos</h2>
+          <p class="muted">Selecione uma categoria ou busque por nome, tema ou plataforma.</p>
+        </div>
+
+        <div class="toolbar" data-reveal>
+          <label class="search">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M11 19a8 8 0 1 1 0-16 8 8 0 0 1 0 16zm10 2-4.35-4.35"/></svg>
+            <input id="q" type="search" placeholder="Buscar projetos" autocomplete="off" aria-label="Buscar projetos">
+            <kbd>/</kbd>
+          </label>
+          <div class="filters" id="filters" role="tablist" aria-label="Categorias"><span class="pill" aria-hidden="true"></span></div>
+        </div>
+
+        <div class="grid" id="grid" aria-live="polite"></div>
+        <nav class="pager" id="pager" aria-label="Páginas de projetos" hidden></nav>
+        <p class="empty" id="empty" hidden>Nenhum projeto encontrado.</p>
+
+        <div class="subsection" id="workflows">
+          <div class="section-head" data-reveal>
+            <p class="kicker">Pipelines reprodutíveis</p>
+            <h3 class="sub-title">Workflows</h3>
+            <p class="muted">Análises completas em Snakemake e Nextflow, com containers e ambientes versionados. Alguns rodam nos dois motores.</p>
+          </div>
+          <div class="toolbar" id="wf-toolbar" data-reveal>
+            <div class="filters" id="wf-filters" role="tablist" aria-label="Motores de workflow"><span class="pill" aria-hidden="true"></span></div>
+          </div>
+          <div class="grid" id="wf-grid" aria-live="polite"></div>
+          <nav class="pager" id="wf-pager" aria-label="Páginas de workflows" hidden></nav>
+          <p class="empty" id="wf-empty" hidden>Nenhum workflow encontrado.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" class="section section-alt">
+      <div class="wrap about">
+        <div data-reveal>
+          <p class="kicker">06 · O laboratório</p>
+          <h2>Sobre o laboratório</h2>
+          <p>
+            O LaBiOmicS (Laboratório de Bioinformática e Ciências Ômicas) faz parte do Núcleo Integrado de
+            Biotecnologia (NIB) e do Núcleo de Pesquisas Tecnológicas (NPT) da Universidade de Mogi das Cruzes (UMC),
+            e dos Programas de Pós-Graduação em Biotecnologia e em Engenharia Biomédica da UMC. O laboratório pesquisa
+            genômica, transcriptômica, microbioma e metagenômica, combinando ciência de dados e biologia molecular para
+            responder perguntas sobre estrutura, função e evolução de sistemas biológicos.
+          </p>
+          <p>
+            Os projetos em andamento vão da saúde humana e animal à biotecnologia ambiental: o microbioma do leite
+            bovino em diferentes populações, assinaturas do microbioma intestinal no Transtorno do Espectro Autista,
+            a disbiose oral associada ao tabagismo e ao vaping, a dinâmica microbiana em biodigestores para otimizar
+            a produção de biogás, a filogenômica mitocondrial de peixes neotropicais e a prospecção de RNAs longos não
+            codificantes (lncRNAs) no transcriptoma canino.
+          </p>
+          <p>
+            Todo o trabalho segue os princípios da Ciência Aberta: dados, código e métodos ficam disponíveis para quem
+            quiser conferir ou reaproveitar. <a href="#ciencia-aberta">Veja como fazemos</a>.
+          </p>
+        </div>
+        <div data-reveal style="--i:1">
+          <article class="person">
+            <p class="kicker">Coordenação</p>
+            <div class="person-top">
+              <img class="person-avatar" src="images/fabiano-menegidio.jpg" alt="Foto do Prof. Dr. Fabiano Bezerra Menegidio" width="64" height="64" loading="lazy">
+              <h3><small class="person-title">Prof. Dr.</small> <span class="person-name">Fabiano Bezerra Menegidio</span></h3>
+            </div>
+            <p>
+              Coordenador do LaBiOmicS e docente dos Programas de Pós-Graduação em Engenharia Biomédica e em
+              Biotecnologia da UMC. Lidera projetos em transcriptômica, genômica, microbioma e metagenômica.
+            </p>
+            <p>
+              Une a academia ao empreendedorismo como cofundador e CTO das startups de base biotecnológica
+              EasyOmics, Brycon Soluções Biotecnológicas e Dayhoff Solutions.
+            </p>
+            <div class="person-links">
+              <a class="btn" href="http://lattes.cnpq.br/2745899638505571" target="_blank" rel="noopener">Currículo Lattes</a>
+              <a class="btn" href="https://www.linkedin.com/in/fabianomenegidio/" target="_blank" rel="noopener">LinkedIn</a>
+            </div>
+          </article>
+          <h3 class="infra-title">Infraestrutura</h3>
+          <dl class="infra">
+            <div><dt>Hardware local</dt><dd>2 servidores + 12 workstations</dd></div>
+            <div><dt>Plataformas externas</dt><dd>Galaxy Project (EUA, UE, AU)</dd></div>
+            <div><dt>Workflows</dt><dd>Nextflow / Snakemake</dd></div>
+          </dl>
         </div>
       </div>
     </section>
@@ -721,6 +721,7 @@
           <span class="dx-msg" id="dx-msg" aria-live="polite"></span>
           <span class="keys">← → andar · espaço pular · Esc sair</span>
         </div>
+        <button type="button" class="dx-top-btn" id="dx-up" aria-label="Ir para o topo da página"><svg aria-hidden="true" viewBox="0 0 24 24" width="14" height="14"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-6 6 6-6 6 6"/></svg><span>topo</span></button>
         <button type="button" class="dx-play" id="dx-play" aria-pressed="false">
           <svg aria-hidden="true" viewBox="0 0 24 24" width="16" height="16"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 11h4M8 9v4M15 12h.01M18 10h.01M17.3 5H6.7a4 4 0 0 0-4 3.6l-.6 5.2A3 3 0 0 0 5 17c1 0 1.5-.5 2-1l1.4-1.4A2 2 0 0 1 9.8 14h4.4a2 2 0 0 1 1.4.6L17 16c.5.5 1 1 2 1a3 3 0 0 0 2.9-3.2l-.6-5.2A4 4 0 0 0 17.3 5z"/></svg>
           <span>Jogar com o Mr. DNA</span>
@@ -753,7 +754,12 @@
     </div>
   </footer>
 
+  <div class="jump" id="jump">
+    <button type="button" class="jump-btn" id="jump-up" aria-label="Ir para o topo da página" title="Ir para o topo"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 19V5m-6 6 6-6 6 6"/></svg></button>
+    <button type="button" class="jump-btn" id="jump-down" aria-label="Ir para o fim da página" title="Ir para o fim"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-6-6 6 6 6-6"/></svg></button>
+  </div>
+
   <script src="assets/projects.js?v=95763254"></script>
-  <script src="assets/app.js?v=5600b701"></script>
+  <script src="assets/app.js?v=a8d06c53"></script>
 </body>
 </html>
